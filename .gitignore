@@ -61,3 +61,5 @@ crashlytics-build.properties
 /.vsconfig
 /UserSettings/EditorUserSettings.asset
 /UserSettings/Layouts/default-2021.dwlt
+/Assets/OpenAssets.lnk
+/Assets/OpenAssets.lnk.meta
