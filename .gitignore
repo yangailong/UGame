@@ -63,3 +63,6 @@ crashlytics-build.properties
 /UserSettings/Layouts/default-2021.dwlt
 /Assets/OpenAssets.lnk
 /Assets/OpenAssets.lnk.meta
+HotFixAssembly/.vs/*
+HotFixAssembly/obj/*
+HotFixAssembly/bin/*
