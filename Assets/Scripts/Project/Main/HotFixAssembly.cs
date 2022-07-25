@@ -9,6 +9,7 @@ public class HotFixAssembly
     public HotFixAssembly()
     {
         appdomain = new AppDomain();
+      
     }
 
     public void Start()
@@ -25,12 +26,12 @@ public class HotFixAssembly
     public void Load()
     {
         //获取dll
-        byte[] dll = null;//www.bytes
+        byte[] dll =DownDll.DllData();//www.bytes
          fs = new MemoryStream(dll);
 
 
         //PDB文件是调试数据库，如需要在日志中显示报错的行号，则必须提供PDB文件，不过由于会额外耗用内存，正式发布时请将PDB去掉，下面LoadAssembly的时候pdb传null即可
-        byte[] pdb = null; //www.bytes;
+        byte[] pdb = DownDll.PDBData(); //www.bytes;
         MemoryStream p = new MemoryStream(pdb);
 
         try
@@ -56,7 +57,7 @@ public class HotFixAssembly
 
     private void OnHotFixLoaded()
     {
-        appdomain.Invoke("HotFix_Project.InstanceClass", "StaticFunTest", null, null);
+        appdomain.Invoke("RunGame", "StartUp", null, null);
     }
 
 

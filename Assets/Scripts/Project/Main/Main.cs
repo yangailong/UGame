@@ -9,7 +9,6 @@ public class Main : MonoBehaviour
     private void Awake()
     {
         Init();
-       
     }
 
     private void Start()
