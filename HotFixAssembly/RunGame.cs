@@ -7,6 +7,8 @@ public class RunGame
     {
         Debug.Log($"---调用成功了:StartUp");
 
+        GameObject gameObject = new GameObject("哈哈哈哈");
+
         Init();
     }
 
