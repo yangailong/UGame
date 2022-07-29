@@ -7,27 +7,28 @@ public class CopyDllToProject : Editor
     [MenuItem("Tools/Dll/CopyDllToProject")]
     public static void Copy()
     {
-        string originPath = $"{Application.dataPath}/../HotFixAssembly/bin/Debug/net6.0";
-        string writePath = $"{Application.dataPath}/AddressableAssets/Remote/Dll";
+        string dllFullName = "HotFixAssembly.dll";
+        string pdbFullName = "HotFixAssembly.pdb";
 
-        if (!Directory.Exists(originPath) || !Directory.Exists(writePath))
+        string originPath = $"{Application.dataPath}/../HotFixAssembly/bin/Debug/net6.0";
+        string writePath = $"{Application.dataPath}/AddressableAssets/Remote/Dll/";
+
+        if (!Directory.Exists(originPath))
         {
-            Debug.LogError($"no find path   {originPath} ---------  {writePath}");
+            Debug.LogError($"no find path   {originPath}");
             return;
         }
 
-        Directory.Delete(writePath, true);
-        Directory.CreateDirectory(writePath);
+        var dll = new FileInfo($"{originPath}/{dllFullName}");
+        var pdb = new FileInfo($"{originPath}/{pdbFullName}");
 
-        var dll = new FileInfo($"{originPath}/HotFixAssembly.dll");
-        var pdb = new FileInfo($"{originPath}/HotFixAssembly.pdb");
-
-        dll.CopyTo($"{writePath}{dll.Name}");
-        pdb.CopyTo($"{writePath}{pdb.Name}");
+        dll.CopyTo($"{writePath}{dll.Name}", true);//覆盖
+        pdb.CopyTo($"{writePath}{pdb.Name}", true);
 
         dll.Refresh();
         pdb.Refresh();
 
+        AssetDatabase.Refresh();
     }
 
 
