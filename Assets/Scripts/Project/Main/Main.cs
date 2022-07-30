@@ -1,37 +1,33 @@
 using UnityEngine;
 using UnityEngine.UI;
-
-public class Main : MonoBehaviour
+namespace UGame_Local
 {
-    private HotFixAssembly hotFixAssembly = null;
-
-
-    private void Awake()
+    public class Main : MonoBehaviour
     {
-        Init();
+        private HotFixAssembly hotFixAssembly = null;
+
+
+        private void Awake()
+        {
+            Init();
+        }
+
+        private void Start()
+        {
+            hotFixAssembly.Start();
+        }
+
+
+        private void Init()
+        {
+            hotFixAssembly = new HotFixAssembly();
+        }
+
+
+
+        private void OnApplicationQuit()
+        {
+            hotFixAssembly.Close();
+        }
     }
-
-    private void Start()
-    {
-        hotFixAssembly.Start();
-    }
-
-
-    private void Init()
-    {
-        hotFixAssembly = new HotFixAssembly();
-    }
-
-
-
-    private void OnApplicationQuit()
-    {
-        hotFixAssembly.Close();
-    }
-
-
-
-
-
-
 }

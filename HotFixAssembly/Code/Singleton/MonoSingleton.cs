@@ -1,20 +1,24 @@
 ﻿using UnityEngine;
-/// <summary>单例Mono基类</summary>
-public class MonoSingleton<T> where T : UnityEngine.Component
+
+namespace UGame_Remove
 {
-    protected MonoSingleton() { }
-
-    protected static T instance = null;
-
-    public static T Instance
+    /// <summary>单例Mono基类</summary>
+    public class MonoSingleton<T> where T : UnityEngine.Component
     {
-        get
+        protected MonoSingleton() { }
+
+        protected static T instance = null;
+
+        public static T Instance
         {
-            if (null == instance)
+            get
             {
-                instance = new GameObject($"[{typeof(T).Name}]").AddComponent<T>();
+                if (null == instance)
+                {
+                    instance = new GameObject($"[{typeof(T).Name}]").AddComponent<T>();
+                }
+                return instance;
             }
-            return instance;
         }
     }
 }

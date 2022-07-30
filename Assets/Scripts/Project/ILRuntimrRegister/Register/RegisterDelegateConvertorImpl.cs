@@ -1,10 +1,13 @@
 using ILRuntime.Runtime.Enviorment;
-public class RegisterDelegateConvertorImpl : ILRuntimeRegister
+namespace UGame_Local
 {
-    protected override void Register(AppDomain appDomain)
+    public class RegisterDelegateConvertorImpl : Singleton<RegisterDelegateConvertorImpl>, ILRuntimeRegister
     {
-        //appDomain.DelegateManager.RegisterDelegateConvertor(this);
+        public void Register(AppDomain appDomain)
+        {
+
+        }
+
     }
 
 }
-

@@ -1,24 +1,25 @@
 ﻿
 using UnityEngine;
-
-public class RunGame
+namespace UGame_Remove
 {
-    public static void StartUp()
+    public class RunGame
     {
-        Debug.Log($"---调用成功了:StartUp");
+        public static void StartUp()
+        {
+            Debug.Log($"---调用成功了:StartUp");
 
-        GameObject gameObject = new GameObject("哈哈哈哈");
+            GameObject gameObject = new GameObject("哈哈哈哈");
 
-        Init();
+            Init();
+        }
+
+
+        public static void Init()
+        {
+            var ui = UIManager.Instance;
+
+        }
+
+
     }
-
-
-    public static void Init()
-    {
-        var ui = UIManager.Instance;
-
-    }
-
-
 }
-

@@ -1,28 +1,30 @@
 ﻿using System;
 using UnityEngine;
-public class UIBase : MonoBehaviour
+namespace UGame_Remove
 {
-    void Awake()
+    public class UIBase : MonoBehaviour
     {
+        void Awake()
+        {
+
+        }
+
+        void OnEnable()
+        {
+
+        }
+
+        void Start()
+        {
+
+        }
+
+        void OnDestory()
+        {
+
+        }
+
+
 
     }
-
-    void OnEnable()
-    {
-        
-    }
-
-    void Start()
-    {
-
-    }
-
-    void OnDestory()
-    {
-        
-    }
-
-
-
 }
-

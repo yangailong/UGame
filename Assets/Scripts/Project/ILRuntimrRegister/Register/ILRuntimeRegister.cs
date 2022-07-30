@@ -1,23 +1,9 @@
 ﻿using ILRuntime.Runtime.Enviorment;
-public class ILRuntimeRegister
+namespace UGame_Local
 {
-    private static ILRuntimeRegister instance = null;
-
-    public static void HelperRegisters(AppDomain appDomain)
+    public interface ILRuntimeRegister
     {
-        if (instance == null)
-        {
-            instance = new ILRuntimeRegister();
-        }
-        instance.Register(appDomain);
-    }
-
-
-
-    protected  virtual void Register(AppDomain appDomain)
-    {
-       
+        void Register(AppDomain appDomain);
     }
 
 }
-

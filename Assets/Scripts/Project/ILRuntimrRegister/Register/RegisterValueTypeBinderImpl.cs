@@ -1,13 +1,15 @@
 ﻿using ILRuntime.Runtime.Enviorment;
 using UnityEngine;
-
-public class RegisterValueTypeBinderImpl : ILRuntimeRegister
+namespace UGame_Local
 {
-    protected override void Register(AppDomain appDomain)
+    public class RegisterValueTypeBinderImpl : Singleton<RegisterValueTypeBinderImpl>, ILRuntimeRegister
     {
-        appDomain.RegisterValueTypeBinder(typeof(Vector2),new Vector2Binder());
-        appDomain.RegisterValueTypeBinder(typeof(Vector3),new Vector3Binder());
+        public void Register(AppDomain appDomain)
+        {
+            appDomain.RegisterValueTypeBinder(typeof(Vector2), new Vector2Binder());
+            appDomain.RegisterValueTypeBinder(typeof(Vector3), new Vector3Binder());
+        }
+
     }
 
 }
-

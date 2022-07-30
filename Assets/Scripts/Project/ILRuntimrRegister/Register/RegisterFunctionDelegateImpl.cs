@@ -1,10 +1,12 @@
 ﻿using ILRuntime.Runtime.Enviorment;
+namespace UGame_Local
+{
+    public class RegisterFunctionDelegateImpl : Singleton<RegisterFunctionDelegateImpl>, ILRuntimeRegister
+    {
+        public void Register(AppDomain appDomain)
+        {
 
-public class RegisterFunctionDelegateImpl:ILRuntimeRegister
-    {
-    protected override void Register(AppDomain appDomain)
-    {
-        base.Register(appDomain);
+        }
     }
-}
 
+}

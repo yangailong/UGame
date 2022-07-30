@@ -1,43 +1,53 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using UnityEngine;
 
-public class UIManager: MonoBehaviour
+namespace UGame_Remove
 {
-    public static UIManager Instance { get { return MonoSingleton<UIManager>.Instance; } }
-
-    public void Awake()
+    public class UIManager : MonoBehaviour
     {
-        Destroy(gameObject);
+        public static UIManager Instance { get { return MonoSingleton<UIManager>.Instance; } }
+
+        public void Awake()
+        {
+            Debug.Log("455641651456");
+            Destroy(gameObject);
+        }
+
+        void Start()
+        {
+            Debug.Log("Start");
+        }
+
+        void Update()
+        {
+
+        }
+
+        public UIBase Open()
+        {
+            return null;
+        }
+
+
+
+        public UIBase Close()
+        {
+            return null;
+        }
+
+        public bool IsOpen()
+        {
+            return false;
+        }
+
+        public void CloseAll()
+        {
+
+        }
+
+
+
+
     }
-
-
-    public UIBase Open()
-    {
-        return null;
-    }
-
-
-
-    public UIBase Close()
-    {
-        return null;
-    }
-
-    public bool IsOpen()
-    {
-        return false;
-    }
-
-    public void CloseAll()
-    {
-        
-    }
-
-
-    
-
 }
-

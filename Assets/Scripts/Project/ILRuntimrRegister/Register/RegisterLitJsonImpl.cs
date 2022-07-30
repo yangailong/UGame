@@ -1,10 +1,11 @@
 ﻿using ILRuntime.Runtime.Enviorment;
-
-public class RegisterLitJsonImpl : ILRuntimeRegister
+namespace UGame_Local
 {
-    protected override void Register(AppDomain appDomain)
+    public class RegisterLitJsonImpl : Singleton<RegisterLitJsonImpl>, ILRuntimeRegister
     {
-        base.Register(appDomain);
+        public void Register(AppDomain appDomain)
+        {
+
+        }
     }
 }
-

@@ -1,14 +1,14 @@
 ﻿using ILRuntime.Runtime.Enviorment;
 using UnityEngine;
-
-public class RegisterCrossBindingAdaptorImpl : ILRuntimeRegister
+namespace UGame_Local
 {
-    protected override void Register(AppDomain appDomain)
+    public class RegisterCrossBindingAdaptorImpl : Singleton<RegisterCrossBindingAdaptorImpl>, ILRuntimeRegister
     {
-        Debug.Log("-------------------");
-        appDomain.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
+        public void Register(AppDomain appDomain)
+        {
+            appDomain.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
+        }
+
     }
 
-
 }
-

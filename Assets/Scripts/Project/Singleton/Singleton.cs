@@ -1,5 +1,5 @@
-﻿
-namespace UGame_Remove
+﻿using System;
+namespace UGame_Local
 {
     /// <summary>单例基类</summary>
     public class Singleton<T> where T : new()
