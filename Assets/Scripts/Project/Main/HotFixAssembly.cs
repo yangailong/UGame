@@ -19,19 +19,18 @@ namespace UGame_Local
             OnHotFixLoaded();
         }
 
-        MemoryStream fs = null;
-        MemoryStream p = null;
+
 
 
         public void Load()
         {
             //获取dll
-            byte[] dll = DownDll.DllData();//www.bytes
-            fs = new MemoryStream(dll);
+            byte[] dll = DownDll.DllData();
+            MemoryStream fs = new MemoryStream(dll);
 
 
             //PDB文件是调试数据库，如需要在日志中显示报错的行号，则必须提供PDB文件，不过由于会额外耗用内存，正式发布时请将PDB去掉，下面LoadAssembly的时候pdb传null即可
-            byte[] pdb = DownDll.PDBData(); //www.bytes;
+            byte[] pdb = DownDll.PDBData();
             MemoryStream p = new MemoryStream(pdb);
 
             try
@@ -68,10 +67,6 @@ namespace UGame_Local
         }
 
 
-        public void Close()
-        {
-            fs?.Close();
-            p?.Close();
-        }
+
     }
 }

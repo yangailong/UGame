@@ -3,7 +3,7 @@
 namespace UGame_Remove
 {
     /// <summary>单例Mono基类</summary>
-    public class MonoSingleton<T> where T : UnityEngine.Component
+    public class MonoSingleton<T> where T :Component
     {
         protected MonoSingleton() { }
 

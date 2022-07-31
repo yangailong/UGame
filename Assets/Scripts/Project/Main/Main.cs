@@ -22,12 +22,5 @@ namespace UGame_Local
         {
             hotFixAssembly = new HotFixAssembly();
         }
-
-
-
-        private void OnApplicationQuit()
-        {
-            hotFixAssembly.Close();
-        }
     }
 }

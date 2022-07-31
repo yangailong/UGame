@@ -8,9 +8,14 @@ namespace UGame_Remove
         {
             Debug.Log($"---调用成功了:StartUp");
 
-            GameObject gameObject = new GameObject("哈哈哈哈");
+            GameObject gameObject = new GameObject("UIManager");
 
-            Init();
+            gameObject.AddComponent<Manager>();
+
+            //var mgr = gameObject.GetComponent<Manager>();
+            //mgr.Test();
+
+            //Init();
         }
 
 
@@ -20,6 +25,33 @@ namespace UGame_Remove
 
         }
 
+
+
+
+    }
+
+    public class Manager : MonoBehaviour
+    {
+        void Awake()
+        {
+            Debug.Log("Awake");
+        }
+
+        void Start()
+        {
+            Debug.Log("Start");
+
+        }
+
+        //void Update()
+        //{
+        //    Debug.Log("---");
+        //}
+
+        public void Test()
+        {
+            Debug.Log("Test");
+        }
 
     }
 }
