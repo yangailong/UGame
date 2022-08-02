@@ -8,14 +8,16 @@ namespace UGame_Remove
         {
             Debug.Log($"---调用成功了:StartUp");
 
-            GameObject gameObject = new GameObject("UIManager");
+            //GameObject gameObject = new GameObject("UIManager");
 
-            gameObject.AddComponent<Manager>();
+            //gameObject.AddComponent<Manager>();
 
             //var mgr = gameObject.GetComponent<Manager>();
             //mgr.Test();
 
-            //Init();
+            Init();
+
+
         }
 
 
