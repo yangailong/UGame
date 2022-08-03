@@ -17,7 +17,7 @@ public class ILRuntimeMenu
         Application.OpenURL("https://ourpalm.github.io/ILRuntime/");
     }
 
-    [MenuItem("ILRuntime/打开ILRuntime Github项目")]
+    [MenuItem("Tools/ILRuntime/打开ILRuntime Github项目")]
     static void OpenGithub()
     {
         Application.OpenURL("https://github.com/Ourpalm/ILRuntime");

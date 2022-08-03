@@ -11,13 +11,12 @@ namespace UGame_Local
     {
         public void Register(AppDomain appDomain)
         {
-            //appDomain.RegisterCrossBindingAdaptor(new MonoBehaviourAdapter());
-            //appDomain.RegisterCrossBindingAdaptor(new ComponentAdapter());
+            Assembly assembly = typeof(Main).Assembly;
+            var crossBindingAsaptor = assembly.GetTypes().ToList().FindAll(t => t.IsSubclassOf(typeof(CrossBindingAdaptor)));
 
-            Assembly assembly=typeof(Main).Assembly;
-            foreach (var type in assembly.GetTypes().ToList().FindAll(t=>t.IsSubclassOf(typeof(CrossBindingAdaptor))))
+            foreach (var type in crossBindingAsaptor)
             {
-                object o= Activator.CreateInstance(type);
+                object o = Activator.CreateInstance(type);
                 CrossBindingAdaptor adaptor = o as CrossBindingAdaptor;
                 if (adaptor == null) continue;
                 appDomain.RegisterCrossBindingAdaptor(adaptor);
