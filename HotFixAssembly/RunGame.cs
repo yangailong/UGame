@@ -11,7 +11,7 @@ namespace UGame_Remove
 
            
 
-            Init();
+            //Init();
 
 
         }
@@ -19,8 +19,9 @@ namespace UGame_Remove
 
         public static void Init()
         {
-            var ui = UIManager.Instance;
+            //var ui = UIManager.Instance;
 
+            UIManager.Init();
         }
 
 

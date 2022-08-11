@@ -1,34 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UGame_Remove
 {
     public class UIManager : MonoBehaviour
     {
-        public static UIManager Instance { get { return MonoSingleton<UIManager>.Instance; } }
+
+        public static void Init()
+        {
+            UIPanelDic.Clear();
+
+            UIManager instance = Resources.Load<GameObject>(typeof(UIManager).Name).AddComponent<UIManager>();
+
+            DontDestroyOnLoad(instance);
+        }
 
         private static Dictionary<string, UIPanelBase> UIPanelDic = new Dictionary<string, UIPanelBase>();
 
 
-        public void Awake()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
-
+       
 
         public static T? Open<T>(UICallback? callback = null, params object[] param) where T : UIPanelBase
         {
             return Open(typeof(T).Name, callback, param) as T;
         }
 
-        public static UIPanelBase Open(string name, UICallback callback = null, params object[] param)
+
+        public static UIPanelBase Open(string name, UICallback? callback = null, params object[] param)
         {
-            UIPanelBase panel = null;
+            UIPanelBase? panel = null;
 
             if (!UIPanelDic.TryGetValue(name, out panel))
             {
-                panel=CreatUI(name);
+                panel = CreatUI(name);
             }
 
             panel.OnUIEnable();
@@ -38,16 +41,6 @@ namespace UGame_Remove
         }
 
 
-        public static T? GetUI<T>(string name) where T : UIPanelBase
-        {
-            if (UIPanelDic.ContainsKey(name))
-            {
-                return UIPanelDic[name] as T;
-            }
-
-            return null;
-        }
-
         public static void Close(string name, bool isPlayAnim = true, UICallback? callback = null, params object[] param)
         {
             if (!UIPanelDic.ContainsKey(name))
@@ -56,9 +49,10 @@ namespace UGame_Remove
             }
             else
             {
-                Close(UIPanelDic[name],isPlayAnim,callback,param);
+                Close(UIPanelDic[name], isPlayAnim, callback, param);
             }
         }
+
 
         public static void Close(UIPanelBase panel, bool isPlayAnim = true, UICallback? callback = null, params object[] param)
         {
@@ -72,7 +66,7 @@ namespace UGame_Remove
                 {
                     callback = (p1, p) => { panel.OnUIDisable(); };
                 }
-                
+
                 //TODO...播放动画
             }
             else
@@ -91,8 +85,6 @@ namespace UGame_Remove
             UIPanelDic.Add(name, panel);
             return panel;
         }
-
-
 
     }
 }
