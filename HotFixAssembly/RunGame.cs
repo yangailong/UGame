@@ -9,6 +9,9 @@ namespace UGame_Remove
             Debug.Log($"UGame_Remove StartUp");
 
             Init();
+
+            //GameObject.Find("Binder").gameObject.AddComponent<binderTest>();
+
         }
 
 
@@ -19,5 +22,17 @@ namespace UGame_Remove
 
     }
 
+    public class binderTest:UnityEngine.MonoBehaviour
+    {
 
+        void Awake()
+        {
+            Debug.Log("Awake");
+        }
+
+        void OnDisable()
+        {
+            Debug.Log("OnDisable");
+        }
+    }
 }
