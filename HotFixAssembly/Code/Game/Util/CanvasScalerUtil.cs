@@ -13,7 +13,7 @@ namespace UGame_Remove
 
         private Vector2 oldScreenRect = new Vector2(Screen.width, Screen.height);
 
-        private CanvasScaler canvasScaler = null;
+        private CanvasScaler? canvasScaler = null;
 
         void Awake()
         {

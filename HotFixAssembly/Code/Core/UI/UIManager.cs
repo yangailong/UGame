@@ -9,7 +9,7 @@ namespace UGame_Remove
         {
             UIPanelDic.Clear();
 
-            UIManager instance = Resources.Load<GameObject>(typeof(UIManager).Name).AddComponent<UIManager>();
+            UIManager instance = Resources.Load<GameObject>("UIRoot").AddComponent<UIManager>();
 
             DontDestroyOnLoad(instance);
         }
@@ -77,7 +77,7 @@ namespace UGame_Remove
 
         private static UIPanelBase CreatUI(string name)
         {
-            GameObject go = null;//TODO...加载出来
+            GameObject? go = null;//TODO...加载出来
 
             UIPanelBase panel = Instantiate(go).GetComponent<UIPanelBase>();
             panel.OnUIAwake();

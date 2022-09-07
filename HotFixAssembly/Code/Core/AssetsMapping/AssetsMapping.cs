@@ -16,10 +16,9 @@ namespace UGame_Remove
 
 
         /// <summary>获取assetsName路径 </summary>
-        public static string LoadPath(string assetsName)
+        public static string? LoadPath(string assetsName)
         {
-            string path = string.Empty;
-            if (!mapping.TryGetValue(assetsName, out path))
+            if (!mapping.TryGetValue(assetsName, out string? path))
             {
                 Debug.LogError($"AssetsMapping can't find ->{assetsName}<-");
             }
@@ -33,7 +32,8 @@ namespace UGame_Remove
         /// <summary>获取多个assetsName路径 </summary>
         public static IEnumerable LoadPaths(IEnumerable assetsName)
         {
-            List<string> paths = new List<string>();
+            List<string?> paths = new List<string?>();
+
             foreach (string name in assetsName)
             {
                 paths.Add(LoadPath(name));

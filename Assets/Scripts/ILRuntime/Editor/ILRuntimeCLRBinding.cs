@@ -12,7 +12,7 @@ public class ILRuntimeCLRBinding
     {
         //用新的分析热更dll调用引用来生成绑定代码
         AppDomain domain = new AppDomain();
-        using (FileStream fs = new FileStream("Assets/AddressableAssets/Remote/Dll/HotFixAssembly.dll", FileMode.Open, FileAccess.Read))
+        using (FileStream fs = new FileStream("Assets/AddressableAssets/Remote_UnMapping/Dll/HotFixAssembly.dll", FileMode.Open, FileAccess.Read))
         {
             domain.LoadAssembly(fs);
 
