@@ -14,10 +14,9 @@ namespace UGame_Remove
             DontDestroyOnLoad(instance);
         }
 
+
         private static Dictionary<string, UIPanelBase> UIPanelDic = new Dictionary<string, UIPanelBase>();
 
-
-       
 
         public static T? Open<T>(UICallback? callback = null, params object[] param) where T : UIPanelBase
         {

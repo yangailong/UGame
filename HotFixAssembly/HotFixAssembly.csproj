@@ -13,6 +13,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Reference Include="UnityEditor.CoreModule">
+      <HintPath>dlls\UnityEditor.CoreModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>dlls\UnityEngine.CoreModule.dll</HintPath>
     </Reference>

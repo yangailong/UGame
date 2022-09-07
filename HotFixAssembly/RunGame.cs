@@ -1,5 +1,5 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
+
 namespace UGame_Remove
 {
     public class RunGame
@@ -9,7 +9,7 @@ namespace UGame_Remove
         {
             Debug.Log($"UGame_Remove StartUp");
 
-           
+
 
             //Init();
 
@@ -29,5 +29,5 @@ namespace UGame_Remove
 
     }
 
-    
+
 }

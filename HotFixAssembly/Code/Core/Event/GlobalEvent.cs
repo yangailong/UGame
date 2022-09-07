@@ -34,10 +34,9 @@ namespace UGame_Remove
         /// <param name="handler">回调方法</param>
         public static void RemoveEvent(Enum key, EventHandler handler)
         {
-
-            if (m_EnumEventDic.ContainsKey(key))
+            if (!m_EnumEventDic.TryGetValue(key, out EventHandler? eventHandler))
             {
-                m_EnumEventDic[key] -= handler;
+                eventHandler -= handler;
             }
         }
 
@@ -76,9 +75,6 @@ namespace UGame_Remove
         }
 
 
-
-
-
         /// <summary>
         /// 移除所有事件
         /// </summary>
@@ -86,6 +82,8 @@ namespace UGame_Remove
         {
             m_EnumEventDic.Clear();
         }
+
+
     }
 }
 
