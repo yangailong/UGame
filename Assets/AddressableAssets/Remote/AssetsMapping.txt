@@ -1,0 +1,5 @@
+demo	Prefabs/demo.prefab
+Main	Scenes/Main.unity
+CfgRemoteLang	ScriptableObject/CfgRemoteLang.asset
+UI_demo	UI/UI_demo.jpg
+AssetsMapping	AssetsMapping.txt

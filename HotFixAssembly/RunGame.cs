@@ -1,14 +1,21 @@
 ﻿
 using UnityEngine;
 
-public class RunGame
+namespace UGame_Remove
 {
-    public static void StartUp()
+    public class RunGame
     {
-        Debug.Log($"调用成功了:StartUp");
+        public static void StartUp()
+        {
+            Debug.Log($"UGame_Remove StartUp");
+
+
+            Init();
+        }
+
+        public static void Init()
+        {
+            UIManager.Init();
+        }
     }
-
-
-
 }
-

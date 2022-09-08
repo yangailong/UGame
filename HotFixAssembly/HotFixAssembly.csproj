@@ -7,12 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="dlls\**" />
-    <EmbeddedResource Remove="dlls\**" />
-    <None Remove="dlls\**" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Reference Include="UnityEditor.CoreModule">
+      <HintPath>dlls\UnityEditor.CoreModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>dlls\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
