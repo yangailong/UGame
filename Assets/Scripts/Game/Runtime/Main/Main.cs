@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.UI;
 namespace UGame_Local
 {
     public class Main : MonoBehaviour

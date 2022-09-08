@@ -8,13 +8,14 @@ namespace UGame_Remove
         {
             Debug.Log($"UGame_Remove StartUp");
 
+           
             Init();
         }
 
 
         public static void Init()
         {
-            //UIManager.Init();
+            UIManager.Init();
         }
 
     }
