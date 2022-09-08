@@ -4,19 +4,7 @@
     <TargetFramework>net6.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <IsPublishable>True</IsPublishable>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
   </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <Optimize>False</Optimize>
-  </PropertyGroup>
-
-  <ItemGroup>
-    <Compile Remove="dlls\**" />
-    <EmbeddedResource Remove="dlls\**" />
-    <None Remove="dlls\**" />
-  </ItemGroup>
 
   <ItemGroup>
     <Reference Include="UnityEditor.CoreModule">

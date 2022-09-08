@@ -29,18 +29,17 @@ namespace UGame_Remove
                 return defaultValue;
             }
 
-
-            var data = PlayerPrefs.GetString(key, defaultValue);
+            string decrypt = PlayerPrefs.GetString(key, defaultValue);
 
             try
             {
-                var result = CrypManager.DecryptStr(defaultEncryptKey, data);
+                var result = CrypManager.DecryptStr(defaultEncryptKey, decrypt);
+
                 return result;
             }
             catch (Exception e)
             {
-
-                Debug.LogError($"can not decrypt:{key}, error details:{e.Message}  local data:{data}");
+                Debug.LogErrorFormat("can not decrypt:{0}, error details:{1},local data:{2}", key, e.Message, decrypt);
 
                 return defaultValue;
             }
@@ -51,7 +50,7 @@ namespace UGame_Remove
         {
             PlayerPrefs.DeleteKey(key);
         }
-        
+
 
         public static void DeleteAll()
         {

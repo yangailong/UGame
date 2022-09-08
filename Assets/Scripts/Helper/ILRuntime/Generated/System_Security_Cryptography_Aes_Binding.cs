@@ -14,36 +14,38 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class UnityEngine_WaitForSeconds_Binding
+    unsafe class System_Security_Cryptography_Aes_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             MethodBase method;
             Type[] args;
-            Type type = typeof(UnityEngine.WaitForSeconds);
+            Type type = typeof(System.Security.Cryptography.Aes);
+            args = new Type[]{};
+            method = type.GetMethod("Create", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, Create_0);
 
-            args = new Type[]{typeof(System.Single)};
-            method = type.GetConstructor(flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Ctor_0);
 
         }
 
 
-
-        static StackObject* Ctor_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* Create_0(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Single @seconds = *(float*)&ptr_of_this_method->Value;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 0);
 
 
-            var result_of_this_method = new UnityEngine.WaitForSeconds(@seconds);
+            var result_of_this_method = System.Security.Cryptography.Aes.Create();
 
+            object obj_result_of_this_method = result_of_this_method;
+            if(obj_result_of_this_method is CrossBindingAdaptorType)
+            {    
+                return ILIntepreter.PushObject(__ret, __mStack, ((CrossBindingAdaptorType)obj_result_of_this_method).ILInstance);
+            }
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
+
 
 
     }

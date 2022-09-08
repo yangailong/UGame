@@ -175,11 +175,20 @@ namespace ILRuntime.Runtime.Generated
             if(!isNewObj)
             {
                 __ret--;
-                WriteBackInstance(__domain, __ret, __mStack, ref result_of_this_method);
+                if (ILRuntime.Runtime.Generated.CLRBindings.s_UnityEngine_Vector2_Binding_Binder != null) {
+                    ILRuntime.Runtime.Generated.CLRBindings.s_UnityEngine_Vector2_Binding_Binder.WriteBackValue(__domain, __ret, __mStack, ref result_of_this_method);
+                } else {
+                    WriteBackInstance(__domain, __ret, __mStack, ref result_of_this_method);
+                }
                 return __ret;
             }
 
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+            if (ILRuntime.Runtime.Generated.CLRBindings.s_UnityEngine_Vector2_Binding_Binder != null) {
+                ILRuntime.Runtime.Generated.CLRBindings.s_UnityEngine_Vector2_Binding_Binder.PushValue(ref result_of_this_method, __intp, __ret, __mStack);
+                return __ret + 1;
+            } else {
+                return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+            }
         }
 
 

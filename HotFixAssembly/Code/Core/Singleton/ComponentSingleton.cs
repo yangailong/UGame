@@ -80,7 +80,7 @@ namespace UGame_Remove
         {
             if (Exists)
             {
-                DestroyImmediate(Instance.gameObject);
+                DestroyImmediate(Instance?.gameObject);
                 instance = null;
             }
         }
