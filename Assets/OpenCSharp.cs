@@ -1,5 +1,5 @@
 using UnityEngine;
-  /// <summary> 说明</summary>
+/// <summary> 说明</summary>
 public class OpenCSharp : MonoBehaviour
 {
     private void Awake()
@@ -8,4 +8,5 @@ public class OpenCSharp : MonoBehaviour
     }
 
 }
+
 
