@@ -9,9 +9,6 @@ namespace UGame_Remove
             Debug.Log($"UGame_Remove StartUp");
 
             Init();
-
-            //GameObject.Find("Binder").gameObject.AddComponent<binderTest>();
-
         }
 
 

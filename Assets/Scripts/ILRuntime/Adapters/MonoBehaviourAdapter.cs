@@ -3,42 +3,32 @@ using System;
 using ILRuntime.Runtime.Enviorment;
 using ILRuntime.Runtime.Intepreter;
 using ILRuntime.CLR.Method;
-
+using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
 public class MonoBehaviourAdapter : CrossBindingAdaptor
 {
-    public override Type BaseCLRType
-    {
-        get
-        {
-            return typeof(MonoBehaviour);
-        }
-    }
+    public override Type BaseCLRType => typeof(MonoBehaviour);
 
-    public override Type AdaptorType
-    {
-        get
-        {
-            return typeof(Adaptor);
-        }
-    }
 
-    public override object CreateCLRInstance(ILRuntime.Runtime.Enviorment.AppDomain appdomain, ILTypeInstance instance)
+    public override Type AdaptorType => typeof(Adaptor);
+
+
+    public override object CreateCLRInstance(AppDomain appdomain, ILTypeInstance instance)
     {
         return new Adaptor(appdomain, instance);
     }
+
+
     //为了完整实现MonoBehaviour的所有特性，这个Adapter还得扩展，这里只抛砖引玉，只实现了最常用的Awake, Start和Update
     public class Adaptor : MonoBehaviour, CrossBindingAdaptorType
     {
         ILTypeInstance instance;
-        ILRuntime.Runtime.Enviorment.AppDomain appdomain;
 
-        public Adaptor()
-        {
+        AppDomain appdomain;
 
-        }
+        public Adaptor() { }
 
-        public Adaptor(ILRuntime.Runtime.Enviorment.AppDomain appdomain, ILTypeInstance instance)
+        public Adaptor(AppDomain appdomain, ILTypeInstance instance)
         {
             this.appdomain = appdomain;
             this.instance = instance;
@@ -46,7 +36,9 @@ public class MonoBehaviourAdapter : CrossBindingAdaptor
 
         public ILTypeInstance ILInstance { get { return instance; } set { instance = value; } }
 
-        public ILRuntime.Runtime.Enviorment.AppDomain AppDomain { get { return appdomain; } set { appdomain = value; } }
+
+        public AppDomain AppDomain { get { return appdomain; } set { appdomain = value; } }
+
 
         IMethod mAwakeMethod;
         bool mAwakeMethodGot;
@@ -109,7 +101,9 @@ public class MonoBehaviourAdapter : CrossBindingAdaptor
                 return instance.ToString();
             }
             else
+            {
                 return instance.Type.FullName;
+            }
         }
     }
 }

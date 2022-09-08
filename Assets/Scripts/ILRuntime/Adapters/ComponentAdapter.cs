@@ -3,7 +3,6 @@ using ILRuntime.Runtime.Enviorment;
 using ILRuntime.Runtime.Intepreter;
 using System;
 using UnityEngine;
-using static CoroutineAdapter;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
 public class ComponentAdapter : CrossBindingAdaptor

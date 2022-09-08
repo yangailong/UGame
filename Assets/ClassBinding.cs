@@ -1,6 +1,3 @@
-using System;
-using System.Net;
-using UGame_Remove;
 using UnityEngine;
 public class ClassBinding : MonoBehaviour
 {
@@ -16,11 +13,13 @@ public class ClassBinding : MonoBehaviour
        // Debug.Log($"name:{type.Name}");
 
         //gameObject.AddComponent(type);
-
-
     }
 
 
+    private void Start()
+    {
+        
+    }
 
 
 }

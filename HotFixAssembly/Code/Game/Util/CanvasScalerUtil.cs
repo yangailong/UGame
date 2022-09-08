@@ -22,15 +22,18 @@ namespace UGame_Remove
             oldScreenRect = ReferenceResolution;
         }
 
-        IEnumerator Start()
-        {
-            while (true)
-            {
-                yield return new WaitForSeconds(m_Frequency);
-                Refresh();
-            }
+        //IEnumerator Start()
+        //{
+        //    while (true)
+        //    {
+        //        yield return new WaitForSeconds(m_Frequency);
+        //        Refresh();
+        //    }
 
-        }
+        //}
+
+
+        
 
 
         private void Refresh()

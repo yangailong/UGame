@@ -1,10 +1,6 @@
 using UnityEngine;
 using System.IO;
-using UGame_Remove;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
-using Unity.VisualScripting;
-using System;
-
 namespace UGame_Local
 {
     public class HotFixAssembly
@@ -21,11 +17,6 @@ namespace UGame_Local
             Load();
             InitializeILRuntime();
             OnHotFixLoaded();
-
-            var type =appdomain.GetType("UGame_Remove.binderTest");
-
-            Debug.LogError($"Name:{type.Name}");
-            GameObject.Find("Binder").AddComponent(type.ReflectionType);
         }
 
 

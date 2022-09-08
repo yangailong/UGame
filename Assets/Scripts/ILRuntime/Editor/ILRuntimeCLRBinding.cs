@@ -1,9 +1,10 @@
 ﻿#if UNITY_EDITOR
 using UnityEditor;
 using System.IO;
-using ILRuntime.Runtime.Enviorment;
 using ILRuntime.Runtime.CLRBinding;
 using UGame_Local;
+using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
+
 [System.Reflection.Obfuscation(Exclude = true)]
 public class ILRuntimeCLRBinding
 {
@@ -28,7 +29,14 @@ public class ILRuntimeCLRBinding
     static void InitILRuntime(AppDomain domain)
     {
         //这里需要注册所有热更DLL中用到的跨域继承Adapter，否则无法正确抓取引用
+
+        RegisterCLRMethodRedirectionImpl.Instance.Register(domain);
         RegisterCrossBindingAdaptorImpl.Instance.Register(domain);
+        RegisterDelegateConvertorImpl.Instance.Register(domain);
+        RegisterFunctionDelegateImpl.Instance.Register(domain);
+        RegisterMethodDelegateImpl.Instance.Register(domain);
+        RegisterValueTypeBinderImpl.Instance.Register(domain);
+        RegisterLitJsonImpl.Instance.Register(domain);
     }
 }
 #endif

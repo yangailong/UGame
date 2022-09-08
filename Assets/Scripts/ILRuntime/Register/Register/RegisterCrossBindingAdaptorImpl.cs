@@ -19,6 +19,7 @@ namespace UGame_Local
                 object o = Activator.CreateInstance(type);
                 CrossBindingAdaptor adaptor = o as CrossBindingAdaptor;
                 if (adaptor == null) continue;
+                Debug.Log($"name:{type.Name}");
                 appDomain.RegisterCrossBindingAdaptor(adaptor);
             }
         }
