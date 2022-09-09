@@ -5,14 +5,14 @@ namespace UGame_Local
 {
     public class HotFixAssembly
     {
-        private AppDomain appdomain = null;
+        public AppDomain appDomain = null;
 
         public HotFixAssembly()
         {
-            appdomain = new AppDomain();
+            appDomain = new AppDomain();
         }
 
-        public void Start()
+        public void Run()
         {
             Load();
             InitializeILRuntime();
@@ -35,7 +35,7 @@ namespace UGame_Local
 
             try
             {
-                appdomain.LoadAssembly(fs, p, new ILRuntime.Mono.Cecil.Pdb.PdbReaderProvider());
+                appDomain.LoadAssembly(fs, p, new ILRuntime.Mono.Cecil.Pdb.PdbReaderProvider());
             }
             catch
             {
@@ -49,21 +49,21 @@ namespace UGame_Local
 #if DEBUG && (UNITY_EDITOR || UNITY_ANDROID || UNITY_IPHONE)
 
             //由于Unity的Profiler接口只允许在主线程使用，为了避免出异常，需要告诉ILRuntime主线程的线程ID才能正确将函数运行耗时报告给Profiler
-            appdomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
-            appdomain.DebugService.StartDebugService(56000);
+            appDomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
+            appDomain.DebugService.StartDebugService(56000);
 #endif
-            RegisterCLRMethodRedirectionImpl.Instance.Register(appdomain);
-            RegisterCrossBindingAdaptorImpl.Instance.Register(appdomain);
-            RegisterDelegateConvertorImpl.Instance.Register(appdomain);
-            RegisterFunctionDelegateImpl.Instance.Register(appdomain);
-            RegisterMethodDelegateImpl.Instance.Register(appdomain);
-            RegisterValueTypeBinderImpl.Instance.Register(appdomain);
-            RegisterLitJsonImpl.Instance.Register(appdomain);
+            RegisterCLRMethodRedirectionImpl.Instance.Register(appDomain);
+            RegisterCrossBindingAdaptorImpl.Instance.Register(appDomain);
+            RegisterDelegateConvertorImpl.Instance.Register(appDomain);
+            RegisterFunctionDelegateImpl.Instance.Register(appDomain);
+            RegisterMethodDelegateImpl.Instance.Register(appDomain);
+            RegisterValueTypeBinderImpl.Instance.Register(appDomain);
+            RegisterLitJsonImpl.Instance.Register(appDomain);
         }
 
         private void OnHotFixLoaded()
         {
-            appdomain.Invoke("UGame_Remove.RunGame", "StartUp", null, null);
+            appDomain.Invoke("UGame_Remove.RunGame", "StartUp", null, null);
         }
 
 

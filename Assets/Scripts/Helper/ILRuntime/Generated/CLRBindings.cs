@@ -25,20 +25,30 @@ namespace ILRuntime.Runtime.Generated
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
             System_Byte_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_String_Binding.Register(app);
+            System_String_Binding.Register(app);
+            UnityEngine_Debug_Binding.Register(app);
+            System_Collections_Generic_List_1_String_Binding.Register(app);
+            System_Collections_IEnumerable_Binding.Register(app);
+            System_Collections_IEnumerator_Binding.Register(app);
+            System_IDisposable_Binding.Register(app);
+            System_Type_Binding.Register(app);
+            System_Reflection_MemberInfo_Binding.Register(app);
+            UnityEngine_Object_Binding.Register(app);
+            UnityEngine_TextAsset_Binding.Register(app);
+            System_Action_1_Boolean_Binding.Register(app);
+            System_Int32_Binding.Register(app);
             System_Text_Encoding_Binding.Register(app);
             System_Security_Cryptography_Aes_Binding.Register(app);
             System_Security_Cryptography_SymmetricAlgorithm_Binding.Register(app);
             System_Security_Cryptography_ICryptoTransform_Binding.Register(app);
             System_Convert_Binding.Register(app);
-            UnityEngine_Debug_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Enum_ILTypeInstance_Binding.Register(app);
             System_Object_Binding.Register(app);
             UnityEngine_PlayerPrefs_Binding.Register(app);
-            System_String_Binding.Register(app);
             System_Exception_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MonoBehaviourAdapter_Binding_Adaptor_Binding.Register(app);
             UnityEngine_Resources_Binding.Register(app);
-            UnityEngine_Object_Binding.Register(app);
             UnityEngine_GameObject_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
             UnityEngine_UI_CanvasScaler_Binding.Register(app);

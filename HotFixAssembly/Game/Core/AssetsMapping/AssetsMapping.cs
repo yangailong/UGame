@@ -6,12 +6,13 @@ namespace UGame_Remove
     public static class AssetsMapping
     {
         private static readonly string needListenerAssetsRootPath = "AddressableAssets/Remote";
-        private static readonly string creatPath = $"AssetsMapping.txt";
+        private static readonly string creatPath = $"{typeof(AssetsMapping).Name}.txt";
         private static readonly char namePathSplit = '	';
 
 
         /// <summary>资源映射数据  key:资源名    value:资源路径 </summary>
         private static Dictionary<string, string> mapping = new Dictionary<string, string>();
+
         public static Dictionary<string, string> Mapping => mapping;
 
 
@@ -23,9 +24,9 @@ namespace UGame_Remove
                 Debug.LogError($"AssetsMapping can't find ->{assetsName}<-");
             }
 
-            path = $"Assets/{needListenerAssetsRootPath}/{path.TrimStart().TrimEnd()}";
+            path = $"Assets/{needListenerAssetsRootPath}/{path}";
 
-            return path.Trim();
+            return path?.Trim();
         }
 
 
@@ -60,6 +61,7 @@ namespace UGame_Remove
         private static void LoadAssetMappingAsync(Action<bool> callback)
         {
             string path = $"Assets/{needListenerAssetsRootPath}/{creatPath}";
+
             ResourceManager.LoadAssetMappingAsync<TextAsset>(path, o =>
             {
                 if (o == null || string.IsNullOrEmpty(o.text))
@@ -75,10 +77,13 @@ namespace UGame_Remove
                     string[] lineData = line.Split(namePathSplit);
                     mapping.Add(lineData[0], lineData[1]);
                 }
-                Debug.Log($"mapping table count: {mapping.Count}");
+
+                Debug.Log("Mapping table count:"+ mapping.Count);
+
                 callback?.Invoke(true);
             });
         }
+
 
     }
 }

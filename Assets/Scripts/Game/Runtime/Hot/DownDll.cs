@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 
@@ -8,7 +6,6 @@ public class DownDll
     public const string DllPath = "AddressableAssets/Remote_UnMapping/Dll/HotFixAssembly.dll";
 
     public const string PDBPath = "AddressableAssets/Remote_UnMapping/Dll/HotFixAssembly.pdb";
-
 
     public static byte[] PDBData()
     {

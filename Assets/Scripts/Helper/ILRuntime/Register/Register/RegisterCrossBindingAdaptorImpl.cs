@@ -11,7 +11,7 @@ namespace UGame_Local
     {
         public void Register(AppDomain appDomain)
         {
-            Assembly assembly = typeof(Main).Assembly;
+            Assembly assembly = typeof(AppMain).Assembly;
             var crossBindingAsaptor = assembly.GetTypes().ToList().FindAll(t => t.IsSubclassOf(typeof(CrossBindingAdaptor)));
 
             foreach (var type in crossBindingAsaptor)
@@ -19,7 +19,7 @@ namespace UGame_Local
                 object o = Activator.CreateInstance(type);
                 CrossBindingAdaptor adaptor = o as CrossBindingAdaptor;
                 if (adaptor == null) continue;
-                Debug.Log($"name:{type.Name}");
+                //Debug.Log($"name:{type.Name}");
                 appDomain.RegisterCrossBindingAdaptor(adaptor);
             }
         }
