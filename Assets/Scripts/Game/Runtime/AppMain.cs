@@ -6,7 +6,6 @@ namespace UGame_Local
     {
         public static HotFixAssembly hotFixAssembly = new HotFixAssembly();
 
-
         private void Awake()
         {
             hotFixAssembly.Run();
