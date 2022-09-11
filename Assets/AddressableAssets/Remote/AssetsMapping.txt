@@ -1,4 +1,5 @@
 demo	Prefabs/demo.prefab
+Login	Scenes/Login.unity
 Main	Scenes/Main.unity
 CfgRemoteLang	ScriptableObject/CfgRemoteLang.asset
 UI_demo	UI/UI_demo.jpg

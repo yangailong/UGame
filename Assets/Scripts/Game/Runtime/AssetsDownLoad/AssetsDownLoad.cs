@@ -6,7 +6,7 @@ using UnityEngine.AddressableAssets;
 using UnityEngine.AddressableAssets.ResourceLocators;
 using UnityEngine.ResourceManagement.AsyncOperations;
 
-namespace AbeatsGame
+namespace UGame_Local
 {
     /// <summary>
     /// 热更资源下载

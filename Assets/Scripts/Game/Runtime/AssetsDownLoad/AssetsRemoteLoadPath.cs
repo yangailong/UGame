@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace AbeatsGame
+namespace UGame_Local
 {
 
     /// <summary>资源下载路径</summary>

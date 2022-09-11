@@ -8,9 +8,10 @@ namespace UGame_Local
 
         private void Awake()
         {
+            DontDestroyOnLoad(gameObject);
             hotFixAssembly.Run();
         }
 
-      
+
     }
 }
