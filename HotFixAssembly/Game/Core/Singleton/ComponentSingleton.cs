@@ -6,13 +6,13 @@ namespace UGame_Remove
     public class ComponentSingleton<T> : MonoBehaviour where T : ComponentSingleton<T>
     {
 
-        private static T? instance = null;
+        private static T instance = null;
 
 
         public static bool Exists => instance != null;
 
 
-        public static T? Instance
+        public static T Instance
         {
             get
             {
@@ -25,7 +25,7 @@ namespace UGame_Remove
         }
 
 
-        private static T? FindInstance()
+        private static T FindInstance()
         {
 
 #if UNITY_EDITOR
@@ -46,7 +46,7 @@ namespace UGame_Remove
         }
 
 
-        private static T? CreateNewSingleton()
+        private static T CreateNewSingleton()
         {
             var go = new GameObject($"[{typeof(T).Name}]");
 

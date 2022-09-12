@@ -1,5 +1,6 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.AddressableAssets;
 
 namespace UGame_Remove
 {
@@ -9,27 +10,21 @@ namespace UGame_Remove
         {
             Debug.Log($"UGame_Remove StartUp");
 
-            Init();
+            EnterPrepare();
         }
 
-        public static void Init()
+
+        private static void EnterPrepare()
         {
-            UIManager.Init();
+            //ResourceManager.LoadAssetMappingAsync<TextAsset>($"{AssetsMapping.needListenerAssetsRootPath}", null);
+            //Addressables.LoadAssetAsync<GameObject>("");
+
+
         }
+
+
     }
 
-    public class Demo : MonoBehaviour
-    {
-        //[SerializeField]
-        private string tip = "kanwoya ";
-        void Awake()
-        {
-            Debug.Log("Awake");
-        }
 
-        void Start()
-        {
-            Debug.Log("Start");
-        }
-    }
+
 }
