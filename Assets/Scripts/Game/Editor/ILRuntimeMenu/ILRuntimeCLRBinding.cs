@@ -30,8 +30,8 @@ public class ILRuntimeCLRBinding
     {
         //这里需要注册所有热更DLL中用到的跨域继承Adapter，否则无法正确抓取引用
 
-        RegisterCLRMethodRedirectionImpl.Instance.Register(domain);
         RegisterCrossBindingAdaptorImpl.Instance.Register(domain);
+        RegisterCLRMethodRedirectionImpl.Instance.Register(domain);
         RegisterDelegateConvertorImpl.Instance.Register(domain);
         RegisterFunctionDelegateImpl.Instance.Register(domain);
         RegisterMethodDelegateImpl.Instance.Register(domain);

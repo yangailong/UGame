@@ -1,6 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.AddressableAssets;
 
 namespace UGame_Remove
 {
@@ -19,9 +17,18 @@ namespace UGame_Remove
             //ResourceManager.LoadAssetMappingAsync<TextAsset>($"{AssetsMapping.needListenerAssetsRootPath}", null);
             //Addressables.LoadAssetAsync<GameObject>("");
 
+            UGame_Local.MonoBehaviourRuntime.Instance.StartCoroutine(Coroutine());
+
 
         }
 
+
+        static System.Collections.IEnumerator Coroutine()
+        {
+            Debug.Log("开始协程,t=" + Time.time);
+            yield return new WaitForSeconds(3);
+            Debug.Log("等待了3秒,t=" + Time.time);
+        }
 
     }
 

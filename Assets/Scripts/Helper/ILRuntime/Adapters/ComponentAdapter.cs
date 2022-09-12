@@ -1,7 +1,7 @@
-﻿using ILRuntime.CLR.Method;
+﻿using System;
+using ILRuntime.CLR.Method;
 using ILRuntime.Runtime.Enviorment;
 using ILRuntime.Runtime.Intepreter;
-using System;
 using UnityEngine;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
@@ -12,7 +12,7 @@ public class ComponentAdapter : CrossBindingAdaptor
 
     public override Type AdaptorType => typeof(Adaptor);
 
-    public override object CreateCLRInstance(ILRuntime.Runtime.Enviorment.AppDomain appdomain, ILTypeInstance instance)
+    public override object CreateCLRInstance(AppDomain appdomain, ILTypeInstance instance)
     {
         throw new NotImplementedException();
     }
