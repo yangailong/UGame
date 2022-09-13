@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UGame_Remove
@@ -17,9 +19,9 @@ namespace UGame_Remove
 
 
         /// <summary>获取assetsName路径 </summary>
-        public static string? LoadPath(string assetsName)
+        public static string LoadPath(string assetsName)
         {
-            if (!mapping.TryGetValue(assetsName, out string? path))
+            if (!mapping.TryGetValue(assetsName, out string path))
             {
                 Debug.LogError($"AssetsMapping can't find ->{assetsName}<-");
             }
@@ -33,7 +35,7 @@ namespace UGame_Remove
         /// <summary>获取多个assetsName路径 </summary>
         public static IEnumerable LoadPaths(IEnumerable assetsName)
         {
-            List<string?> paths = new List<string?>();
+            List<string> paths = new List<string>();
 
             foreach (string name in assetsName)
             {

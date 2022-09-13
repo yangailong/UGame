@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace UGame_Remove
 {
@@ -34,7 +36,7 @@ namespace UGame_Remove
         /// <param name="handler">回调方法</param>
         public static void RemoveEvent(Enum key, EventHandler handler)
         {
-            if (!m_EnumEventDic.TryGetValue(key, out EventHandler? eventHandler))
+            if (!m_EnumEventDic.TryGetValue(key, out EventHandler eventHandler))
             {
                 eventHandler -= handler;
             }

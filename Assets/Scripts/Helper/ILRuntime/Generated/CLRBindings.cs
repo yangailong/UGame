@@ -24,7 +24,8 @@ namespace ILRuntime.Runtime.Generated
         /// </summary>
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
-            System_Byte_Binding.Register(app);
+            UnityEngine_AddressableAssets_Addressables_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_Object_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_String_Binding.Register(app);
             System_String_Binding.Register(app);
             UnityEngine_Debug_Binding.Register(app);
@@ -37,6 +38,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Object_Binding.Register(app);
             UnityEngine_TextAsset_Binding.Register(app);
             System_Action_1_Boolean_Binding.Register(app);
+            System_Char_Binding.Register(app);
             System_Int32_Binding.Register(app);
             System_Text_Encoding_Binding.Register(app);
             System_Security_Cryptography_Aes_Binding.Register(app);

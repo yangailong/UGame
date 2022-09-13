@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace UGame_Remove
 {
@@ -18,15 +19,15 @@ namespace UGame_Remove
         private static Dictionary<string, UIPanelBase> UIPanelDic = new Dictionary<string, UIPanelBase>();
 
 
-        public static T? Open<T>(UICallback? callback = null, params object[] param) where T : UIPanelBase
+        public static T Open<T>(UICallback callback = null, params object[] param) where T : UIPanelBase
         {
             return Open(typeof(T).Name, callback, param) as T;
         }
 
 
-        public static UIPanelBase Open(string name, UICallback? callback = null, params object[] param)
+        public static UIPanelBase Open(string name, UICallback callback = null, params object[] param)
         {
-            UIPanelBase? panel = null;
+            UIPanelBase panel = null;
 
             if (!UIPanelDic.TryGetValue(name, out panel))
             {
@@ -40,7 +41,7 @@ namespace UGame_Remove
         }
 
 
-        public static void Close(string name, bool isPlayAnim = true, UICallback? callback = null, params object[] param)
+        public static void Close(string name, bool isPlayAnim = true, UICallback callback = null, params object[] param)
         {
             if (!UIPanelDic.ContainsKey(name))
             {
@@ -53,7 +54,7 @@ namespace UGame_Remove
         }
 
 
-        public static void Close(UIPanelBase panel, bool isPlayAnim = true, UICallback? callback = null, params object[] param)
+        public static void Close(UIPanelBase panel, bool isPlayAnim = true, UICallback callback = null, params object[] param)
         {
             if (isPlayAnim)
             {
@@ -77,7 +78,7 @@ namespace UGame_Remove
 
         private static UIPanelBase CreatUI(string name)
         {
-            GameObject? go = null;//TODO...加载出来
+            GameObject go = null;//TODO...加载出来
 
             UIPanelBase panel = Instantiate(go).GetComponent<UIPanelBase>();
             panel.OnUIAwake();

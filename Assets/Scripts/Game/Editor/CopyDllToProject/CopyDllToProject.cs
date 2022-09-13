@@ -10,7 +10,7 @@ public class CopyDllToProject : Editor
         string dllFullName = "HotFixAssembly.dll";
         string pdbFullName = "HotFixAssembly.pdb";
 
-        string originPath = $"{Application.dataPath}/../HotFixAssembly/bin/Debug/net6.0";
+        string originPath = $"{Application.dataPath}/../HotFixAssembly/bin/Debug";
         string writePath = $"{Application.dataPath}/AddressableAssets/Remote_UnMapping/Dll/";
 
         if (!Directory.Exists(originPath))

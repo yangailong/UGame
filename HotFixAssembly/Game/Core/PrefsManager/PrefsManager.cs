@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 namespace UGame_Remove
 {
@@ -21,7 +22,7 @@ namespace UGame_Remove
         }
 
 
-        public static string? GetString(string key, string? defaultValue = null)
+        public static string GetString(string key, string defaultValue = null)
         {
             if (!PlayerPrefs.HasKey(key))
             {

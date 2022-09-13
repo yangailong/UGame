@@ -37,10 +37,10 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.String)};
             method = type.GetMethod("IsNullOrEmpty", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, IsNullOrEmpty_4);
-            args = new Type[]{typeof(System.Char)};
+            args = new Type[]{typeof(System.Char[])};
             method = type.GetMethod("TrimEnd", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, TrimEnd_5);
-            args = new Type[]{typeof(System.Char), typeof(System.StringSplitOptions)};
+            args = new Type[]{typeof(System.Char[])};
             method = type.GetMethod("Split", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Split_6);
 
@@ -160,13 +160,14 @@ namespace ILRuntime.Runtime.Generated
             StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Char @trimChar = (char)ptr_of_this_method->Value;
+            System.Char[] @trimChars = (System.Char[])typeof(System.Char[]).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
             System.String instance_of_this_method = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
-            var result_of_this_method = instance_of_this_method.TrimEnd(@trimChar);
+            var result_of_this_method = instance_of_this_method.TrimEnd(@trimChars);
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
@@ -175,20 +176,17 @@ namespace ILRuntime.Runtime.Generated
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 3);
+            StackObject* __ret = ILIntepreter.Minus(__esp, 2);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.StringSplitOptions @options = (System.StringSplitOptions)typeof(System.StringSplitOptions).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)20);
+            System.Char[] @separator = (System.Char[])typeof(System.Char[]).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
             ptr_of_this_method = ILIntepreter.Minus(__esp, 2);
-            System.Char @separator = (char)ptr_of_this_method->Value;
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 3);
             System.String instance_of_this_method = (System.String)typeof(System.String).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
-            var result_of_this_method = instance_of_this_method.Split(@separator, @options);
+            var result_of_this_method = instance_of_this_method.Split(@separator);
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }

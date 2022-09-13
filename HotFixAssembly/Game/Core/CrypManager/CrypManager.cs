@@ -1,4 +1,5 @@
-﻿using System.Security.Cryptography;
+﻿using System;
+using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
@@ -14,7 +15,7 @@ namespace UGame_Remove
         /// <param name="key"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static string? EncryptStr(string key, string value)
+        public static string EncryptStr(string key, string value)
         {
             try
             {
@@ -46,7 +47,7 @@ namespace UGame_Remove
         /// <param name="key"></param>
         /// <returns></returns>
         /// <exception cref="Exception"></exception>
-        public static string? DecryptStr(string key, string value)
+        public static string DecryptStr(string key, string value)
         {
             try
             {
@@ -74,7 +75,7 @@ namespace UGame_Remove
         /// <param name="toEncryptArray">明文</param>
         /// <param name="key">密钥</param>
         /// <returns>加密后base64编码的密文</returns>
-        public static byte[]? AesEncrypt(string key, byte[] toEncryptArray)
+        public static byte[] AesEncrypt(string key, byte[] toEncryptArray)
         {
             try
             {
@@ -104,7 +105,7 @@ namespace UGame_Remove
         /// <param name="toDecryptArray">密文</param>
         /// <param name="key">密钥</param>
         /// <returns>明文</returns>
-        public static byte[]? AesDecrypt(string key, byte[] toDecryptArray)
+        public static byte[] AesDecrypt(string key, byte[] toDecryptArray)
         {
             try
             {
@@ -133,7 +134,7 @@ namespace UGame_Remove
         /// <param name="toEncryptArray">明文</param>
         /// <param name="key">密钥</param>
         /// <returns>加密后base64编码的密文</returns>
-        public static byte[]? AesEncryptWithNoPadding(string key, byte[] toEncryptArray)
+        public static byte[] AesEncryptWithNoPadding(string key, byte[] toEncryptArray)
         {
             try
             {
@@ -163,7 +164,7 @@ namespace UGame_Remove
         /// <param name="toDecryptArray">密文</param>
         /// <param name="key">密钥</param>
         /// <returns>明文</returns>
-        public static byte[]? AesDecryptWithNoPadding(string key, byte[] toDecryptArray)
+        public static byte[] AesDecryptWithNoPadding(string key, byte[] toDecryptArray)
         {
             try
             {

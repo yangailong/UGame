@@ -1,12 +1,59 @@
-<Project Sdk="Microsoft.NET.Sdk">
-
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <Nullable>enable</Nullable>
-    <AllowUnsafeBlocks>True</AllowUnsafeBlocks>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{CE8236A6-2245-4E93-9D59-9B96D87D07DE}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>UGame_Remove</RootNamespace>
+    <AssemblyName>HotFixAssembly</AssemblyName>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <Deterministic>true</Deterministic>
   </PropertyGroup>
-
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Game\Core\AssetsLoad\LoadAddressImpl.cs" />
+    <Compile Include="Game\Core\AssetsLoad\LoadAssetsImpl.cs" />
+    <Compile Include="Game\Core\AssetsLoad\ResourceManager.cs" />
+    <Compile Include="Game\Core\AssetsMapping\AssetsMapping.cs" />
+    <Compile Include="Game\Core\CrypManager\CrypManager.cs" />
+    <Compile Include="Game\Core\Event\GlobalEvent.cs" />
+    <Compile Include="Game\Core\PrefsManager\PrefsManager.cs" />
+    <Compile Include="Game\Core\Singleton\ComponentSingleton.cs" />
+    <Compile Include="Game\Core\Singleton\Singleton.cs" />
+    <Compile Include="Game\Core\UI\UIConst.cs" />
+    <Compile Include="Game\Core\UI\UICycle.cs" />
+    <Compile Include="Game\Core\UI\UIManager.cs" />
+    <Compile Include="Game\Core\UI\UIPanelBase.cs" />
+    <Compile Include="Game\Runtime\EventKey\EventEnum.cs" />
+    <Compile Include="Game\Runtime\Utility\CanvasScalerUtil.cs" />
+    <Compile Include="RunGame.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp">
       <HintPath>..\Library\ScriptAssemblies\Assembly-CSharp.dll</HintPath>
@@ -33,5 +80,5 @@
       <HintPath>dlls\UnityEngine.UIModule.dll</HintPath>
     </Reference>
   </ItemGroup>
-
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
