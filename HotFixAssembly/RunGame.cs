@@ -1,4 +1,4 @@
-﻿
+﻿using UGame_Local;
 using UnityEngine;
 
 namespace UGame_Remove
@@ -14,10 +14,24 @@ namespace UGame_Remove
 
         private static void EnterPrepare()
         {
-            //ResourceManager.LoadAssetMappingAsync<TextAsset>($"{AssetsMapping.needListenerAssetsRootPath}", null);
-            //Addressables.LoadAssetAsync<GameObject>("");
+            ResourceManager.LoadAssetAsync<TextAsset>($"Assets/{AssetsMappingConst.needListenerAssetsRootPath}/{AssetsMappingConst.creatPath}", text =>
+            {
+                if (text == null || string.IsNullOrEmpty(text.text))
+                {
+                    Debug.LogError($"资源映射表下载失败...无法进入游戏");
+                    return;
+                }
 
+                AssetsMapping.Initialize(text);
+                ResourceManager.LoadSceneAsync("Login").Completed += p =>
+                {
+                    UIManager.Init();
+                };
+            });
+
+            
         }
+
 
 
 

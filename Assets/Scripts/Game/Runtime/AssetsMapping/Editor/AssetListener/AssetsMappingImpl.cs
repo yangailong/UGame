@@ -4,139 +4,142 @@ using System.IO;
 using System.Text;
 using UnityEditor;
 using UnityEngine;
+using UGame_Local;
 
-public static class AssetsMappingImpl
+namespace UGame_Local_Editor
 {
-    public static bool IsExistAssetsRootPath()
+    public static class AssetsMappingImpl
     {
-        return Directory.Exists($"{Application.dataPath}/{AssetsMappingConst.needListenerAssetsRootPath}");
-    }
-
-    public static bool InListenerAssetsRootPath(string path)
-    {
-        return path.Contains(AssetsMappingConst.needListenerAssetsRootPath);
-    }
-
-    
-    public static void Creat()
-    {
-        Dictionary<string, string> mapping = SearchAssets();
-
-        string content = ParseMappingData(mapping);
-
-        string path = $"{Application.dataPath}/{AssetsMappingConst.needListenerAssetsRootPath}/{AssetsMappingConst.creatPath}";
-
-        WriteStringByFile(path, content);
-
-        AssetDatabase.Refresh();
-       
-    }
-
-    private static string ParseMappingData(Dictionary<string, string> mapping)
-    {
-        string content = string.Empty;
-        foreach (var item in mapping)
+        public static bool IsExistAssetsRootPath()
         {
-            content += $"{item.Key}{AssetsMappingConst.namePathSplit}{item.Value}\n";
+            return Directory.Exists($"{Application.dataPath}/{AssetsMappingConst.needListenerAssetsRootPath}");
         }
 
-        content.TrimEnd('\n');
-
-        return content;
-    }
-
-    private static void WriteStringByFile(string path, string content)
-    {
-        byte[] bytes = Encoding.GetEncoding("UTF-8").GetBytes(content);
-
-        try
+        public static bool InListenerAssetsRootPath(string path)
         {
-            string pathDir = Path.GetDirectoryName(path);
-            if (!Directory.Exists(pathDir))
+            return path.Contains(AssetsMappingConst.needListenerAssetsRootPath);
+        }
+
+
+        public static void Creat()
+        {
+            Dictionary<string, string> mapping = SearchAssets();
+
+            string content = ParseMappingData(mapping);
+
+            string path = $"{Application.dataPath}/{AssetsMappingConst.needListenerAssetsRootPath}/{AssetsMappingConst.creatPath}";
+
+            WriteStringByFile(path, content);
+
+            AssetDatabase.Refresh();
+
+        }
+
+        private static string ParseMappingData(Dictionary<string, string> mapping)
+        {
+            string content = string.Empty;
+            foreach (var item in mapping)
             {
-                Directory.CreateDirectory(pathDir);
+                content += $"{item.Key}{AssetsMappingConst.namePathSplit}{item.Value}\n";
             }
 
-            File.WriteAllBytes(path, bytes);
-        }
-        catch (Exception e)
-        {
-            Debug.LogError($"File Create Fail! \n{e.Message}");
-        }
-    }
+            content.TrimEnd('\n');
 
-
-    private static int direIndex = 0;
-
-    private static Dictionary<string, string> SearchAssets()
-    {
-        string searchPath = $"{Application.dataPath}/{AssetsMappingConst.needListenerAssetsRootPath}";
-
-        direIndex = searchPath.LastIndexOf(AssetsMappingConst.needListenerAssetsRootPath);
-
-        direIndex += AssetsMappingConst.needListenerAssetsRootPath.Length + 1;
-
-        Dictionary<string, string> mapping = new Dictionary<string, string>();
-
-        RecursionSearchAssets(searchPath, mapping);
-
-        return mapping;
-    }
-
-    private static void RecursionSearchAssets(string path, Dictionary<string, string> mapping)
-    {
-        if (!File.Exists(path))
-        {
-            Directory.CreateDirectory(path);
+            return content;
         }
 
-        string[] dires = Directory.GetDirectories(path);
-
-        for (int i = 0; i < dires.Length; i++)
+        private static void WriteStringByFile(string path, string content)
         {
-            RecursionSearchAssets(dires[i], mapping);
-        }
+            byte[] bytes = Encoding.GetEncoding("UTF-8").GetBytes(content);
 
-        string[] files = Directory.GetFiles(path);
-
-        for (int i = 0; i < files.Length; i++)
-        {
-            string fileName = RemoveExpandName(new FileInfo(files[i]).Name);
-            string relativePath = files[i].Substring(direIndex);
-
-
-            if (relativePath.EndsWith(".meta") || relativePath.EndsWith(".DS_Store")) continue;
-
-            relativePath = relativePath.Replace("\\", "/");
-
-            if (fileName.EndsWith(" "))
+            try
             {
-                Debug.LogError($"文件名尾部中有空格！ ->{fileName}<-");
-                continue;
+                string pathDir = Path.GetDirectoryName(path);
+                if (!Directory.Exists(pathDir))
+                {
+                    Directory.CreateDirectory(pathDir);
+                }
+
+                File.WriteAllBytes(path, bytes);
+            }
+            catch (Exception e)
+            {
+                Debug.LogError($"File Create Fail! \n{e.Message}");
+            }
+        }
+
+
+        private static int direIndex = 0;
+
+        private static Dictionary<string, string> SearchAssets()
+        {
+            string searchPath = $"{Application.dataPath}/{AssetsMappingConst.needListenerAssetsRootPath}";
+
+            direIndex = searchPath.LastIndexOf(AssetsMappingConst.needListenerAssetsRootPath);
+
+            direIndex += AssetsMappingConst.needListenerAssetsRootPath.Length + 1;
+
+            Dictionary<string, string> mapping = new Dictionary<string, string>();
+
+            RecursionSearchAssets(searchPath, mapping);
+
+            return mapping;
+        }
+
+        private static void RecursionSearchAssets(string path, Dictionary<string, string> mapping)
+        {
+            if (!File.Exists(path))
+            {
+                Directory.CreateDirectory(path);
             }
 
-            if (!mapping.ContainsKey(fileName))
+            string[] dires = Directory.GetDirectories(path);
+
+            for (int i = 0; i < dires.Length; i++)
             {
-                mapping.Add(fileName, relativePath);
-            }
-            else
-            {
-                Debug.LogError($"存在重名文件！文件名:   {fileName}             path:   {relativePath}");
+                RecursionSearchAssets(dires[i], mapping);
             }
 
+            string[] files = Directory.GetFiles(path);
+
+            for (int i = 0; i < files.Length; i++)
+            {
+                string fileName = RemoveExpandName(new FileInfo(files[i]).Name);
+                string relativePath = files[i].Substring(direIndex);
+
+
+                if (relativePath.EndsWith(".meta") || relativePath.EndsWith(".DS_Store")) continue;
+
+                relativePath = relativePath.Replace("\\", "/");
+
+                if (fileName.EndsWith(" "))
+                {
+                    Debug.LogError($"文件名尾部中有空格！ ->{fileName}<-");
+                    continue;
+                }
+
+                if (!mapping.ContainsKey(fileName))
+                {
+                    mapping.Add(fileName, relativePath);
+                }
+                else
+                {
+                    Debug.LogError($"存在重名文件！文件名:   {fileName}             path:   {relativePath}");
+                }
+
+            }
         }
-    }
 
-    private static string RemoveExpandName(string name)
-    {
-        if (Path.HasExtension(name))
+        private static string RemoveExpandName(string name)
         {
-            name = Path.ChangeExtension(name, null);
+            if (Path.HasExtension(name))
+            {
+                name = Path.ChangeExtension(name, null);
+            }
+            return name;
         }
-        return name;
+
+
     }
-
-
 }
-
 

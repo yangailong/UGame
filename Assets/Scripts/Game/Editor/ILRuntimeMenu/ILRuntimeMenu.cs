@@ -2,31 +2,34 @@
 using UnityEditor;
 using UnityEngine;
 
-[System.Reflection.Obfuscation(Exclude = true)]
-public class ILRuntimeMenu
+namespace UGame_Local_Editor
 {
-   [MenuItem("Tools/ILRuntime/安装VS调试插件")]
-    static void InstallDebugger()
-    {   
-        EditorUtility.OpenWithDefaultApp("Assets/Samples/ILRuntime/2.0.2/Demo/Debugger~/ILRuntimeDebuggerLauncher.vsix");
-    }
-
-    [MenuItem("Tools/ILRuntime/打开ILRuntime中文文档")]
-    static void OpenDocumentation()
+    [System.Reflection.Obfuscation(Exclude = true)]
+    public class ILRuntimeMenu
     {
-        Application.OpenURL("https://ourpalm.github.io/ILRuntime/");
-    }
+        [MenuItem("Tools/ILRuntime/安装VS调试插件")]
+        static void InstallDebugger()
+        {
+            EditorUtility.OpenWithDefaultApp("Assets/Samples/ILRuntime/2.0.2/Demo/Debugger~/ILRuntimeDebuggerLauncher.vsix");
+        }
 
-    [MenuItem("Tools/ILRuntime/打开ILRuntime Github项目")]
-    static void OpenGithub()
-    {
-        Application.OpenURL("https://github.com/Ourpalm/ILRuntime");
-    }
+        [MenuItem("Tools/ILRuntime/打开ILRuntime中文文档")]
+        static void OpenDocumentation()
+        {
+            Application.OpenURL("https://ourpalm.github.io/ILRuntime/");
+        }
 
-    [MenuItem("Tools/ILRuntime/打开ILRuntime视频教程")]
-    static void OpenTutorial()
-    {
-        Application.OpenURL("https://learn.u3d.cn/tutorial/ilruntime");
+        [MenuItem("Tools/ILRuntime/打开ILRuntime Github项目")]
+        static void OpenGithub()
+        {
+            Application.OpenURL("https://github.com/Ourpalm/ILRuntime");
+        }
+
+        [MenuItem("Tools/ILRuntime/打开ILRuntime视频教程")]
+        static void OpenTutorial()
+        {
+            Application.OpenURL("https://learn.u3d.cn/tutorial/ilruntime");
+        }
     }
 }
 #endif

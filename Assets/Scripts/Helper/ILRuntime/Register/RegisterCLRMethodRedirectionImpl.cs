@@ -14,7 +14,7 @@ namespace UGame_Local
 {
     public class RegisterCLRMethodRedirectionImpl : Singleton<RegisterCLRMethodRedirectionImpl>, ILRuntimeRegister
     {
-        public unsafe void Register(AppDomain appDomain)
+        public unsafe void Register(AppDomain appdomain)
         {
             Type[] args;
             BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static |
@@ -24,7 +24,7 @@ namespace UGame_Local
             Type gameObjectType = typeof(GameObject);
             Type componentType = typeof(Component);
             var addComponentMethod = gameObjectType.GetMethods().ToList().Find(m => m.Name == "AddComponent" && m.GetGenericArguments().Length == 1);
-            appDomain.RegisterCLRMethodRedirection(addComponentMethod, AddComponent);
+            appdomain.RegisterCLRMethodRedirection(addComponentMethod, AddComponent);
 
             //var addComponentMethod2 = gameObjectType.GetMethods().ToList().Find(i => i.Name == "AddComponent" && i.GetGenericArguments().Length != 1);
             //appDomain.RegisterCLRMethodRedirection(addComponentMethod2, AddComponent2);
@@ -32,7 +32,7 @@ namespace UGame_Local
 
             //注册get，有2种get component，一个是GameObject调用，一个是脚本调用
             var getComponentMethod = gameObjectType.GetMethods().ToList().Find(i => i.Name == "GetComponent" && i.GetGenericArguments().Length == 1);
-             appDomain.RegisterCLRMethodRedirection(getComponentMethod, GetComponent);
+             appdomain.RegisterCLRMethodRedirection(getComponentMethod, GetComponent);
 
             //var getComponentMethod2 = componentType.GetMethods().ToList().Find(i => i.Name == "GetComponent" && i.GetGenericArguments().Length == 1);
             //appDomain.RegisterCLRMethodRedirection(getComponentMethod2, GetComponent);

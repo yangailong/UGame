@@ -5,9 +5,9 @@ namespace UGame_Local
 {
     public class MonoBehaviourRuntime : ComponentSingleton<MonoBehaviourRuntime>
     {
-        public void DoCoroutine(IEnumerator routine)
+        void Awake()
         {
-            StartCoroutine(routine);
+            DontDestroyOnLoad(gameObject);
         }
     }
 }

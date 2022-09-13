@@ -1,7 +1,6 @@
 using UnityEditor;
-using UnityEngine;
 
-namespace UGame_Local
+namespace UGame_Local_Editor
 {
     public class AssetsMappingTool
     {

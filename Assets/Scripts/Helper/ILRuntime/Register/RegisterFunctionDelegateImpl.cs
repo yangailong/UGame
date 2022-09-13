@@ -3,7 +3,7 @@ namespace UGame_Local
 {
     public class RegisterFunctionDelegateImpl : Singleton<RegisterFunctionDelegateImpl>, ILRuntimeRegister
     {
-        public void Register(AppDomain appDomain)
+        public void Register(AppDomain appdomain)
         {
 
         }

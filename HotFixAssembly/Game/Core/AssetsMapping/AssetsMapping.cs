@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UGame_Local;
 
 namespace UGame_Remove
 {
     public static class AssetsMapping
     {
-        private static readonly string needListenerAssetsRootPath = "AddressableAssets/Remote";
-        private static readonly string creatPath = $"{typeof(AssetsMapping).Name}.txt";
-        private static readonly char namePathSplit = '	';
-
-
         /// <summary>资源映射数据  key:资源名    value:资源路径 </summary>
         private static Dictionary<string, string> mapping = new Dictionary<string, string>();
 
@@ -24,9 +19,11 @@ namespace UGame_Remove
             if (!mapping.TryGetValue(assetsName, out string path))
             {
                 Debug.LogError($"AssetsMapping can't find ->{assetsName}<-");
+
+                return assetsName;
             }
 
-            path = $"Assets/{needListenerAssetsRootPath}/{path}";
+            path = $"Assets/{AssetsMappingConst.needListenerAssetsRootPath}/{path}";
 
             return path?.Trim();
         }
@@ -52,40 +49,27 @@ namespace UGame_Remove
         }
 
 
-        /// <summary>异步初始化</summary>
-        public static void InitializeAsync(Action<bool> callback)
+        /// <summary>初始化映射表</summary>
+        public static void Initialize(TextAsset textAsset)
         {
-            LoadAssetMappingAsync(callback);
-        }
-
-
-
-        /// <summary>加载读取映射表</summary>
-        private static void LoadAssetMappingAsync(Action<bool> callback)
-        {
-            string path = $"Assets/{needListenerAssetsRootPath}/{creatPath}";
-
-            ResourceManager.LoadAssetMappingAsync<TextAsset>(path, o =>
+            if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
             {
-                if (o == null || string.IsNullOrEmpty(o.text))
-                {
-                    callback?.Invoke(false);
-                    return;
-                }
+                Debug.LogError($"mapping cannot be empty");
+                return;
+            }
 
-                string tmpContent = o.text.TrimEnd('\n');
-                string[] allLine = tmpContent.Split('\n');
-                foreach (string line in allLine)
-                {
-                    string[] lineData = line.Split(namePathSplit);
-                    mapping.Add(lineData[0], lineData[1]);
-                }
+            mapping.Clear();
+            string tmpContent = textAsset.text.TrimEnd('\n');
+            string[] allLine = tmpContent.Split('\n');
+            foreach (string line in allLine)
+            {
+                string[] lineData = line.Split(AssetsMappingConst.namePathSplit);
+                mapping.Add(lineData[0], lineData[1]);
+            }
 
-                Debug.Log("Mapping table count:" + mapping.Count);
-
-                callback?.Invoke(true);
-            });
+            Debug.Log("Mapping table count:" + mapping.Count);
         }
+
 
 
     }
