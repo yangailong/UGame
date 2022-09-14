@@ -67,7 +67,7 @@ namespace UGame_Remove
                 mapping.Add(lineData[0], lineData[1]);
             }
 
-            Debug.Log("Mapping table count:" + mapping.Count);
+            Debug.Log($"Mapping table count:{mapping.Count}");
         }
 
 

@@ -23,14 +23,16 @@ namespace UGame_Remove
                 }
 
                 AssetsMapping.Initialize(text);
+
                 ResourceManager.LoadSceneAsync("Login").Completed += p =>
                 {
                     UIManager.Init();
                 };
             });
-
-            
         }
+
+
+
 
 
 

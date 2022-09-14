@@ -21,7 +21,6 @@ namespace UGame_Remove
         /// <param name="callBack">加载结束后回调，返回该资源</param>
         public static void LoadAssetAsync<TObject>(string assetsName, Action<TObject> callBack) where TObject : Object
         {
-
             string path = AssetsMapping.IsExit(assetsName) ? AssetsMapping.LoadPath(assetsName) : assetsName;
 
             loadAssets.LoadAssetAsync<TObject>(path, callBack);
