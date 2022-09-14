@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UGame_Remove
@@ -6,7 +7,7 @@ namespace UGame_Remove
     public class CanvasScalerUtil : MonoBehaviour
     {
         //检测频率
-       // private float m_Frequency = 0.1f;
+        private float m_Frequency = 0.1f;
 
         private Vector2 ReferenceResolution = new Vector2(Screen.width, Screen.height);
 
@@ -21,18 +22,14 @@ namespace UGame_Remove
             oldScreenRect = ReferenceResolution;
         }
 
-        //IEnumerator Start()
-        //{
-        //    while (true)
-        //    {
-        //        yield return new WaitForSeconds(m_Frequency);
-        //        Refresh();
-        //    }
-
-        //}
-
-
-        
+        IEnumerator Start()
+        {
+            while (true)
+            {
+                yield return new WaitForSeconds(m_Frequency);
+                Refresh();
+            }
+        }
 
 
         private void Refresh()

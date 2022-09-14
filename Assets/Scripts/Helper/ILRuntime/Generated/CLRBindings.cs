@@ -39,7 +39,6 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Object_Binding.Register(app);
             UnityEngine_TextAsset_Binding.Register(app);
             System_Char_Binding.Register(app);
-            System_Int32_Binding.Register(app);
             System_Text_Encoding_Binding.Register(app);
             System_Security_Cryptography_Aes_Binding.Register(app);
             System_Security_Cryptography_SymmetricAlgorithm_Binding.Register(app);
@@ -56,6 +55,8 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_CanvasScaler_Binding.Register(app);
             UnityEngine_Screen_Binding.Register(app);
             UnityEngine_Vector2_Binding.Register(app);
+            UnityEngine_WaitForSeconds_Binding.Register(app);
+            System_NotSupportedException_Binding.Register(app);
             UnityEngine_ResourceManagement_AsyncOperations_AsyncOperationHandle_1_SceneInstance_Binding.Register(app);
 
             ILRuntime.CLR.TypeSystem.CLRType __clrType = null;

@@ -1,4 +1,4 @@
-demo	Prefabs/demo.prefab
+UIRoot	Prefabs/UIRoot.prefab
 Login	Scenes/Login.unity
 Main	Scenes/Main.unity
 CfgRemoteLang	ScriptableObject/CfgRemoteLang.asset

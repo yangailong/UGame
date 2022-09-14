@@ -10,6 +10,7 @@ namespace UGame_Remove
         /// <summary>资源映射数据  key:资源名    value:资源路径 </summary>
         private static Dictionary<string, string> mapping = new Dictionary<string, string>();
 
+
         public static Dictionary<string, string> Mapping => mapping;
 
 

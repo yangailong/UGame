@@ -9,10 +9,16 @@ namespace UGame_Remove
         public static void Init()
         {
             UIPanelDic.Clear();
+
             var uiRootName = "UIRoot";
-            UIManager instance = Instantiate(Resources.Load<GameObject>(uiRootName)).AddComponent<UIManager>();
-            instance.name = uiRootName;
-            DontDestroyOnLoad(instance);
+            ResourceManager.LoadAssetAsync<GameObject>(uiRootName, o =>
+            {
+                if (o == null) return;
+
+                UIManager instance = Instantiate(o).AddComponent<UIManager>();
+                instance.name = uiRootName;
+                DontDestroyOnLoad(instance);
+            });
         }
 
 
