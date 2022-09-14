@@ -49,7 +49,6 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_PlayerPrefs_Binding.Register(app);
             System_Exception_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MonoBehaviourAdapter_Binding_Adaptor_Binding.Register(app);
-            UnityEngine_Resources_Binding.Register(app);
             UnityEngine_GameObject_Binding.Register(app);
             UnityEngine_Component_Binding.Register(app);
             UnityEngine_UI_CanvasScaler_Binding.Register(app);

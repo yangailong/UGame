@@ -1,4 +1,6 @@
-﻿using UGame_Local;
+﻿using System;
+using System.Collections;
+using UGame_Local;
 using UnityEngine;
 
 namespace UGame_Remove
@@ -9,10 +11,17 @@ namespace UGame_Remove
         {
             Debug.Log($"UGame_Remove StartUp");
 
-            EnterPrepare();
+            RunTime();
         }
 
-        private static void EnterPrepare()
+
+        private static void RunTime()
+        {
+            InitMapping(EnterPrepare);
+        }
+
+
+        private static void InitMapping(Action enterPrepare)
         {
             ResourceManager.LoadAssetAsync<TextAsset>($"Assets/{AssetsMappingConst.needListenerAssetsRootPath}/{AssetsMappingConst.creatPath}", text =>
             {
@@ -24,19 +33,20 @@ namespace UGame_Remove
 
                 AssetsMapping.Initialize(text);
 
-                ResourceManager.LoadSceneAsync("Login").Completed += p =>
-                {
-                    UIManager.Init();
-                };
+                enterPrepare?.Invoke();
             });
         }
 
 
+        private static void EnterPrepare()
+        {
+            //TOOD....预加载资源
 
-
-
-
-
+            ResourceManager.LoadSceneAsync("Login").Completed += p =>
+            {
+                UIManager.Init();
+            };
+        }
 
     }
 }

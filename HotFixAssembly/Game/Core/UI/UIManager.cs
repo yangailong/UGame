@@ -16,7 +16,9 @@ namespace UGame_Remove
                 if (o == null) return;
 
                 UIManager instance = Instantiate(o).AddComponent<UIManager>();
+
                 instance.name = uiRootName;
+
                 DontDestroyOnLoad(instance);
             });
         }
@@ -33,11 +35,13 @@ namespace UGame_Remove
 
         public static UIPanelBase Open(string name, UICallback callback = null, params object[] param)
         {
-            UIPanelBase panel = null;
-
-            if (!UIPanelDic.TryGetValue(name, out panel))
+            if (!UIPanelDic.TryGetValue(name, out UIPanelBase panel))
             {
                 panel = CreatUI(name);
+
+                panel.OnUIAwake();
+
+                UIPanelDic.Add(name, panel);
             }
 
             panel.OnUIEnable();
@@ -66,11 +70,11 @@ namespace UGame_Remove
             {
                 if (callback != null)
                 {
-                    callback += (p1, p2) => { panel.OnUIDisable(); };
+                    callback += (u, p) => { panel.OnUIDisable(); };
                 }
                 else
                 {
-                    callback = (p1, p) => { panel.OnUIDisable(); };
+                    callback = (u, p) => { panel.OnUIDisable(); };
                 }
 
                 //TODO...播放动画
@@ -87,10 +91,9 @@ namespace UGame_Remove
             GameObject go = null;//TODO...加载出来
 
             UIPanelBase panel = Instantiate(go).GetComponent<UIPanelBase>();
-            panel.OnUIAwake();
-            UIPanelDic.Add(name, panel);
             return panel;
         }
+
 
     }
 }
