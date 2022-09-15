@@ -1,53 +1,84 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace UGame_Remove
 {
     public class UIManager : MonoBehaviour
     {
+        private static Dictionary<string, UIPanelBase> UIPanelDic = null;
+
+        private static Dictionary<UIPanelLayer, RectTransform> layers = null;
+
+        private static Canvas canvas = null;
+
+
+        public static Canvas Canvas => canvas;
+
+
+        public static RectTransform Getlayer(UIPanelLayer layer) => layers[layer];
+
 
         public static void Init()
         {
-            UIPanelDic.Clear();
+            UIPanelDic = new Dictionary<string, UIPanelBase>();
+
+            layers = new Dictionary<UIPanelLayer, RectTransform>();
 
             var uiRootName = "UIRoot";
+
             ResourceManager.LoadAssetAsync<GameObject>(uiRootName, o =>
             {
                 if (o == null) return;
 
-                UIManager instance = Instantiate(o).AddComponent<UIManager>();
+                UIManager go = Instantiate(o).AddComponent<UIManager>();
 
-                instance.name = uiRootName;
+                go.name = uiRootName;
 
-                DontDestroyOnLoad(instance);
+                canvas = go.transform.GetComponentInChildren<Canvas>();
+
+                foreach (UIPanelLayer layer in Enum.GetValues(typeof(UIPanelLayer)))
+                {
+                    layers.Add(layer, canvas.transform.Find(layer.ToString()) as RectTransform);
+                }
+
+                DontDestroyOnLoad(go);
             });
         }
 
 
-        private static Dictionary<string, UIPanelBase> UIPanelDic = new Dictionary<string, UIPanelBase>();
-
-
-        public static T Open<T>(UICallback callback = null, params object[] param) where T : UIPanelBase
+        public static void Open<T>(UICallback callback = null, params object[] param)
         {
-            return Open(typeof(T).Name, callback, param) as T;
+            UIManager.Open(typeof(T).Name, callback, param);
         }
 
 
-        public static UIPanelBase Open(string name, UICallback callback = null, params object[] param)
+        public static void Open(string name, UICallback callback = null, params object[] param)
         {
-            if (!UIPanelDic.TryGetValue(name, out UIPanelBase panel))
+            Action<UIPanelBase> openPanel = panel =>
             {
-                panel = CreatUI(name);
+                panel.OnUIEnable();
 
-                panel.OnUIAwake();
+                //TODO...播放动画
+            };
 
-                UIPanelDic.Add(name, panel);
+            if (UIPanelDic.ContainsKey(name))
+            {
+                openPanel.Invoke(UIPanelDic[name]);
+            }
+            else
+            {
+                UIManager.CreatUI(name, creatPanel =>
+                {
+                    creatPanel.OnUIAwake();
+
+                    UIPanelDic.Add(name, creatPanel);
+
+                    openPanel.Invoke(creatPanel);
+                });
             }
 
-            panel.OnUIEnable();
 
-            //TODO...播放动画
-            return panel;
         }
 
 
@@ -86,12 +117,22 @@ namespace UGame_Remove
         }
 
 
-        private static UIPanelBase CreatUI(string name)
+        private static void CreatUI(string name, Action<UIPanelBase> callback)
         {
-            GameObject go = null;//TODO...加载出来
+            ResourceManager.LoadAssetAsync<GameObject>(name, o =>
+            {
+                if (o == null)
+                {
+                    Debug.LogError($"no {name} panel exists");
+                    return;
+                }
 
-            UIPanelBase panel = Instantiate(go).GetComponent<UIPanelBase>();
-            return panel;
+                var att = Attribute.GetCustomAttribute(typeof(UIPanelBase), typeof(UILayerAttribute)) as UILayerAttribute;
+
+                var panel = GameObject.Instantiate(o, UIManager.Getlayer(att.layer)).GetComponent<UIPanelBase>();
+
+                callback.Invoke(panel);
+            });
         }
 
 

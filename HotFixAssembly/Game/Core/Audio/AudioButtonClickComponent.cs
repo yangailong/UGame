@@ -1,31 +1,55 @@
-﻿using FrameWork.SDKManager;
-using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using JEngine.Core;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Button))]
-public class AudioButtonClickComponent : MonoBehaviour {
+namespace _26Key
+{
 
-    public string audioName = "";
-    public float volume = 1f;
-    // Use this for initialization
-    void Awake ()
+    public class AudioButtonClickComponent : MonoBehaviour
     {
-        Button button = GetComponent<Button>();
-        button.onClick.AddListener(OnClick);
-	}
 
-    private void OnClick()
-    {
-        if (ResourcesConfigManager.GetIsExitRes(audioName))
+        public string m_AudioName = "";
+
+        public float m_Volume = 1f;
+
+
+        private Button _button = null;
+        private Button Button
         {
-            AudioPlayManager.PlaySFX2D(audioName, volume);
+            get
+            {
+                if (_button == null)
+                {
+                    _button = GetComponent<Button>();
+                }
+                return _button;
+            }
         }
-        else
+
+
+        void Awake()
         {
-            Debug.LogError("不存在音频文件：" + audioName);
+            Button.onClick.AddListener(OnClick);
+        }
+
+
+        void OnDestroy()
+        {
+            Button.onClick.RemoveListener(OnClick);
+        }
+
+
+
+        private void OnClick()
+        {
+            if (!string.IsNullOrEmpty(m_AudioName))
+            {
+                AudioPlayManager.PlaySFX2D(m_AudioName, m_Volume);
+            }
+            else
+            {
+                Log.PrintError("不存在音频文件：" + m_AudioName);
+            }
         }
     }
 }
