@@ -11,15 +11,15 @@ namespace UGame_Remove
 
         private static Dictionary<UIPanelLayer, RectTransform> layers = null;
 
-        private static Canvas canvas = null;
+        private static Canvas m_Canvas = null;
 
-        private static UIManager uiRoot = null;
+        private static UIManager m_UIRoot = null;
 
-        private static UIAnimManager animManager = null;
+        private static UIAnimManager m_AnimManager = null;
 
-        private static EventSystem eventSystem = null;
+        private static EventSystem m_EventSystem = null;
 
-        private static Camera camera = null;
+        private static Camera m_Camera = null;
 
 
         public static void Init()
@@ -34,36 +34,35 @@ namespace UGame_Remove
             {
                 if (o == null) return;
 
-                uiRoot = Instantiate(o).AddComponent<UIManager>();
+                m_UIRoot = Instantiate(o).AddComponent<UIManager>();
 
-                animManager = uiRoot.gameObject.AddComponent<UIAnimManager>();
+                m_AnimManager = m_UIRoot.gameObject.AddComponent<UIAnimManager>();
 
-                eventSystem = uiRoot.transform.GetComponentInChildren<EventSystem>();
+                m_EventSystem = m_UIRoot.transform.GetComponentInChildren<EventSystem>();
 
-                uiRoot.name = uiRootName;
+                m_UIRoot.name = uiRootName;
 
-                canvas = uiRoot.transform.GetComponentInChildren<Canvas>();
+                m_Canvas = m_UIRoot.transform.GetComponentInChildren<Canvas>();
 
-                camera = uiRoot.transform.GetComponentInChildren<Camera>();
+                m_Camera = m_UIRoot.transform.GetComponentInChildren<Camera>();
 
                 foreach (UIPanelLayer layer in Enum.GetValues(typeof(UIPanelLayer)))
                 {
-                    layers.Add(layer, canvas.transform.Find(layer.ToString()) as RectTransform);
+                    layers.Add(layer, m_Canvas.transform.Find(layer.ToString()) as RectTransform);
                 }
 
-                DontDestroyOnLoad(uiRoot);
+                DontDestroyOnLoad(m_UIRoot);
             });
         }
 
+        public static UIManager UIRoot => m_UIRoot;
 
-        public static UIManager UIRoot => uiRoot;
+        public static Canvas Canvas => m_Canvas;
 
-        public static Canvas Canvas => canvas;
-
-        public static Camera Camera => camera;
+        public static Camera Camera => m_Camera;
 
 
-        public static EventSystem EventSystem => eventSystem;
+        public static EventSystem EventSystem => m_EventSystem;
 
 
         public static RectTransform Getlayer(UIPanelLayer layer) => layers[layer];
@@ -98,7 +97,7 @@ namespace UGame_Remove
             {
                 panel.OnUIEnable();
 
-                UIManager.animManager.StartEnterAnim(panel, callback, param);
+                UIManager.m_AnimManager.StartEnterAnim(panel, callback, param);
             };
 
             if (UIPanelDic.ContainsKey(name))
@@ -147,7 +146,7 @@ namespace UGame_Remove
                     callback = (u, p) => { panel.OnUIDisable(); };
                 }
 
-                UIManager.animManager.StartExitAnim(panel, callback, param);
+                UIManager.m_AnimManager.StartExitAnim(panel, callback, param);
 
             }
             else

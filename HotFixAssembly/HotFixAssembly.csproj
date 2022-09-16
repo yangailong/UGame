@@ -45,6 +45,7 @@
     <Compile Include="Game\Core\Resource\LoadAssetsImpl.cs" />
     <Compile Include="Game\Core\Resource\ResourceManager.cs" />
     <Compile Include="Game\Core\UI\Helper\UILayerArr.cs" />
+    <Compile Include="Game\Core\UI\UIAnimManager.cs" />
     <Compile Include="Game\Runtime\Utility\Singleton\ComponentSingleton.cs" />
     <Compile Include="Game\Runtime\Utility\Singleton\Singleton.cs" />
     <Compile Include="Game\Core\UI\UIConst.cs" />

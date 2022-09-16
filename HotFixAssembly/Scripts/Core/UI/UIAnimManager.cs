@@ -4,6 +4,7 @@ namespace UGame_Remove
 {
     public class UIAnimManager : MonoBehaviour
     {
+
         //开始调用进入动画
         public void StartEnterAnim(UIPanelBase panel, UICallback callBack, params object[] param)
         {
