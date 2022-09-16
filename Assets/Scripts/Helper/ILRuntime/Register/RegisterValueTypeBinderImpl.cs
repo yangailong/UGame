@@ -1,4 +1,4 @@
-﻿using ILRuntime.Runtime.Enviorment;
+﻿using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 using UnityEngine;
 namespace UGame_Local
 {

@@ -32,7 +32,7 @@ namespace UGame_Local
 
             //注册get，有2种get component，一个是GameObject调用，一个是脚本调用
             var getComponentMethod = gameObjectType.GetMethods().ToList().Find(i => i.Name == "GetComponent" && i.GetGenericArguments().Length == 1);
-             appdomain.RegisterCLRMethodRedirection(getComponentMethod, GetComponent);
+            appdomain.RegisterCLRMethodRedirection(getComponentMethod, GetComponent);
 
             //var getComponentMethod2 = componentType.GetMethods().ToList().Find(i => i.Name == "GetComponent" && i.GetGenericArguments().Length == 1);
             //appDomain.RegisterCLRMethodRedirection(getComponentMethod2, GetComponent);

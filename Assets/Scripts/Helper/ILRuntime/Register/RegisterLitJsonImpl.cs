@@ -1,4 +1,4 @@
-﻿using ILRuntime.Runtime.Enviorment;
+﻿using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 namespace UGame_Local
 {
     public class RegisterLitJsonImpl : Singleton<RegisterLitJsonImpl>, ILRuntimeRegister

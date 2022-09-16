@@ -26,12 +26,12 @@ namespace ILRuntime.Runtime.Generated
             field = type.GetField("needListenerAssetsRootPath", flag);
             app.RegisterCLRFieldGetter(field, get_needListenerAssetsRootPath_0);
             app.RegisterCLRFieldBinding(field, CopyToStack_needListenerAssetsRootPath_0, null);
-            field = type.GetField("namePathSplit", flag);
-            app.RegisterCLRFieldGetter(field, get_namePathSplit_1);
-            app.RegisterCLRFieldBinding(field, CopyToStack_namePathSplit_1, null);
             field = type.GetField("creatPath", flag);
-            app.RegisterCLRFieldGetter(field, get_creatPath_2);
-            app.RegisterCLRFieldBinding(field, CopyToStack_creatPath_2, null);
+            app.RegisterCLRFieldGetter(field, get_creatPath_1);
+            app.RegisterCLRFieldBinding(field, CopyToStack_creatPath_1, null);
+            field = type.GetField("namePathSplit", flag);
+            app.RegisterCLRFieldGetter(field, get_namePathSplit_2);
+            app.RegisterCLRFieldBinding(field, CopyToStack_namePathSplit_2, null);
 
 
         }
@@ -49,28 +49,28 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static object get_namePathSplit_1(ref object o)
+        static object get_creatPath_1(ref object o)
+        {
+            return UGame_Local.AssetsMappingConst.creatPath;
+        }
+
+        static StackObject* CopyToStack_creatPath_1(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
+        {
+            var result_of_this_method = UGame_Local.AssetsMappingConst.creatPath;
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static object get_namePathSplit_2(ref object o)
         {
             return UGame_Local.AssetsMappingConst.namePathSplit;
         }
 
-        static StackObject* CopyToStack_namePathSplit_1(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
+        static StackObject* CopyToStack_namePathSplit_2(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
         {
             var result_of_this_method = UGame_Local.AssetsMappingConst.namePathSplit;
             __ret->ObjectType = ObjectTypes.Integer;
             __ret->Value = (int)result_of_this_method;
             return __ret + 1;
-        }
-
-        static object get_creatPath_2(ref object o)
-        {
-            return UGame_Local.AssetsMappingConst.creatPath;
-        }
-
-        static StackObject* CopyToStack_creatPath_2(ref object o, ILIntepreter __intp, StackObject* __ret, IList<object> __mStack)
-        {
-            var result_of_this_method = UGame_Local.AssetsMappingConst.creatPath;
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
 

@@ -4,7 +4,7 @@
 
 using UnityEngine;
 
-namespace UGame_Local_CfgData {
+namespace UGame_Local_In_CfgData {
 
 	public partial class CfgLocalLang : ScriptableObject {
 

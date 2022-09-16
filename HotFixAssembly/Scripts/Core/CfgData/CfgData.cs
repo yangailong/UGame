@@ -18,11 +18,24 @@ namespace UGame_Remove
 
             Assembly assembly = typeof(AppMain).Assembly;
 
-            var arr = assembly.GetTypes().ToList().FindAll(t => t.Namespace.Equals("UGame_Local_CfgData"));
-            foreach (var item in arr)
+            Predicate<Type> typeMatch = type => type.BaseType == typeof(ScriptableObject) && !string.IsNullOrEmpty(type.Namespace) && type.Namespace.Equals("UGame_Local_Out_CfgData");
+
+            var arr = assembly.GetTypes().ToList().FindAll(typeMatch);
+
+            string[] assetsName = arr.Select(type => type.Name).ToArray();
+
+
+            ResourceManager.LoadAssetsAsync<ScriptableObject>(assetsName, o =>
             {
-                Debug.LogError($"name:{item.Name}");
-            }
+                if (!valuePairs.ContainsKey(o.name))
+                {
+                    valuePairs.Add(o.name, o);
+
+                    Debug.Log($"count:{valuePairs.Count}");
+                }
+            });
+
+
         }
 
 

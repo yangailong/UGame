@@ -40,12 +40,6 @@
     <Compile Include="RunGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Scripts\Core\AssetsMapping\AssetsMapping.cs" />
-    <Compile Include="Scripts\Core\Audio\Audio2DPlayer.cs" />
-    <Compile Include="Scripts\Core\Audio\Audio3DPlayer.cs" />
-    <Compile Include="Scripts\Core\Audio\AudioAsset.cs" />
-    <Compile Include="Scripts\Core\Audio\AudioButtonClickComponent.cs" />
-    <Compile Include="Scripts\Core\Audio\AudioPlayerBase.cs" />
-    <Compile Include="Scripts\Core\Audio\AudioPlayManager.cs" />
     <Compile Include="Scripts\Core\CfgData\CfgData.cs" />
     <Compile Include="Scripts\Core\CrypManager\CrypManager.cs" />
     <Compile Include="Scripts\Core\Event\GlobalEvent.cs" />
