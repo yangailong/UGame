@@ -45,8 +45,10 @@ namespace UGame_Remove
             ResourceManager.LoadSceneAsync("Login").Completed += p =>
             {
                 UIManager.Init();
+                CfgData.Init();
             };
         }
+
 
     }
 }
