@@ -7,6 +7,7 @@ namespace UGame_Remove
 {
     public class RunGame
     {
+
         public static void StartUp()
         {
             Debug.Log($"UGame_Remove StartUp");

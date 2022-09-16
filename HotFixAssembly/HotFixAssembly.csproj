@@ -37,13 +37,14 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Game\Core\ResourceManager\LoadAddressImpl.cs" />
-    <Compile Include="Game\Core\ResourceManager\LoadAssetsImpl.cs" />
-    <Compile Include="Game\Core\ResourceManager\ResourceManager.cs" />
     <Compile Include="Game\Core\AssetsMapping\AssetsMapping.cs" />
     <Compile Include="Game\Core\CrypManager\CrypManager.cs" />
     <Compile Include="Game\Core\Event\GlobalEvent.cs" />
     <Compile Include="Game\Core\PrefsManager\PrefsManager.cs" />
+    <Compile Include="Game\Core\Resource\LoadAddressImpl.cs" />
+    <Compile Include="Game\Core\Resource\LoadAssetsImpl.cs" />
+    <Compile Include="Game\Core\Resource\ResourceManager.cs" />
+    <Compile Include="Game\Core\UI\Helper\UILayerArr.cs" />
     <Compile Include="Game\Runtime\Utility\Singleton\ComponentSingleton.cs" />
     <Compile Include="Game\Runtime\Utility\Singleton\Singleton.cs" />
     <Compile Include="Game\Core\UI\UIConst.cs" />

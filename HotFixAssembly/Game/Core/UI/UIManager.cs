@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-
+using UnityEngine.EventSystems;
 namespace UGame_Remove
 {
     public class UIManager : MonoBehaviour
@@ -12,11 +13,13 @@ namespace UGame_Remove
 
         private static Canvas canvas = null;
 
+        private static UIManager uiRoot = null;
 
-        public static Canvas Canvas => canvas;
+        private static UIAnimManager animManager = null;
 
+        private static EventSystem eventSystem = null;
 
-        public static RectTransform Getlayer(UIPanelLayer layer) => layers[layer];
+        private static Camera camera = null;
 
 
         public static void Init()
@@ -31,19 +34,55 @@ namespace UGame_Remove
             {
                 if (o == null) return;
 
-                UIManager go = Instantiate(o).AddComponent<UIManager>();
+                uiRoot = Instantiate(o).AddComponent<UIManager>();
 
-                go.name = uiRootName;
+                animManager = uiRoot.gameObject.AddComponent<UIAnimManager>();
 
-                canvas = go.transform.GetComponentInChildren<Canvas>();
+                eventSystem = uiRoot.transform.GetComponentInChildren<EventSystem>();
+
+                uiRoot.name = uiRootName;
+
+                canvas = uiRoot.transform.GetComponentInChildren<Canvas>();
+
+                camera = uiRoot.transform.GetComponentInChildren<Camera>();
 
                 foreach (UIPanelLayer layer in Enum.GetValues(typeof(UIPanelLayer)))
                 {
                     layers.Add(layer, canvas.transform.Find(layer.ToString()) as RectTransform);
                 }
 
-                DontDestroyOnLoad(go);
+                DontDestroyOnLoad(uiRoot);
             });
+        }
+
+
+        public static UIManager UIRoot => uiRoot;
+
+        public static Canvas Canvas => canvas;
+
+        public static Camera Camera => camera;
+
+
+        public static EventSystem EventSystem => eventSystem;
+
+
+        public static RectTransform Getlayer(UIPanelLayer layer) => layers[layer];
+
+
+        public static UIPanelBase GetHasPanel<T>()
+        {
+            return UIManager.GetHasPanel(typeof(T).Name);
+        }
+
+
+        public static UIPanelBase GetHasPanel(string name)
+        {
+            if (!UIPanelDic.TryGetValue(name, out var panel))
+            {
+                Debug.LogError($"The {name} panel does not exist");
+            }
+
+            return panel;
         }
 
 
@@ -59,7 +98,7 @@ namespace UGame_Remove
             {
                 panel.OnUIEnable();
 
-                //TODO...播放动画
+                UIManager.animManager.StartEnterAnim(panel, callback, param);
             };
 
             if (UIPanelDic.ContainsKey(name))
@@ -108,7 +147,8 @@ namespace UGame_Remove
                     callback = (u, p) => { panel.OnUIDisable(); };
                 }
 
-                //TODO...播放动画
+                UIManager.animManager.StartExitAnim(panel, callback, param);
+
             }
             else
             {
@@ -117,7 +157,22 @@ namespace UGame_Remove
         }
 
 
-        private static void CreatUI(string name, Action<UIPanelBase> callback)
+        public static void CloseAllUI(bool isPlayerAnim = false)
+        {
+            foreach (var item in UIPanelDic.Values)
+            {
+                UIManager.Close(item, isPlayerAnim);
+            }
+        }
+
+
+        public static void CreatUI<T>(Action<UIPanelBase> callback)
+        {
+            UIManager.CreatUI(typeof(T).Name, callback);
+        }
+
+
+        public static void CreatUI(string name, Action<UIPanelBase> callback)
         {
             ResourceManager.LoadAssetAsync<GameObject>(name, o =>
             {
@@ -133,6 +188,33 @@ namespace UGame_Remove
 
                 callback.Invoke(panel);
             });
+        }
+
+
+        public static void Destroy<T>()
+        {
+            UIManager.Destroy(typeof(T).Name);
+        }
+
+
+        public static void Destroy(string name)
+        {
+            if (UIPanelDic.TryGetValue(name, out var panel))
+            {
+                panel.OnUIDestroy();
+                UIPanelDic.Remove(name);
+            }
+        }
+
+
+        public static void DestroyAll()
+        {
+            var arr = UIPanelDic.Values.ToArray();
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                Destroy(arr[i]);
+            }
         }
 
 
