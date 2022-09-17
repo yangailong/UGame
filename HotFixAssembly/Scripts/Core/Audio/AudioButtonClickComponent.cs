@@ -1,8 +1,7 @@
-﻿using JEngine.Core;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace _26Key
+namespace UGame_Remove
 {
 
     public class AudioButtonClickComponent : MonoBehaviour

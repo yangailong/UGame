@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
 using System;
-using JEngine.Core;
 
-namespace _26Key
+namespace UGame_Remove
 {
     public enum AudioPlayState
     {

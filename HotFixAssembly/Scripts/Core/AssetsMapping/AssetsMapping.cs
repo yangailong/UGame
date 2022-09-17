@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UGame_Local;
+using System;
 
 namespace UGame_Remove
 {
     public static class AssetsMapping
     {
         /// <summary>资源映射数据  key:资源名    value:资源路径 </summary>
-        private static Dictionary<string, string> mapping = new Dictionary<string, string>();
+        private static Dictionary<string, string> mapping = null;
 
 
         public static Dictionary<string, string> Mapping => mapping;
@@ -56,10 +57,10 @@ namespace UGame_Remove
             if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
             {
                 Debug.LogError($"mapping cannot be empty");
-                return;
             }
 
-            mapping.Clear();
+            mapping = new Dictionary<string, string>();
+
             string tmpContent = textAsset.text.TrimEnd('\n');
             string[] allLine = tmpContent.Split('\n');
             foreach (string line in allLine)

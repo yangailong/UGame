@@ -1,6 +1,9 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UGame_Local;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace UGame_Remove
 {
@@ -11,44 +14,29 @@ namespace UGame_Remove
         {
             Debug.Log($"UGame_Remove StartUp");
 
-            RunTime();
+            MonoBehaviourRuntime.Instance.StartCoroutine(Init());
         }
 
 
-        private static void RunTime()
+        private static IEnumerator Init()
         {
-            InitMapping(EnterPrepare);
-        }
+            string path = $"Assets/{AssetsMappingConst.needListenerAssetsRootPath}/{AssetsMappingConst.creatPath}";
 
-
-        private static void InitMapping(Action enterPrepare)
-        {
-            ResourceManager.LoadAssetAsync<TextAsset>($"Assets/{AssetsMappingConst.needListenerAssetsRootPath}/{AssetsMappingConst.creatPath}", text =>
+            ResourceManager.LoadAssetAsync<TextAsset>(path, o =>
             {
-                if (text == null || string.IsNullOrEmpty(text.text))
-                {
-                    Debug.LogError($"资源映射表下载失败...无法进入游戏");
-                    return;
-                }
-
-                AssetsMapping.Initialize(text);
-
-                enterPrepare?.Invoke();
-            });
-        }
-
-
-        private static void EnterPrepare()
-        {
-            //TOOD....预加载资源
-
-            ResourceManager.LoadSceneAsync("Login").Completed += p =>
-            {
+                AssetsMapping.Initialize(o);
                 UIManager.Init();
                 CfgData.Init();
-            };
-        }
+            });
 
+            yield return null;
+
+
+
+
+
+
+        }
 
     }
 }

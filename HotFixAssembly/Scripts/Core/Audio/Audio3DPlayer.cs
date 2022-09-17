@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-namespace _26Key
+namespace UGame_Remove
 {
     public class Audio3DPlayer : AudioPlayerBase
     {

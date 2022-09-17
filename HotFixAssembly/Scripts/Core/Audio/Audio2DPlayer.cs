@@ -1,12 +1,13 @@
-﻿using JEngine.Core;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace _26Key
+namespace UGame_Remove
 {
     public class Audio2DPlayer : AudioPlayerBase
     {
+
         public Dictionary<int, AudioAsset> bgMusicDic = new Dictionary<int, AudioAsset>();
+
         public List<AudioAsset> sfxList = new List<AudioAsset>();
 
         public Audio2DPlayer(MonoBehaviour mono) : base(mono) { }
@@ -14,6 +15,7 @@ namespace _26Key
         public override void SetMusicVolume(float volume)
         {
             base.SetMusicVolume(volume);
+
             foreach (var item in bgMusicDic.Values)
             {
                 item.TotleVolume = volume;
