@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace UGame_Remove
+namespace  UGame_Remove_Tmp
 {
     public class Audio2DPlayer : AudioPlayerBase
     {

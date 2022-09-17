@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-namespace UGame_Remove
+namespace UGame_Remove_Tmp
 {
 
     public class AudioButtonClickComponent : MonoBehaviour

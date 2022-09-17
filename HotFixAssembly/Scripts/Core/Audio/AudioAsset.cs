@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-namespace UGame_Remove
+namespace UGame_Remove_Tmp
 {
     public enum AudioPlayState
     {
@@ -24,6 +24,7 @@ namespace UGame_Remove
         public AudioSourceType sourceType;
         public string flag = "";
         private string assetName = "";
+        
         /// <summary>
         /// music，记录channel
         /// </summary>

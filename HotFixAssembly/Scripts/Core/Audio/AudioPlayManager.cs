@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using System;
 
-namespace UGame_Remove
+namespace  UGame_Remove_Tmp
 {
     public class AudioPlayManager : MonoBehaviour
     {
