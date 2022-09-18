@@ -46,10 +46,15 @@
     <Compile Include="Scripts\Core\Audio\AudioButtonClickComponent.cs" />
     <Compile Include="Scripts\Core\Audio\AudioPlayerBase.cs" />
     <Compile Include="Scripts\Core\Audio\AudioPlayManager.cs" />
+    <Compile Include="Scripts\Core\Audio\Audio\Audio2DPlayer.cs" />
+    <Compile Include="Scripts\Core\Audio\Audio\Audio3DPlayer.cs" />
+    <Compile Include="Scripts\Core\Audio\Audio\AudioAsset.cs" />
+    <Compile Include="Scripts\Core\Audio\Audio\AudioConst.cs" />
+    <Compile Include="Scripts\Core\Audio\Audio\AudioPlayerBase.cs" />
+    <Compile Include="Scripts\Core\Audio\Audio\AudioPlayManager.cs" />
     <Compile Include="Scripts\Core\CfgData\CfgData.cs" />
     <Compile Include="Scripts\Core\CrypManager\CrypManager.cs" />
     <Compile Include="Scripts\Core\Event\GlobalEvent.cs" />
-    <Compile Include="Scripts\Core\IPrep.cs" />
     <Compile Include="Scripts\Core\PrefsManager\PrefsManager.cs" />
     <Compile Include="Scripts\Core\Resource\LoadAddressImpl.cs" />
     <Compile Include="Scripts\Core\Resource\LoadAssetsImpl.cs" />
@@ -66,9 +71,11 @@
     <Compile Include="Scripts\Game\Utility\Singleton\Singleton.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp">
+    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\ScriptAssemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="System" />
     <Reference Include="Unity.Addressables">
       <HintPath>dlls\Unity.Addressables.dll</HintPath>
     </Reference>
@@ -77,6 +84,9 @@
     </Reference>
     <Reference Include="UnityEditor.CoreModule">
       <HintPath>dlls\UnityEditor.CoreModule.dll</HintPath>
+    </Reference>
+    <Reference Include="UnityEngine.AudioModule">
+      <HintPath>dlls\UnityEngine.AudioModule.dll</HintPath>
     </Reference>
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>dlls\UnityEngine.CoreModule.dll</HintPath>
