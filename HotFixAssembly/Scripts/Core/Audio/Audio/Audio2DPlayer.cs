@@ -6,11 +6,15 @@ namespace UGame_Remove
 {
     public class Audio2DPlayer : AudioPlayerBase
     {
-        public Dictionary<int, AudioAsset> bgMusicDic = new Dictionary<int, AudioAsset>();
+        public Dictionary<int, AudioAsset> bgMusicDic = null;
 
-        public List<AudioAsset> sfxList = new List<AudioAsset>();
+        public List<AudioAsset> sfxList =null;
 
-        public Audio2DPlayer(MonoBehaviour mono) : base(mono) { }
+        public Audio2DPlayer(MonoBehaviour mono) : base(mono)
+        {
+            bgMusicDic = new Dictionary<int, AudioAsset>();
+            sfxList = new List<AudioAsset>();   
+        }
 
 
         public void SetMusicVolume(float volume)
@@ -93,14 +97,74 @@ namespace UGame_Remove
         }
 
 
-        public void PlaySFX(string name, float volumeScale = 1f, float delay = 0f, float pitch = 1)
+        public void PlaySFX(AudioClip audioClip, float volumeScale = 1f, float delay = 0f, float pitch = 1)
         {
-            
+            AudioAsset audioAsset = CreateAudioAsset(mono.gameObject, false, AudioSourceType.SFX);
+            sfxList.Add(audioAsset);
+            base.Play(audioAsset, audioClip, false, volumeScale, delay, pitch);
         }
+
 
         public void PauseSFXAll(bool isPause)
         {
-            
+            foreach (var item in sfxList)
+            {
+                if (isPause)
+                {
+                    item.Pause();
+                }
+                else
+                {
+                    item.Play();
+                }
+            }
         }
+
+
+
+        public void ClearDirtyAudioAsset()
+        {
+            var dirty = new List<AudioAsset>();
+
+            foreach (var item in sfxList)
+            {
+                item.CheckState();
+                if (item.PlayState == AudioPlayState.Stop)
+                {
+                    dirty.Add(item);
+                }
+            }
+
+
+            for (int i = 0; i < dirty.Count; i++)
+            {
+                var item = dirty[i];
+                DestroyAudioAsset(item);
+                sfxList.Remove(item);
+            }
+
+
+
+            var channalDirty = new List<int>();
+            foreach (var item in bgMusicDic)
+            {
+                item.Value.CheckState();
+                if (item.Value.PlayState == AudioPlayState.Stop)
+                {
+                    channalDirty.Add(item.Key);
+                }
+            }
+
+
+            foreach (var item in channalDirty)
+            {
+                DestroyAudioAsset(bgMusicDic[item]);
+                bgMusicDic.Remove(item);
+            }
+
+            channalDirty.Clear();
+        }
+
+
     }
 }

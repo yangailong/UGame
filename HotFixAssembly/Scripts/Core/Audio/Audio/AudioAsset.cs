@@ -63,11 +63,7 @@ namespace UGame_Remove
 
 
         /// <summary>播放状态</summary>
-        public AudioPlayState playState
-        {
-            get => playState;
-            set => playState = value;
-        }
+        public AudioPlayState PlayState { get; set; }
 
 
         /// <summary>Audio Source Name</summary>
@@ -81,7 +77,7 @@ namespace UGame_Remove
             {
                 audioSource.time = 0;
                 audioSource.PlayDelayed(delay);
-                playState = AudioPlayState.Playing;
+                PlayState = AudioPlayState.Playing;
             }
         }
 
@@ -91,7 +87,7 @@ namespace UGame_Remove
             if (audioSource?.clip != null && audioSource.isPlaying)
             {
                 audioSource.Pause();
-                playState = AudioPlayState.Pause;
+                PlayState = AudioPlayState.Pause;
             }
         }
 
@@ -99,7 +95,7 @@ namespace UGame_Remove
         public void Stop()
         {
             audioSource?.Stop();
-            playState = AudioPlayState.Stop;
+            PlayState = AudioPlayState.Stop;
         }
 
 
@@ -109,7 +105,15 @@ namespace UGame_Remove
         }
 
 
+        public void CheckState()
+        {
+            if (PlayState == AudioPlayState.Stop) return;
 
+            if (audioSource == null || (!audioSource.isPlaying && PlayState != AudioPlayState.Pause))
+            {
+                Stop();
+            }
+        }
 
     }
 }

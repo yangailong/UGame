@@ -9,8 +9,6 @@ namespace UGame_Remove
 
         Pause,
 
-        Stoping,
-
         Stop,
     }
 
@@ -22,8 +20,4 @@ namespace UGame_Remove
         SFX,
     }
 
-    public class AudioConst
-    {
-
-    }
 }
