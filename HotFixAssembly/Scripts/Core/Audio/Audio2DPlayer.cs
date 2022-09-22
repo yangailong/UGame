@@ -1,154 +1,175 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 
-namespace  UGame_Remove_Tmp
+namespace UGame_Remove
 {
     public class Audio2DPlayer : AudioPlayerBase
     {
+        public Dictionary<int, AudioAsset> musics { get; private set; } = null;
 
-        public Dictionary<int, AudioAsset> bgMusicDic = new Dictionary<int, AudioAsset>();
+        public List<AudioAsset> sfxs { get; private set; } = null;
 
-        public List<AudioAsset> sfxList = new List<AudioAsset>();
 
-        public Audio2DPlayer(MonoBehaviour mono) : base(mono) { }
-
-        public override void SetMusicVolume(float volume)
+        public Audio2DPlayer(MonoBehaviour mono) : base(mono)
         {
-            base.SetMusicVolume(volume);
+            musics = new Dictionary<int, AudioAsset>();
+            sfxs = new List<AudioAsset>();
+        }
 
-            foreach (var item in bgMusicDic.Values)
+
+        public void SetMusicVolume(float volume)
+        {
+            base.musicVolume = volume;
+
+            foreach (var item in musics.Values)
             {
                 item.TotleVolume = volume;
             }
         }
-        public override void SetSFXVolume(float volume)
+
+
+        public void SetSFXVolume(float volume)
         {
-            base.SetSFXVolume(volume);
-            for (int i = 0; i < sfxList.Count; i++)
+            base.sfxVolume = volume;
+
+            foreach (var item in sfxs)
             {
-                sfxList[i].TotleVolume = volume;
+                item.TotleVolume = volume;
             }
         }
 
-        public AudioAsset PlayMusic(int channel, string audioName, bool isLoop = true, float volumeScale = 1, float delay = 0f, float fadeTime = 0.5f, string flag = "")
-        {
-            AudioAsset au;
 
-            if (bgMusicDic.ContainsKey(channel))
+        public AudioAsset PlayMusic2D(int channel, AudioClip audioClip, bool isLoop = true, float volumeScale = 1, float delay = 0f)
+        {
+            AudioAsset audioAsset = null;
+
+            if (musics.ContainsKey(channel))
             {
-                au = bgMusicDic[channel];
+                audioAsset = musics[channel];
             }
             else
             {
-                au = CreateAudioAssetByPool(mono.gameObject, false, AudioSourceType.Music);
-                bgMusicDic.Add(channel, au);
+                audioAsset = base.CreateAudioAsset(mono.gameObject, false, AudioSourceType.Music);
+                musics.Add(channel, audioAsset);
             }
-            au.musicChannel = channel;
-            PlayMusicControl(au, audioName, isLoop, volumeScale, delay, fadeTime, flag);
-            return au;
-        }
-        public void PauseMusic(int channel, bool isPause, float fadeTime = 0.5f)
-        {
-            if (bgMusicDic.ContainsKey(channel))
-            {
-                AudioAsset au = bgMusicDic[channel];
-                PauseMusicControl(au, isPause, fadeTime);
+            audioAsset.musicChannel = channel;
 
-            }
-        }
-        public void PauseMusicAll(bool isPause, float fadeTime = 0.5f)
-        {
-            foreach (int i in bgMusicDic.Keys)
-            {
-                PauseMusic(i, isPause, fadeTime);
-            }
+            base.Play(audioAsset, audioClip, isLoop, volumeScale, delay);
+
+            return audioAsset;
         }
 
-        public void StopMusic(int channel, float fadeTime = 0.5f)
-        {
-            if (bgMusicDic.ContainsKey(channel))
-            {
-                StopMusicControl(bgMusicDic[channel], fadeTime);
-            }
 
-        }
-
-        public void StopMusicAll()
+        public void PauseMusic2D(int channel, bool isPause)
         {
-            foreach (int i in bgMusicDic.Keys)
-            {
-                StopMusic(i);
-            }
-        }
-
-        public void PlaySFX(string name, float volumeScale = 1f, float delay = 0f, float pitch = 1, string flag = "")
-        {
-            AudioAsset au = GetEmptyAudioAssetFromSFXList();
-            au.flag = flag;
-            PlayClip(au, name, false, volumeScale, delay, pitch);
-
-        }
-        public void PauseSFXAll(bool isPause)
-        {
-            for (int i = 0; i < sfxList.Count; i++)
+            if (musics.TryGetValue(channel, out var audioAsset))
             {
                 if (isPause)
                 {
-                    sfxList[i].Pause();
+                    audioAsset.Pause();
                 }
                 else
                 {
-                    sfxList[i].Play();
+                    audioAsset.Play();
                 }
             }
         }
 
-        private AudioAsset GetEmptyAudioAssetFromSFXList()
+
+        public void PauseMusicAll2D(bool isPause)
         {
-            AudioAsset au = null;
-            if (au == null)
+            foreach (var item in musics.Keys)
             {
-                au = CreateAudioAssetByPool(mono.gameObject, false, AudioSourceType.SFX);
-                sfxList.Add(au);
+                PauseMusic2D(item, isPause);
             }
-            return au;
         }
 
-        private List<AudioAsset> clearList = new List<AudioAsset>();
-        public void ClearMoreAudioAsset()
+
+        public void StopMusic2D(int channel)
         {
-            for (int i = 0; i < sfxList.Count; i++)
+            if (musics.TryGetValue(channel, out var audioAsset))
             {
-                sfxList[i].CheckState();
-                if (sfxList[i].PlayState == AudioPlayState.Stop)
+                audioAsset.Stop();
+            }
+        }
+
+
+        public void StopMusicAll2D()
+        {
+            foreach (var item in musics.Keys)
+            {
+                StopMusic2D(item);
+            }
+        }
+
+
+        public void PlaySFX2D(AudioClip audioClip, float volumeScale = 1f, float delay = 0f, float pitch = 1)
+        {
+            AudioAsset audioAsset = CreateAudioAsset(mono.gameObject, false, AudioSourceType.SFX);
+            sfxs.Add(audioAsset);
+            base.Play(audioAsset, audioClip, false, volumeScale, delay, pitch);
+        }
+
+
+        public void PauseSFXAll2D(bool isPause)
+        {
+            foreach (var item in sfxs)
+            {
+                if (isPause)
                 {
-                    clearList.Add(sfxList[i]);
+                    item.Pause();
+                }
+                else
+                {
+                    item.Play();
+                }
+            }
+        }
+
+
+        public void ClearDirtyAudioAsset()
+        {
+            var dirty = new List<AudioAsset>();
+
+            foreach (var item in sfxs)
+            {
+                item.CheckAudioState();
+                if (item.PlayState == AudioPlayState.Stop)
+                {
+                    dirty.Add(item);
                 }
             }
 
 
-            for (int i = 0; i < clearList.Count; i++)
+            for (int i = 0; i < dirty.Count; i++)
             {
-                DestroyAudioAssetByPool(clearList[i]);
-                sfxList.Remove(clearList[i]);
+                var item = dirty[i];
+                base.DestroyAudioAsset(item);
+                sfxs.Remove(item);
             }
-            clearList.Clear();
 
-            foreach (var item in bgMusicDic)
+
+
+            var channalDirty = new List<int>();
+            foreach (var item in musics)
             {
-                item.Value.CheckState();
-                //if (item.Value.PlayState == AudioPlayState.Stop)
-                //    channalClearList.Add(item.Key);
+                item.Value.CheckAudioState();
+                if (item.Value.PlayState == AudioPlayState.Stop)
+                {
+                    channalDirty.Add(item.Key);
+                }
             }
-            //foreach (var item in channalClearList)
-            //{
-            //    DestroyAudioAssetByPool(bgMusicDic[item]);
-            //    bgMusicDic.Remove(item);
-            //}
-            //channalClearList.Clear();
+
+
+            foreach (var item in channalDirty)
+            {
+                DestroyAudioAsset(musics[item]);
+                musics.Remove(item);
+            }
+
+            channalDirty.Clear();
         }
+
 
     }
-
-
 }

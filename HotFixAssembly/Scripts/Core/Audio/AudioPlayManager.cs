@@ -1,76 +1,58 @@
-﻿using UnityEngine;
-using System;
+﻿using System;
+using UnityEngine;
 
-namespace  UGame_Remove_Tmp
+namespace UGame_Remove
 {
     public class AudioPlayManager : MonoBehaviour
     {
-        #region 属性
 
-        public static Audio2DPlayer a2DPlayer;
-        public static Audio3DPlayer a3DPlayer;
-        /// <summary>
-        ///  音乐播放完成 回调（参数 ：资源名，channel，flag（标识：用于在多个相同音频名称时分辨））
-        /// </summary>
-        public static Action<string, int, string> OnMusicStopCallBack;
-        /// <summary>
-        /// 音乐播放将要完成 回调，提前1秒回调，当clip时长不足1秒则在OnMusicStopCallBack前回调（参数 ：资源名，channel，flag（标识：用于在多个相同音频名称时分辨））
-        /// </summary>
-        public static Action<string, int, string> OnMusicPreStopCallBack;
+        public static Audio2DPlayer a2DPlayer { get; private set; } = null;
 
-        /// <summary>
-        /// SFX播放完成 回调（参数 ：资源名，flag（标识：用于在多个相同音频名称时分辨））
-        /// </summary>
-        public static Action<string, string> OnSFXStopCallBack;
 
-        #endregion
+        public static Audio3DPlayer a3DPlayer { get; private set; } = null;
 
-        #region 外部调用
+        private static float totleVolume = 1f;
+
+        private static float musicVolume = 1f;
+
+        private static float sfxVolume = 1f;
+
 
         public static void Init()
         {
-            GameObject obj = new GameObject("[AudioManager]");
-            AudioPlayManager audioManager = obj.AddComponent<AudioPlayManager>();
-            DontDestroyOnLoad(obj);
+            var go = new GameObject($"[{typeof(AudioPlayManager).Name}]").AddComponent<AudioPlayManager>();
 
-            a2DPlayer = new Audio2DPlayer(audioManager);
-            a3DPlayer = new Audio3DPlayer(audioManager);
-            if (JSaver.HasData("TotleVolume"))
-                TotleVolume = JSaver.GetFloat("TotleVolume", 1f);
-            else
-                TotleVolume = 1;
-            if (JSaver.HasData("MusicVolume"))
-                MusicVolume = JSaver.GetFloat("MusicVolume", 1f);
-            else
-                MusicVolume = 1;
-            if (JSaver.HasData("SFXVolume"))
-                SFXVolume = JSaver.GetFloat("SFXVolume", 1f);
-            else
-                SFXVolume = 1;
+            DontDestroyOnLoad(go);
+
+            a2DPlayer = new Audio2DPlayer(go);
+            a3DPlayer = new Audio3DPlayer(go);
+
+
+            TotleVolume = float.Parse(PrefsManager.GetString("TotleVolume", "1"));
+
+            MusicVolume = float.Parse(PrefsManager.GetString("MusicVolume", "1"));
+
+            SFXVolume = float.Parse(PrefsManager.GetString("SFXVolume", "1"));
         }
 
-        #region Volume
 
-        private static float totleVolume = 1f;
         public static float TotleVolume
         {
-            get { return totleVolume; }
+            get => totleVolume;
+
             set
             {
                 totleVolume = Mathf.Clamp01(value);
                 SetMusicVolume();
                 SetSFXVolume();
-
             }
         }
 
+
         public static float MusicVolume
         {
-            get
-            {
-                return musicVolume;
-            }
-
+            get => musicVolume;
+           
             set
             {
                 musicVolume = Mathf.Clamp01(value);
@@ -78,12 +60,10 @@ namespace  UGame_Remove_Tmp
             }
         }
 
+
         public static float SFXVolume
         {
-            get
-            {
-                return sfxVolume;
-            }
+            get => sfxVolume;
 
             set
             {
@@ -92,154 +72,155 @@ namespace  UGame_Remove_Tmp
             }
         }
 
-        private static float musicVolume = 1f;
-
-        private static float sfxVolume = 1f;
 
         private static void SetMusicVolume()
         {
             a2DPlayer.SetMusicVolume(totleVolume * musicVolume);
             a3DPlayer.SetMusicVolume(totleVolume * musicVolume);
         }
+
+
         private static void SetSFXVolume()
         {
             a2DPlayer.SetSFXVolume(totleVolume * sfxVolume);
             a3DPlayer.SetSFXVolume(totleVolume * sfxVolume);
         }
 
+
         public static void SaveVolume()
         {
-            JSaver.SaveAsString<float>("TotleVolume", TotleVolume);
-            JSaver.SaveAsString<float>("MusicVolume", MusicVolume);
-            JSaver.SaveAsString<float>("SFXVolume", SFXVolume);
+            PrefsManager.SetString("TotleVolume", $"{TotleVolume}");
+            PrefsManager.SetString("MusicVolume", $"{MusicVolume}");
+            PrefsManager.SetString("SFXVolume", $"{SFXVolume}");
         }
-        #endregion
 
-        #region 播放接口
 
-        public static AudioAsset PlayMusic2D(string name, int channel, float volumeScale = 1, bool isLoop = true, float fadeTime = 0.5f, float delay = 0f, string flag = "")
+        public static AudioAsset PlayMusic2D(AudioClip audioClip, int channel, float volumeScale = 1, bool isLoop = true, float delay = 0f)
         {
-            return a2DPlayer.PlayMusic(channel, name, isLoop, volumeScale, delay, fadeTime, flag);
+            return a2DPlayer.PlayMusic2D(channel, audioClip, isLoop, volumeScale, delay);
         }
 
 
-        public static void PauseMusic2D(int channel, bool isPause, float fadeTime = 0.5f)
+        public static void PauseMusic2D(int channel, bool isPause)
         {
-            a2DPlayer.PauseMusic(channel, isPause, fadeTime);
+            a2DPlayer.PauseMusic2D(channel, isPause);
         }
 
 
-        public static void PauseMusicAll2D(bool isPause, float fadeTime = 0.5f)
+        public static void PauseMusicAll2D(bool isPause)
         {
-            a2DPlayer.PauseMusicAll(isPause, fadeTime);
+            a2DPlayer.PauseMusicAll2D(isPause);
         }
 
 
-        public static void StopMusic2D(int channel, float fadeTime = 0.5f)
+        public static void StopMusic2D(int channel)
         {
-
-            a2DPlayer.StopMusic(channel, fadeTime);
+            a2DPlayer.StopMusic2D(channel);
         }
+
 
         public static void StopMusicAll2D()
         {
-            a2DPlayer.StopMusicAll();
+            a2DPlayer.StopMusicAll2D();
         }
 
-        public static void PlaySFX2D(string name, float volumeScale = 1f, float delay = 0f, float pitch = 1, string flag = "")
+
+        public static void PlaySFX2D(AudioClip audioClip, float volumeScale = 1f, float delay = 0f, float pitch = 1)
         {
-            a2DPlayer.PlaySFX(name, volumeScale, delay, pitch, flag);
+            a2DPlayer.PlaySFX2D(audioClip, volumeScale, delay, pitch);
         }
 
 
         public static void PauseSFXAll2D(bool isPause)
         {
-            a2DPlayer.PauseSFXAll(isPause);
-
+            a2DPlayer.PauseSFXAll2D(isPause);
         }
 
 
-        public static AudioAsset PlayMusic3D(GameObject owner, string audioName, int channel = 0, float volumeScale = 1, bool isLoop = true, float fadeTime = 0.5f, float delay = 0f, string flag = "")
+        public static AudioAsset PlayMusic3D(GameObject owner, AudioClip audioClip, int channel = 0, float volumeScale = 1, bool isLoop = true, float delay = 0f)
         {
-            return a3DPlayer.PlayMusic(owner, audioName, channel, isLoop, volumeScale, delay, fadeTime, flag);
+            return a3DPlayer.PlayMusic3D(owner, audioClip, channel, isLoop, volumeScale, delay);
         }
 
 
-        public static void PauseMusic3D(GameObject owner, int channel, bool isPause, float fadeTime = 0.5f)
+        public static void PauseMusic3D(GameObject owner, int channel, bool isPause)
         {
-            a3DPlayer.PauseMusic(owner, channel, isPause, fadeTime);
+            a3DPlayer.PauseMusic3D(owner, channel, isPause);
         }
 
 
-        public static void PauseMusicAll3D(bool isPause, float fadeTime = 0.5f)
+        public static void PauseMusicAll3D(bool isPause)
         {
-            a3DPlayer.PauseMusicAll(isPause, fadeTime);
+            a3DPlayer.PauseMusicAll3D(isPause);
         }
 
 
-
-        public static void StopMusic3D(GameObject owner, int channel, float fadeTime = 0.5f)
+        public static void StopMusic3D(GameObject owner, int channel)
         {
-            a3DPlayer.StopMusic(owner, channel, fadeTime);
+            a3DPlayer.StopMusic3D(owner, channel);
         }
 
 
         public static void StopMusicOneAll3D(GameObject owner)
         {
-            a3DPlayer.StopMusicOneAll(owner);
+            a3DPlayer.StopMusicOneAll3D(owner);
         }
 
 
         public static void StopMusicAll3D()
         {
-            a3DPlayer.StopMusicAll();
+            a3DPlayer.StopMusicAll3D();
         }
 
 
-        public static void ReleaseMusic3D(GameObject owner)
+        public static void DestroyMusic3D(GameObject owner)
         {
-            a3DPlayer.ReleaseMusic(owner);
+            a3DPlayer.DestroyMusic3D(owner);
         }
 
-        public static void ReleaseMusicAll3D()
+
+        public static void DestroyMusicAll3D()
         {
-            a3DPlayer.ReleaseMusicAll();
+            a3DPlayer.DestroyMusicAll3D();
         }
 
-        public static void PlaySFX3D(GameObject owner, string name, float delay = 0f, float volumeScale = 1f)
+
+        public static void PlaySFX3D(GameObject owner, AudioClip audioClip, float delay = 0f, float volumeScale = 1f)
         {
-            a3DPlayer.PlaySFX(owner, name, volumeScale, delay);
+            a3DPlayer.PlaySFX3D(owner, audioClip, volumeScale, delay);
         }
+
+
         public static void PlaySFX3D(Vector3 position, string name, float delay = 0f, float volumeScale = 1)
         {
-            a3DPlayer.PlaySFX(position, name, volumeScale, delay);
+            //TODO...
+            //a3DPlayer.PlaySFX(position, name, volumeScale, delay);
         }
+
 
         public static void PauseSFXAll3D(bool isPause)
         {
-            a3DPlayer.PauseSFXAll(isPause);
-        }
-        public static void ReleaseSFX3D(GameObject owner)
-        {
-            a3DPlayer.ReleaseSFX(owner);
-        }
-        public static void ReleaseSFXAll3D()
-        {
-            a3DPlayer.ReleaseSFXAll();
+            a3DPlayer.PauseSFXAll3D(isPause);
         }
 
-        #endregion
 
-        #endregion
+        public static void DestroySFX3D(GameObject owner)
+        {
+            a3DPlayer.DestroySFX3D(owner);
+        }
+
+
+        public static void DestroySFXAll3D()
+        {
+            a3DPlayer.DestroySFXAll3D();
+        }
 
 
         void Update()
         {
-            a3DPlayer.ClearDestroyObjectData();
-            a2DPlayer.ClearMoreAudioAsset();
-
-            a2DPlayer.UpdateFade();
-            a3DPlayer.UpdateFade();
+            a2DPlayer.ClearDirtyAudioAsset();
+            a3DPlayer.ClearDirtyAudioAsset();
         }
+
     }
 }

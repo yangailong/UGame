@@ -57,7 +57,7 @@ namespace UGame_Local_Editor
 
             foreach (var path in pathArr)
             {
-                if (AssetsMappingImpl.InListenerAssetsRootPath(path))
+                if (AssetsMapperImpl.InListenerAssetsRootPath(path))
                 {
                     update = true;
                     break;
@@ -66,9 +66,9 @@ namespace UGame_Local_Editor
 
             if (!update) return;
 
-            if (AssetsMappingImpl.IsExistAssetsRootPath())
+            if (AssetsMapperImpl.IsExistAssetsRootPath())
             {
-                AssetsMappingImpl.Creat();
+                AssetsMapperImpl.Creat();
             }
 
         }

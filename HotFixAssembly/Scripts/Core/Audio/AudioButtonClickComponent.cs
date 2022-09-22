@@ -1,54 +1,35 @@
 ﻿using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace UGame_Remove_Tmp
+namespace UGame_Remove
 {
-
     public class AudioButtonClickComponent : MonoBehaviour
     {
 
-        public string m_AudioName = "";
+        //[FormerlySerializedAs("m_AudioClip")]
+        private AudioClip m_AudioClip = null;
 
-        public float m_Volume = 1f;
 
-
-        private Button _button = null;
-        private Button Button
-        {
-            get
-            {
-                if (_button == null)
-                {
-                    _button = GetComponent<Button>();
-                }
-                return _button;
-            }
-        }
+      //  [FormerlySerializedAs("m_Volume")]
+        private float m_Volume = 1f;
 
 
         void Awake()
         {
-            Button.onClick.AddListener(OnClick);
+            GetComponent<Button>().onClick.AddListener(OnClick);
         }
 
 
         void OnDestroy()
         {
-            Button.onClick.RemoveListener(OnClick);
+            GetComponent<Button>().onClick.RemoveListener(OnClick);
         }
-
 
 
         private void OnClick()
         {
-            if (!string.IsNullOrEmpty(m_AudioName))
-            {
-                AudioPlayManager.PlaySFX2D(m_AudioName, m_Volume);
-            }
-            else
-            {
-                Log.PrintError("不存在音频文件：" + m_AudioName);
-            }
+            AudioPlayManager.PlaySFX2D(m_AudioClip, m_Volume);
         }
     }
 }

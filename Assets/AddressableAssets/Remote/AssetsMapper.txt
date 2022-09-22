@@ -3,4 +3,4 @@ UIRoot	Prefabs/UIRoot.prefab
 Login	Scenes/Login.unity
 Main	Scenes/Main.unity
 UI_demo	UI/UI_demo.jpg
-AssetsMapping	AssetsMapping.txt
+AssetsMapper	AssetsMapper.txt

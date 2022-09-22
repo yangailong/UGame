@@ -18,7 +18,7 @@ namespace UGame_Remove
         /// 初始化资源映射表
         /// </summary>
         /// <param name="textAsset">资源映射表txt</param>
-        public static void Initialize(TextAsset textAsset)
+        public static void Init(TextAsset textAsset)
         {
             if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
             {
@@ -31,7 +31,7 @@ namespace UGame_Remove
             string[] allLine = tmpContent.Split('\n');
             foreach (string line in allLine)
             {
-                string[] lineData = line.Split(AssetsMappingConst.namePathSplit);
+                string[] lineData = line.Split(AssetsMapperConst.namePathSplit);
                 mapper.Add(lineData[0], lineData[1]);
             }
 
@@ -62,7 +62,7 @@ namespace UGame_Remove
                 throw new ArgumentException($"AssetsMapper can't find ->{assetsName}<-");
             }
 
-            path = $"Assets/{AssetsMappingConst.needListenerAssetsRootPath}/{path}";
+            path = $"Assets/{AssetsMapperConst.needListenerAssetsRootPath}/{path}";
 
             return path?.Trim();
         }

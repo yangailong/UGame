@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: AssetsMapping
+  m_Name: AssetsMapper
   m_EditorClassIdentifier: 
-  m_GroupName: AssetsMapping
+  m_GroupName: AssetsMapper
   m_Data:
     m_SerializedData: []
   m_GUID: 7b7a9d34ffcc95c46b8d559a4981e5af
   m_SerializeEntries:
-  - m_GUID: 380223a8742c9a944a982e41f9f570f5
-    m_Address: Assets/AddressableAssets/Remote/AssetsMapping.txt
+  - m_GUID: ce81cbd24abad434e8ac4685aa644363
+    m_Address: Assets/AddressableAssets/Remote/AssetsMapper.txt
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

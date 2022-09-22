@@ -19,13 +19,14 @@ namespace UGame_Remove
 
         private static IEnumerator Init()
         {
-            string path = $"Assets/{AssetsMappingConst.needListenerAssetsRootPath}/{AssetsMappingConst.creatPath}";
+            string path = $"Assets/{AssetsMapperConst.needListenerAssetsRootPath}/{AssetsMapperConst.creatPath}";
 
             ResourceManager.LoadAssetAsync<TextAsset>(path, o =>
             {
-                AssetsMapper.Initialize(o);
+                AssetsMapper.Init(o);
                 UIManager.Init();
                 CfgData.Init();
+                AudioPlayManager.Init();
             });
 
             yield return null;

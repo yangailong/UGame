@@ -8,16 +8,16 @@ using UGame_Local;
 
 namespace UGame_Local_Editor
 {
-    public static class AssetsMappingImpl
+    public static class AssetsMapperImpl
     {
         public static bool IsExistAssetsRootPath()
         {
-            return Directory.Exists($"{Application.dataPath}/{AssetsMappingConst.needListenerAssetsRootPath}");
+            return Directory.Exists($"{Application.dataPath}/{AssetsMapperConst.needListenerAssetsRootPath}");
         }
 
         public static bool InListenerAssetsRootPath(string path)
         {
-            return path.Contains(AssetsMappingConst.needListenerAssetsRootPath);
+            return path.Contains(AssetsMapperConst.needListenerAssetsRootPath);
         }
 
 
@@ -27,7 +27,7 @@ namespace UGame_Local_Editor
 
             string content = ParseMappingData(mapping);
 
-            string path = $"{Application.dataPath}/{AssetsMappingConst.needListenerAssetsRootPath}/{AssetsMappingConst.creatPath}";
+            string path = $"{Application.dataPath}/{AssetsMapperConst.needListenerAssetsRootPath}/{AssetsMapperConst.creatPath}";
 
             WriteStringByFile(path, content);
 
@@ -40,7 +40,7 @@ namespace UGame_Local_Editor
             string content = string.Empty;
             foreach (var item in mapping)
             {
-                content += $"{item.Key}{AssetsMappingConst.namePathSplit}{item.Value}\n";
+                content += $"{item.Key}{AssetsMapperConst.namePathSplit}{item.Value}\n";
             }
 
             content.TrimEnd('\n');
@@ -73,11 +73,11 @@ namespace UGame_Local_Editor
 
         private static Dictionary<string, string> SearchAssets()
         {
-            string searchPath = $"{Application.dataPath}/{AssetsMappingConst.needListenerAssetsRootPath}";
+            string searchPath = $"{Application.dataPath}/{AssetsMapperConst.needListenerAssetsRootPath}";
 
-            direIndex = searchPath.LastIndexOf(AssetsMappingConst.needListenerAssetsRootPath);
+            direIndex = searchPath.LastIndexOf(AssetsMapperConst.needListenerAssetsRootPath);
 
-            direIndex += AssetsMappingConst.needListenerAssetsRootPath.Length + 1;
+            direIndex += AssetsMapperConst.needListenerAssetsRootPath.Length + 1;
 
             Dictionary<string, string> mapping = new Dictionary<string, string>();
 
