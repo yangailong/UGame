@@ -23,7 +23,7 @@ namespace UGame_Remove
 
             ResourceManager.LoadAssetAsync<TextAsset>(path, o =>
             {
-                AssetsMapping.Initialize(o);
+                AssetsMapper.Initialize(o);
                 UIManager.Init();
                 CfgData.Init();
             });

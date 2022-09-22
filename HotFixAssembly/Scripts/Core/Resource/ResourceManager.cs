@@ -21,7 +21,7 @@ namespace UGame_Remove
         /// <param name="callBack">加载结束后回调，返回该资源</param>
         public static void LoadAssetAsync<TObject>(string assetsName, Action<TObject> callBack) where TObject : Object
         {
-            string path = AssetsMapping.IsExit(assetsName) ? AssetsMapping.LoadPath(assetsName) : assetsName;
+            string path = AssetsMapper.IsExit(assetsName) ? AssetsMapper.LoadPath(assetsName) : assetsName;
 
             loadAssets.LoadAssetAsync<TObject>(path, callBack);
         }
@@ -35,7 +35,7 @@ namespace UGame_Remove
         /// <param name="callBack">加载结束后回调，返回该资源</param>
         public static void LoadAssetsAsync<TObject>(IEnumerable assetsName, Action<TObject> callBack) where TObject : Object
         {
-            IEnumerable paths = AssetsMapping.LoadPaths(assetsName);
+            IEnumerable paths = AssetsMapper.LoadPaths(assetsName);
 
             loadAssets.LoadAssetsAsync<TObject>(paths, callBack);
         }
@@ -51,7 +51,7 @@ namespace UGame_Remove
         /// <returns></returns>
         public static AsyncOperationHandle<SceneInstance> LoadSceneAsync(string sceneName, LoadSceneMode loadMode = LoadSceneMode.Single, bool activateOnLoad = true, int priority = 100)
         {
-            string path = AssetsMapping.LoadPath(sceneName);
+            string path = AssetsMapper.LoadPath(sceneName);
             return loadAssets.LoadSceneAsync(path, loadMode, activateOnLoad, priority);
         }
 
