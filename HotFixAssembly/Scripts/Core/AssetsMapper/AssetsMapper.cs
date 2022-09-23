@@ -8,7 +8,7 @@ namespace UGame_Remove
 {
     public static class AssetsMapper
     {
-        private static Dictionary<string, string> mapper = null;
+        private static Dictionary<string, string> mapper = new Dictionary<string, string>();
 
         /// <summary>资源映射数据  key:资源名    value:资源路径 </summary>
         public static Dictionary<string, string> Mapper => mapper;
@@ -22,10 +22,10 @@ namespace UGame_Remove
         {
             if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
             {
-                Debug.LogError($"mapping cannot be empty");
+                throw new ArgumentNullException($"{nameof(textAsset)} cannot be empty ");
             }
 
-            mapper = new Dictionary<string, string>();
+            mapper.Clear();
 
             string tmpContent = textAsset.text.TrimEnd('\n');
             string[] allLine = tmpContent.Split('\n');

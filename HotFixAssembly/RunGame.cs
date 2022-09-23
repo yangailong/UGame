@@ -26,7 +26,7 @@ namespace UGame_Remove
                 AssetsMapper.Init(o);
                 UIManager.Init();
                 CfgData.Init();
-                AudioPlayManager.Init();
+                //AudioPlayManager.Init();
             });
 
             yield return null;

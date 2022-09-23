@@ -26,7 +26,7 @@ namespace UGame_Remove
 
         private void OnPointerClick()
         {
-            AudioPlayManager.PlaySFX2D(m_AudioClip, m_Volume);
+            //AudioPlayManager.PlaySFX2D(m_AudioClip, m_Volume);
         }
 
 

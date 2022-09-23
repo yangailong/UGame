@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 
 namespace UGame_Remove
@@ -187,10 +186,8 @@ namespace UGame_Remove
         }
 
 
-        public async void PlaySFX(Vector3 position, AudioClip audioClip, float volumeScale = 1f, float delay = 0f)
+        public void PlaySFX(Vector3 position, AudioClip audioClip, float volumeScale = 1f, float delay = 0f)
         {
-            int millisecondsDelay = (int)(delay * 100);
-            await Task.Delay(millisecondsDelay);
             AudioSource.PlayClipAtPoint(audioClip, position, AudioPlayManager.TotleVolume * AudioPlayManager.SFXVolume * volumeScale);
         }
 

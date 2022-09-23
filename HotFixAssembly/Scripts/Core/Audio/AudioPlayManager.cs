@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using UGame_Local;
 using UnityEngine;
 
 namespace UGame_Remove
@@ -10,6 +12,7 @@ namespace UGame_Remove
 
 
         public static Audio3DPlayer a3DPlayer { get; private set; } = null;
+
 
         private static float totleVolume = 1f;
 
@@ -52,7 +55,7 @@ namespace UGame_Remove
         public static float MusicVolume
         {
             get => musicVolume;
-           
+
             set
             {
                 musicVolume = Mathf.Clamp01(value);
@@ -191,10 +194,16 @@ namespace UGame_Remove
         }
 
 
-        public static void PlaySFX3D(Vector3 position, string name, float delay = 0f, float volumeScale = 1)
+        public static void PlaySFX3D(Vector3 position, AudioClip audioClip, float delay = 0f, float volumeScale = 1)
         {
-            //TODO...
-            //a3DPlayer.PlaySFX(position, name, volumeScale, delay);
+            MonoBehaviourRuntime.Instance.StartCoroutine(awitDelay(position, audioClip, delay, volumeScale));
+        }
+
+
+        private static IEnumerator awitDelay(Vector3 position, AudioClip audioClip, float delay = 0f, float volumeScale = 1)
+        {
+            yield return new WaitForSeconds(delay);
+            a3DPlayer.PlaySFX(position, audioClip, volumeScale, delay);
         }
 
 

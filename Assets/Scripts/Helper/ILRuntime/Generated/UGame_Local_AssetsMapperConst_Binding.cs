@@ -14,7 +14,7 @@ using ILRuntime.CLR.Utils;
 
 namespace ILRuntime.Runtime.Generated
 {
-    unsafe class UGame_Local_AssetsMappingConst_Binding
+    unsafe class UGame_Local_AssetsMapperConst_Binding
     {
         public static void Register(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
