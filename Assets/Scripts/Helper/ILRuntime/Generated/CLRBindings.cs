@@ -29,6 +29,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_MonoBehaviour_Binding.Register(app);
             UGame_Local_AssetsMapperConst_Binding.Register(app);
             System_String_Binding.Register(app);
+            UnityEngine_WaitForSeconds_Binding.Register(app);
             System_NotSupportedException_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
             UnityEngine_TextAsset_Binding.Register(app);
@@ -78,7 +79,6 @@ namespace ILRuntime.Runtime.Generated
             System_Type_Binding.Register(app);
             System_Reflection_MemberInfo_Binding.Register(app);
             System_Single_Binding.Register(app);
-            UnityEngine_WaitForSeconds_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_ScriptableObject_Binding.Register(app);
             System_Reflection_Assembly_Binding.Register(app);
             System_Linq_Enumerable_Binding.Register(app);

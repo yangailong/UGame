@@ -44,9 +44,9 @@ namespace UGame_Remove
             else
             {
                 audioAsset = new AudioAsset();
-                var tmpGo = new GameObject($"{sourceType}__source_{go.transform.childCount}");
+                var tmpGo = new GameObject($"{sourceType}_{go.transform.childCount}");
                 tmpGo.transform.SetParent(go.transform);
-                audioAsset.audioSource = tmpGo.GetComponent<AudioSource>();
+                audioAsset.audioSource = tmpGo.AddComponent<AudioSource>();
             }
 
             audioAsset.audioSource.spatialBlend = is3D ? 1 : 0;

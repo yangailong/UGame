@@ -40,14 +40,14 @@ namespace ILRuntime.Runtime.Generated
                 }
             }
             args = new Type[]{typeof(UnityEngine.AudioSource)};
-            if (genericMethods.TryGetValue("GetComponent", out lst))
+            if (genericMethods.TryGetValue("AddComponent", out lst))
             {
                 foreach(var m in lst)
                 {
                     if(m.MatchGenericParameters(args, typeof(UnityEngine.AudioSource)))
                     {
                         method = m.MakeGenericMethod(args);
-                        app.RegisterCLRMethodRedirection(method, GetComponent_1);
+                        app.RegisterCLRMethodRedirection(method, AddComponent_1);
 
                         break;
                     }
@@ -109,7 +109,7 @@ namespace ILRuntime.Runtime.Generated
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }
 
-        static StackObject* GetComponent_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* AddComponent_1(ILIntepreter __intp, StackObject* __esp, IList<object> __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -119,7 +119,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine.GameObject instance_of_this_method = (UnityEngine.GameObject)typeof(UnityEngine.GameObject).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
             __intp.Free(ptr_of_this_method);
 
-            var result_of_this_method = instance_of_this_method.GetComponent<UnityEngine.AudioSource>();
+            var result_of_this_method = instance_of_this_method.AddComponent<UnityEngine.AudioSource>();
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }

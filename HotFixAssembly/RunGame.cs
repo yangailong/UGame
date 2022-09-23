@@ -26,12 +26,16 @@ namespace UGame_Remove
                 AssetsMapper.Init(o);
                 UIManager.Init();
                 CfgData.Init();
-                //AudioPlayManager.Init();
+                AudioPlayManager.Init();
             });
 
-            yield return null;
+            yield return new WaitForSeconds(2f);
 
 
+            ResourceManager.LoadAssetAsync<AudioClip>("Cyberworld", o =>
+            {
+                AudioPlayManager.PlayMusic2D(o, 0);
+            });
 
 
 
