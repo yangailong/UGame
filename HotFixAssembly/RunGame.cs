@@ -24,6 +24,7 @@ namespace UGame_Remove
             ResourceManager.LoadAssetAsync<TextAsset>(path, o =>
             {
                 AssetsMapper.Init(o);
+                GlobalEvent.Init();
                 UIManager.Init();
                 CfgData.Init();
                 AudioPlayManager.Init();

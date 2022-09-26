@@ -7,7 +7,7 @@ using UnityEngine;
 
 namespace UGame_Remove
 {
-    public class CfgData 
+    public class CfgData
     {
         private static Dictionary<string, ScriptableObject> valuePairs = null;
 
@@ -37,6 +37,11 @@ namespace UGame_Remove
         }
 
 
+        /// <summary>
+        /// 获取数据
+        /// </summary>
+        /// <typeparam name="T">要获取的数据类型</typeparam>
+        /// <returns>要获得数据</returns>
         public static T GetValue<T>() where T : ScriptableObject
         {
             if (!valuePairs.TryGetValue(typeof(T).Name, out var value))
@@ -48,6 +53,6 @@ namespace UGame_Remove
 
 
 
-      
+
     }
 }

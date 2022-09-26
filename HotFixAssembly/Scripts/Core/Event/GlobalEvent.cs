@@ -8,16 +8,33 @@ namespace UGame_Remove
     {
         public delegate void EventHandler(params object[] sender);
 
-        private static Dictionary<Enum, EventHandler> m_EnumEventDic = new Dictionary<Enum, EventHandler>();
+        private static Dictionary<Enum, EventHandler> m_EnumEventDic = null;
+
+
+        public static void Init()
+        {
+            m_EnumEventDic = new Dictionary<Enum, EventHandler>();
+        }
 
 
         /// <summary>
-        /// 添加事件
+        ///  添加事件
         /// </summary>
-        /// <param name="key">枚举类型</param>
-        /// <param name="handler">回调方法</param>
+        /// <param name="key">要添加的事件</param>
+        /// <param name="handler">要添加的事件参数</param>
+        /// <exception cref="ArgumentNullException">无效参数</exception>
         public static void AddEvent(Enum key, EventHandler handler)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException($"{nameof(key)} is invalid");
+            }
+
+            if (handler == null)
+            {
+                throw new ArgumentNullException($"{nameof(handler)} is invalid");
+            }
+
             if (m_EnumEventDic.ContainsKey(key))
             {
                 m_EnumEventDic[key] += handler;
@@ -30,12 +47,23 @@ namespace UGame_Remove
 
 
         /// <summary>
-        /// 移除某类事件的中的一个
+        /// 移除某类事件的中的一个方法
         /// </summary>
-        /// <param name="key">事件类型</param>
-        /// <param name="handler">回调方法</param>
+        /// <param name="key">要移除事件key</param>
+        /// <param name="handler">要移除的方法</param>
+        /// <exception cref="ArgumentNullException">无效参数</exception>
         public static void RemoveEvent(Enum key, EventHandler handler)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException($"{nameof(key)} is invalid");
+            }
+
+            if (handler == null)
+            {
+                throw new ArgumentNullException($"{nameof(handler)} is invalid");
+            }
+
             if (!m_EnumEventDic.TryGetValue(key, out EventHandler eventHandler))
             {
                 eventHandler -= handler;
@@ -44,11 +72,17 @@ namespace UGame_Remove
 
 
         /// <summary>
-        /// 移除某类事件
+        ///  移除某类事件
         /// </summary>
-        /// <param name="key">事件类型</param>
+        /// <param name="key">要移除事件key</param>
+        /// <exception cref="ArgumentNullException">无效参数</exception>
         public static void RemoveEvent(Enum key)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException($"{nameof(key)} is invalid");
+            }
+
             if (m_EnumEventDic.ContainsKey(key))
             {
                 m_EnumEventDic.Remove(key);
@@ -59,10 +93,16 @@ namespace UGame_Remove
         /// <summary>
         /// 触发事件
         /// </summary>
-        /// <param name="key">事件类型</param>
+        /// <param name="key">要触发事件key</param>
         /// <param name="sender">事件参数</param>
+        /// <exception cref="ArgumentNullException">无效参数</exception>
         public static void DispatchEvent(Enum key, params object[] sender)
         {
+            if (key == null)
+            {
+                throw new ArgumentNullException($"{nameof(key)} is invalid");
+            }
+
             if (m_EnumEventDic.ContainsKey(key))
             {
                 try

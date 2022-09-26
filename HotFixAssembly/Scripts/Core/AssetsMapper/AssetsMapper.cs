@@ -10,24 +10,28 @@ namespace UGame_Remove
     {
         private static Dictionary<string, string> mapper = new Dictionary<string, string>();
 
-        /// <summary>资源映射数据  key:资源名    value:资源路径 </summary>
+
+        /// <summary>
+        /// 资源映射数据  key:资源名    value:资源路径
+        /// </summary>
         public static Dictionary<string, string> Mapper => mapper;
 
 
         /// <summary>
         /// 初始化资源映射表
         /// </summary>
-        /// <param name="textAsset">资源映射表txt</param>
-        public static void Init(TextAsset textAsset)
+        /// <param name="assetsMapper">资源映射表</param>
+        /// <exception cref="ArgumentNullException">无效参数</exception>
+        public static void Init(TextAsset assetsMapper)
         {
-            if (textAsset == null || string.IsNullOrEmpty(textAsset.text))
+            if (assetsMapper == null || string.IsNullOrEmpty(assetsMapper.text))
             {
-                throw new ArgumentNullException($"{nameof(textAsset)} cannot be empty ");
+                throw new ArgumentNullException($"{nameof(assetsMapper)} is invalid");
             }
 
             mapper.Clear();
 
-            string tmpContent = textAsset.text.TrimEnd('\n');
+            string tmpContent = assetsMapper.text.TrimEnd('\n');
             string[] allLine = tmpContent.Split('\n');
             foreach (string line in allLine)
             {
@@ -40,26 +44,39 @@ namespace UGame_Remove
 
 
         /// <summary>
-        /// 是否存在该资源
+        /// 检查资源是否存在
         /// </summary>
-        /// <param name="assetsName">资源名</param>
-        /// <returns></returns>
-        public static bool IsExit(string assetsName)
+        /// <param name="assetName">要检查的资源名</param>
+        /// <returns>资源是否存在</returns>
+        /// <exception cref="ArgumentNullException">无效参数</exception>
+        public static bool IsExit(string assetName)
         {
-            return mapper.ContainsKey(assetsName);
+            if (string.IsNullOrEmpty(assetName))
+            {
+                throw new ArgumentNullException($"{nameof(assetName)} is invalid ");
+            }
+
+            return mapper.ContainsKey(assetName);
         }
 
 
         /// <summary>
         /// 获取assetsName路径
         /// </summary>
-        /// <param name="assetsName">资源名</param>
-        /// <returns></returns>
-        public static string LoadPath(string assetsName)
+        /// <param name="assetName">资源名</param>
+        /// <returns>资源路径</returns>
+        /// <exception cref="ArgumentNullException">无效参数</exception>
+        /// <exception cref="ArgumentException">未查找到该资源</exception>
+        public static string LoadPath(string assetName)
         {
-            if (!mapper.TryGetValue(assetsName, out string path))
+            if (string.IsNullOrEmpty(assetName))
             {
-                throw new ArgumentException($"AssetsMapper can't find ->{assetsName}<-");
+                throw new ArgumentNullException($"{nameof(assetName)} is invalid ");
+            }
+
+            if (!mapper.TryGetValue(assetName, out string path))
+            {
+                throw new ArgumentException($"AssetsMapper can't find ->{assetName}<-");
             }
 
             path = $"Assets/{AssetsMapperConst.needListenerAssetsRootPath}/{path}";
@@ -71,10 +88,16 @@ namespace UGame_Remove
         /// <summary>
         /// 获取多个assetsName路径
         /// </summary>
-        /// <param name="assetsName">资源集合</param>
-        /// <returns></returns>
+        /// <param name="assetsName">要获取的资源名集合</param>
+        /// <returns>资源路径集合</returns>
+        /// <exception cref="ArgumentNullException">无效参数</exception>
         public static IEnumerable LoadPaths(IEnumerable assetsName)
         {
+            if (assetsName == null)
+            {
+                throw new ArgumentNullException($"{nameof(assetsName)} is invalid");
+            }
+
             List<string> paths = new List<string>();
 
             foreach (string name in assetsName)
