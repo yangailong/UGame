@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections;
+using System.Collections.Generic;
 using UGame_Local;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,6 +15,11 @@ namespace UGame_Remove
             Debug.Log($"UGame_Remove StartUp");
 
             MonoBehaviourRuntime.Instance.StartCoroutine(Init());
+
+            //TODO.....
+            //代码延迟执行功能
+
+            //红点系统
         }
 
 
@@ -29,6 +35,7 @@ namespace UGame_Remove
                 CfgData.Init();
                 AudioPlayManager.Init();
             });
+
 
             yield return new WaitForSeconds(2f);
 

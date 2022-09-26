@@ -39,6 +39,7 @@
   <ItemGroup>
     <Compile Include="RunGame.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Scripts\Core\AppInit.cs" />
     <Compile Include="Scripts\Core\AssetsMapper\AssetsMapper.cs" />
     <Compile Include="Scripts\Core\Audio\Base\Audio2DPlayer.cs" />
     <Compile Include="Scripts\Core\Audio\Base\Audio3DPlayer.cs" />
@@ -54,6 +55,7 @@
     <Compile Include="Scripts\Core\Resource\LoadAddressImpl.cs" />
     <Compile Include="Scripts\Core\Resource\LoadAssetsImpl.cs" />
     <Compile Include="Scripts\Core\Resource\ResourceManager.cs" />
+    <Compile Include="Scripts\Core\test.cs" />
     <Compile Include="Scripts\Core\UI\Helper\UILayerAttribute.cs" />
     <Compile Include="Scripts\Core\UI\UIAnimManager.cs" />
     <Compile Include="Scripts\Core\UI\UIConst.cs" />

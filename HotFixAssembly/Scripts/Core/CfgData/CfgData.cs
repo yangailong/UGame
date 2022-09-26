@@ -9,6 +9,7 @@ namespace UGame_Remove
 {
     public class CfgData
     {
+
         private static Dictionary<string, ScriptableObject> valuePairs = null;
 
 
