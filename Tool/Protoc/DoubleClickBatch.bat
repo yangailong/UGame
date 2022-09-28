@@ -19,10 +19,27 @@ for /f "delims=" %%i in ('dir /b "%source%\*.proto"') do (
      echo gen source/%%i...
      
      %toolPath%  --proto_path="%source%"  --csharp_out="%out_CSharpPath%"   "%source%\%%i" 
- 
-)
+ )
 
-echo Success
+ echo 成功创建C#文件...
+
+
+
+ rem ------------------------------删除 hotFixAssembly路径下的PB文件  重新生成--------------------------------
+
+ set "hotFixAssemblyPBPath=%cd%\..\..\HotFixAssembly\Scripts\Game\PB"
+ 
+ ::删除旧的文件，重新生成
+del %hotFixAssemblyPBPath%\*.* /f /s /q
+
+for /f "delims=" %%i in ('dir /b "%out_CSharpPath%\*.cs"') do (
+    copy "%out_CSharpPath%\"%%i %hotFixAssemblyPBPath%
+ )
+ 
+echo 拷贝C#文件成功...
+
+
+
 
 pause
 
