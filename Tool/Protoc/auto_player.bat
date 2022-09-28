@@ -16,9 +16,12 @@ del %out_CSharpPath%\*.* /f /s /q
 ::遍历全部文件
 for /f "delims=" %%i in ('dir /b "%source%\*.proto"') do (
 
+     ::显示.protoc 转C#
+     echo %%i ----:%out_CSharpPath%\%%~ni.cs
+
      ::生成 C# 代码
-     echo %toolPath% -i:%%i -o:%out_CSharpPath%\%%~ni.cs
-          %toolPath% -i:%%i -o:%out_CSharpPath%\%%~ni.cs
+     %toolPath%  %%i ---> %out_CSharpPath%\%%~ni.cs
+ 
 )
 
 echo Success
