@@ -1,17 +1,8 @@
-
-// 指定版本
 syntax = "proto3";
+package Test;
 
-// C#中的namespace
-package ProtoTest;
- 
-
-// 消息结果。
-message MsgResult {
-    // 结果码。
-    int32 code = 1;
-    // 错误消息。
-    string err_msg = 2;
- 
+message Test{
+    string name = 1;
+    int32 id = 2;
+    string psd = 3;
 }
- 
