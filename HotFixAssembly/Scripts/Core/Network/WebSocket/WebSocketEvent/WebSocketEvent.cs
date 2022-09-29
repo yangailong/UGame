@@ -5,21 +5,27 @@ using UnityEngine;
 
 namespace UGame_Remove
 {
-    public class ProtocolAnalyticalWithT<T> : ProtocolAnalytical where T : IMessage, new()
+
+    public delegate void MsgCallBackWithT<T>(int id, T data) where T : IMessage, new();
+
+
+    public class WebSocketEvent<T> : WebSocketEventBase where T : IMessage, new()
     {
         private MsgCallBackWithT<T> callback;
 
-        public ProtocolAnalyticalWithT(int id, MsgCallBackWithT<T> callback) : base()
+        private Action<T, int> action;
+
+        public WebSocketEvent(int id, MsgCallBackWithT<T> callback) : base()
         {
-            this.id = id;
+            this.msgID = id;
             this.callback = callback;
         }
 
         public override void AnalyzingContext(byte[] receiveBuffer, int startPos, int analyzingLength)
         {
             var msg = new T().Descriptor.Parser.ParseFrom(receiveBuffer, startPos, receiveBuffer.Length - startPos);
-            Debug.Log($"recv megId:{id} message:{JsonConvert.SerializeObject(msg)}");
-            callback?.Invoke(id, (T)msg);
+            Debug.Log($"recv megId:{msgID} message:{JsonConvert.SerializeObject(msg)}");
+            callback?.Invoke(msgID, (T)msg);
         }
     }
 }

@@ -1,18 +1,17 @@
-﻿using WebSocket4Net;
+﻿using System;
+using System.IO;
 using UnityEngine;
-using System;
+using WebSocket4Net;
 using Google.Protobuf;
 using Newtonsoft.Json;
-using System.IO;
 using ErrorEventArgs = SuperSocket.ClientEngine.ErrorEventArgs;
-
 namespace UGame_Remove
 {
     public class NetWebSocket : ComponentSingleton<NetWebSocket>
     {
         private WebSocket m_WebSocket = null;
 
-        private SocketMessages m_SocketMessages = new SocketMessages();
+        private WebSocketEventManager m_SocketMessages = new WebSocketEventManager();
 
         public event EventHandler Opened;
         public event EventHandler Closed;
@@ -23,11 +22,7 @@ namespace UGame_Remove
 
         void Awake()
         {
-            m_WebSocket = new WebSocket("url", "SignalR", WebSocketVersion.Rfc6455);
-
-            m_WebSocket.EnableAutoSendPing = true;
-            m_WebSocket.AutoSendPingInterval = 1;
-            m_WebSocket.Open();
+            this.Open("192.168.....", "", WebSocketVersion.Rfc6455);
         }
 
 
@@ -53,7 +48,35 @@ namespace UGame_Remove
 
         void OnDestory()
         {
+            this.Close();
+        }
+
+
+        public void Open(string url, string subProtocol, WebSocketVersion socketVersion)
+        {
+            m_WebSocket = new WebSocket(url, subProtocol, socketVersion);
+
+            m_WebSocket.EnableAutoSendPing = true;
+            m_WebSocket.AutoSendPingInterval = 1;
+
+            m_WebSocket.Open();
+        }
+
+
+        public void Close()
+        {
             m_WebSocket.Close();
+
+            m_WebSocket.Dispose();
+        }
+
+
+        public void Send(int id, IMessage msg)
+        {
+            Debug.Log($"send msgId: {id}, {JsonConvert.SerializeObject(msg)}");
+
+            var buffer = Serialize(id, msg);
+            m_WebSocket.Send(buffer, 0, buffer.Length);
         }
 
 
@@ -103,9 +126,9 @@ namespace UGame_Remove
 
             var id = Bytes2Int(buffer, 4);
 
-            if (m_SocketMessages.HasProtocol(id))
+            if (m_SocketMessages.ContainsMsg(id))
             {
-                m_SocketMessages.Invoke(id, buffer);
+                m_SocketMessages.Dispatch(id, buffer);
             }
             else
             {
@@ -120,15 +143,6 @@ namespace UGame_Remove
             int value = 0;
             value = (int)((bytes[offset + 3] & 0xFF) | ((bytes[offset + 2] & 0xFF) << 8) | ((bytes[offset + 1] & 0xFF) << 16) | ((bytes[offset + 0] & 0xFF) << 24));
             return value;
-        }
-
-
-        public void SendMSg(int id, IMessage msg)
-        {
-            Debug.Log($"send msgId: {id}, {JsonConvert.SerializeObject(msg)}");
-
-            var buffer = Serialize(id, msg);
-            m_WebSocket.Send(buffer, 0, buffer.Length);
         }
 
 
