@@ -52,7 +52,6 @@
     <Compile Include="Scripts\Core\Event\GlobalEvent.cs" />
     <Compile Include="Scripts\Core\Network\NetError.cs" />
     <Compile Include="Scripts\Core\Network\NetManager.cs" />
-    <Compile Include="Scripts\Core\Network\WebSocket\Helper\WebsocketHelper.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\NetWebSocket.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\Protoc\ProtocolAnalytical.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\Protoc\ProtocolAnalyticalWithT.cs" />
