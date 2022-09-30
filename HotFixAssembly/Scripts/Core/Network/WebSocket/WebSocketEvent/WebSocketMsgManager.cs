@@ -17,7 +17,7 @@ namespace UGame_Remove
         {
             if (!eventPairs.ContainsKey(id))
             {
-                var socketEvent = new WebSocketEvent<T>(id, callback);
+                var socketEvent = new WebSocketEventArgs<T>(id, callback);
 
                 eventPairs.Add(id, socketEvent);
             }
@@ -43,7 +43,7 @@ namespace UGame_Remove
         {
             if (eventPairs.TryGetValue(id, out var webSocketEvent))
             {
-                webSocketEvent.Dispatch(buffer, 8, buffer.Length);
+                webSocketEvent.Dispatch(buffer, 8);
             }
         }
 

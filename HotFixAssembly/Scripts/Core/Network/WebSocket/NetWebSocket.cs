@@ -4,7 +4,8 @@ using UnityEngine;
 using WebSocket4Net;
 using Google.Protobuf;
 using Newtonsoft.Json;
-using ErrorEventArgs = SuperSocket.ClientEngine.ErrorEventArgs;
+using System.Diagnostics;
+
 namespace UGame_Remove
 {
     public class NetWebSocket : ComponentSingleton<NetWebSocket>
@@ -84,7 +85,6 @@ namespace UGame_Remove
         {
             Debug.Log($"WebSocket_Opened args:{e}");
             Opened?.Invoke(sender, e);
-
             //开始 心跳
         }
 
