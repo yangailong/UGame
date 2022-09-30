@@ -50,12 +50,9 @@
     <Compile Include="Scripts\Core\CfgData\CfgData.cs" />
     <Compile Include="Scripts\Core\CrypManager\CrypManager.cs" />
     <Compile Include="Scripts\Core\Event\GlobalEvent.cs" />
-    <Compile Include="Scripts\Core\Network\NetError.cs" />
-    <Compile Include="Scripts\Core\Network\NetManager.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\NetWebSocket.cs" />
-    <Compile Include="Scripts\Core\Network\WebSocket\Protoc\ProtocolAnalytical.cs" />
-    <Compile Include="Scripts\Core\Network\WebSocket\Protoc\ProtocolAnalyticalWithT.cs" />
-    <Compile Include="Scripts\Core\Network\WebSocket\SocketMessages\SocketMessages.cs" />
+    <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketEvent.cs" />
+    <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketMsgManager.cs" />
     <Compile Include="Scripts\Core\PrefsManager\PrefsManager.cs" />
     <Compile Include="Scripts\Core\Resource\LoadAddressImpl.cs" />
     <Compile Include="Scripts\Core\Resource\LoadAssetsImpl.cs" />

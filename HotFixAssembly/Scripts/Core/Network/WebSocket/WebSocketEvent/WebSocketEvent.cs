@@ -6,26 +6,35 @@ using UnityEngine;
 namespace UGame_Remove
 {
 
-    public delegate void MsgCallBackWithT<T>(int id, T data) where T : IMessage, new();
-
-
-    public class WebSocketEvent<T> : WebSocketEventBase where T : IMessage, new()
+    public interface IWebSocketEvent
     {
-        private MsgCallBackWithT<T> callback;
+        void Dispatch(byte[] receiveBuffer, int startPos, int Analyzinglenght);
+    }
 
-        private Action<T, int> action;
 
-        public WebSocketEvent(int id, MsgCallBackWithT<T> callback) : base()
+    public class WebSocketEvent<T> : IWebSocketEvent where T : IMessage, new()
+    {
+        private int id;
+
+        private Action<int, T> callback;
+
+
+        public WebSocketEvent(int id, Action<int, T> callback)
         {
-            this.msgID = id;
+            this.id = id;
             this.callback = callback;
         }
 
-        public override void AnalyzingContext(byte[] receiveBuffer, int startPos, int analyzingLength)
+
+        public void Dispatch(byte[] receiveBuffer, int startPos, int Analyzinglenght)
         {
             var msg = new T().Descriptor.Parser.ParseFrom(receiveBuffer, startPos, receiveBuffer.Length - startPos);
-            Debug.Log($"recv megId:{msgID} message:{JsonConvert.SerializeObject(msg)}");
-            callback?.Invoke(msgID, (T)msg);
+
+            Debug.Log($"recv msgId: {id}, {JsonConvert.SerializeObject(msg)}");
+
+            callback?.Invoke(id, (T)msg);
         }
     }
+
 }
+

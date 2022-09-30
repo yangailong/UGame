@@ -1,31 +1,30 @@
-﻿using Google.Protobuf;
+﻿using System;
+using Google.Protobuf;
 using System.Collections.Generic;
-
 namespace UGame_Remove
 {
     public class WebSocketEventManager
     {
-
-        private Dictionary<int, WebSocketEventBase>  eventPairs = null;
-
+        private Dictionary<int, IWebSocketEvent> eventPairs = null;
 
         public WebSocketEventManager()
         {
-            eventPairs = new Dictionary<int, WebSocketEventBase>();
+            eventPairs = new Dictionary<int, IWebSocketEvent>();
         }
 
 
-        public void Register<T>(int id, MsgCallBackWithT<T> callback) where T : IMessage, new()
+        public void Register<T>(int id, Action<int, T> callback) where T : IMessage, new()
         {
             if (!eventPairs.ContainsKey(id))
             {
-                WebSocketEvent<T> protocol = new WebSocketEvent<T>(id, callback);
-                eventPairs.Add(id, protocol);
+                var socketEvent = new WebSocketEvent<T>(id, callback);
+
+                eventPairs.Add(id, socketEvent);
             }
         }
 
 
-        public void Unregister<T>(int id, MsgCallBackWithT<T> callback) where T : IMessage, new()
+        public void Unregister(int id)
         {
             if (eventPairs.ContainsKey(id))
             {
@@ -42,15 +41,11 @@ namespace UGame_Remove
 
         public void Dispatch(int id, byte[] buffer)
         {
-            if (eventPairs.TryGetValue(id, out var protocol))
+            if (eventPairs.TryGetValue(id, out var webSocketEvent))
             {
-                protocol.AnalyzingContext(buffer, 8, buffer.Length);
+                webSocketEvent.Dispatch(buffer, 8, buffer.Length);
             }
         }
-
-
-       
-
 
     }
 }
