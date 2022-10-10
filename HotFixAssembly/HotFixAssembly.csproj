@@ -61,6 +61,7 @@
     <Compile Include="Scripts\Core\UI\UIManager.cs" />
     <Compile Include="Scripts\Core\UI\UIPanelBase.cs" />
     <Compile Include="Scripts\Game\EventKey\EventEnum.cs" />
+    <Compile Include="Scripts\Game\PB\Test.cs" />
     <Compile Include="Scripts\Game\Utility\CanvasScalerUtil.cs" />
     <Compile Include="Scripts\Game\Utility\Singleton\ComponentSingleton.cs" />
     <Compile Include="Scripts\Game\Utility\Singleton\Singleton.cs" />
@@ -70,7 +71,22 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\ScriptAssemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="Google.Protobuf">
+      <HintPath>..\Assets\ThirdParty\GoogleProtobuf\Google.Protobuf.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
+    <Reference Include="System.Buffers, Version=4.0.3.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assets\ThirdParty\GoogleProtobuf\System.Buffers.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Memory, Version=4.0.1.2, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assets\ThirdParty\GoogleProtobuf\System.Memory.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Runtime.CompilerServices.Unsafe, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Assets\ThirdParty\GoogleProtobuf\System.Runtime.CompilerServices.Unsafe.dll</HintPath>
+    </Reference>
     <Reference Include="Unity.Addressables">
       <HintPath>dlls\Unity.Addressables.dll</HintPath>
     </Reference>
@@ -98,7 +114,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Scripts\Core\Network\" />
-    <Folder Include="Scripts\Game\PB\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

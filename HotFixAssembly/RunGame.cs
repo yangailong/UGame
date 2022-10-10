@@ -46,6 +46,8 @@ namespace UGame_Remove
                 AudioPlayManager.PlayMusic2D(o, 0);
             });
 
+            
+            Test.Test test=new Test.Test();
 
 
         }
