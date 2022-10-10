@@ -3,8 +3,6 @@ using System.IO;
 using UnityEngine;
 using WebSocket4Net;
 using Google.Protobuf;
-using Newtonsoft.Json;
-using System.Diagnostics;
 
 namespace UGame_Remove
 {
@@ -16,7 +14,7 @@ namespace UGame_Remove
 
         public event EventHandler Opened;
         public event EventHandler Closed;
-        public event EventHandler<ErrorEventArgs> Error;
+        public event EventHandler<SuperSocket.ClientEngine.ErrorEventArgs> Error;
         public event EventHandler<DataReceivedEventArgs> DataReceived;
         public event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
@@ -31,17 +29,18 @@ namespace UGame_Remove
         {
             m_WebSocket.Opened += WebSocket_Opened;
             m_WebSocket.Closed += WebSocket_Closed;
-            m_WebSocket.Error += WebSocket_Error;
+            m_WebSocket.Error += M_WebSocket_Error;
             m_WebSocket.MessageReceived += WebSocket_MessageReceived;
             m_WebSocket.DataReceived += WebSocket_DataReceived;
         }
 
+      
 
         void OnDisable()
         {
             m_WebSocket.Opened -= WebSocket_Opened;
             m_WebSocket.Closed -= WebSocket_Closed;
-            m_WebSocket.Error -= WebSocket_Error;
+            m_WebSocket.Error -= M_WebSocket_Error;
             m_WebSocket.MessageReceived -= WebSocket_MessageReceived;
             m_WebSocket.DataReceived -= WebSocket_DataReceived;
         }
@@ -74,7 +73,7 @@ namespace UGame_Remove
 
         public void Send(int id, IMessage msg)
         {
-            Debug.Log($"send msgId: {id}, {JsonConvert.SerializeObject(msg)}");
+            Debug.Log($"send msgId: {id}, {JsonUtility.ToJson(msg)}");
 
             var buffer = Serialize(id, msg);
             m_WebSocket.Send(buffer, 0, buffer.Length);
@@ -98,12 +97,12 @@ namespace UGame_Remove
         }
 
 
-        private void WebSocket_Error(object sender, ErrorEventArgs e)
+        private void M_WebSocket_Error(object sender, SuperSocket.ClientEngine.ErrorEventArgs e)
         {
-            Debug.LogError($"WebSocket_Error args:{e}");
-
+            Debug.Log($"M_WebSocket_Error args:{e}");
             Error?.Invoke(sender, e);
         }
+
 
 
         private void WebSocket_MessageReceived(object sender, MessageReceivedEventArgs e)

@@ -1,5 +1,4 @@
 ﻿using Google.Protobuf;
-using Newtonsoft.Json;
 using System;
 using UnityEngine;
 
@@ -30,7 +29,9 @@ namespace UGame_Remove
         {
             var msg = new T().Descriptor.Parser.ParseFrom(receiveBuffer, startPos, receiveBuffer.Length - startPos);
 
-            Debug.Log($"recv msgId: {id}, {JsonConvert.SerializeObject(msg)}");
+            Debug.Log($"recv msgId: {id}, {JsonUtility.ToJson(msg)}");
+
+          
 
             callback?.Invoke(id, (T)msg);
         }

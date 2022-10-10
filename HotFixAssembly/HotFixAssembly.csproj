@@ -183,6 +183,9 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>dlls\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>dlls\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>dlls\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
