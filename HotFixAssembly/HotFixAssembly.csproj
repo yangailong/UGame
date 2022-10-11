@@ -54,12 +54,14 @@
     <Compile Include="Scripts\Core\Resource\LoadAddressImpl.cs" />
     <Compile Include="Scripts\Core\Resource\LoadAssetsImpl.cs" />
     <Compile Include="Scripts\Core\Resource\ResourceManager.cs" />
+    <Compile Include="Scripts\Core\Timer\CoroutineRunner.cs" />
     <Compile Include="Scripts\Core\UI\Helper\UILayerAttribute.cs" />
     <Compile Include="Scripts\Core\UI\UIAnimManager.cs" />
     <Compile Include="Scripts\Core\UI\UIConst.cs" />
     <Compile Include="Scripts\Core\UI\UICycle.cs" />
     <Compile Include="Scripts\Core\UI\UIManager.cs" />
     <Compile Include="Scripts\Core\UI\UIPanelBase.cs" />
+    <Compile Include="Scripts\CoroutineRunnerEX.cs" />
     <Compile Include="Scripts\Game\EventKey\EventEnum.cs" />
     <Compile Include="Scripts\Game\PB\Test.cs" />
     <Compile Include="Scripts\Game\Utility\CanvasScalerUtil.cs" />
