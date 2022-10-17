@@ -34,11 +34,11 @@ namespace UGame_Remove
         /// <summary>
         /// 等待几帧，执行一个方法
         /// </summary>
-        /// <param name="frame">要等待的帧数</param>
+        /// <param name="frames">要等待的帧数</param>
         /// <param name="action">要执行的方法</param>
-        public static void WaitForFrames(int frame, Action action)
+        public static void WaitForFrames(int frames, Action action)
         {
-            Instance.StartCoroutine(Instance.DoWaitForFrames(frame, action));
+            Instance.StartCoroutine(Instance.DoWaitForFrames(frames, action));
         }
 
 
@@ -59,14 +59,14 @@ namespace UGame_Remove
         /// <summary>
         /// 等待几帧，执行一个方法
         /// </summary>
-        /// <param name="frame">要等待的帧数</param>
+        /// <param name="frames">要等待的帧数</param>
         /// <param name="action">要执行的方法</param>
         /// <returns></returns>
-        private IEnumerator DoWaitForFrames(int frame, Action action)
+        private IEnumerator DoWaitForFrames(int frames, Action action)
         {
-            while (frame > 0)
+            while (frames > 0)
             {
-                frame--;
+                frames--;
                 yield return 0;
             }
             action?.Invoke();
