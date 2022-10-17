@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UGame_Local;
 using UnityEngine;
-using UnityEngine.UI;
 
 namespace UGame_Remove
 {
@@ -14,10 +11,7 @@ namespace UGame_Remove
         {
             Debug.Log($"UGame_Remove StartUp");
 
-            MonoBehaviourRuntime.Instance.StartCoroutine(Init());
-
-            //TODO.....
-            //代码延迟执行功能
+            CoroutineRunner.OverStartCoroutine(Init());
 
             //红点系统
         }
@@ -46,8 +40,8 @@ namespace UGame_Remove
                 AudioPlayManager.PlayMusic2D(o, 0);
             });
 
-            
-            Test.Test test=new Test.Test();
+
+            Test.Test test = new Test.Test();
 
 
         }

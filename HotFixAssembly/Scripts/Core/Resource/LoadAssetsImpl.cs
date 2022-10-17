@@ -7,7 +7,6 @@ using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
-using UGame_Local;
 
 namespace UGame_Remove
 {
@@ -30,14 +29,14 @@ namespace UGame_Remove
         /// <summary>加载单个资源</summary>
         public void LoadAssetAsync<TObject>(string path, Action<TObject> callBack) where TObject : Object
         {
-            MonoBehaviourRuntime.Instance.StartCoroutine(DoLoadAsset<TObject>(path, callBack));
+            CoroutineRunner.OverStartCoroutine(DoLoadAsset<TObject>(path, callBack));
         }
 
 
         /// <summary>加载多个资源</summary>
         public void LoadAssetsAsync<TObject>(IEnumerable paths, Action<TObject> callBack) where TObject : Object
         {
-            MonoBehaviourRuntime.Instance.StartCoroutine(DoLoadAssets(paths, callBack));
+            CoroutineRunner.OverStartCoroutine(DoLoadAssets(paths, callBack));
         }
 
         /// <summary>加载场景</summary>
@@ -78,7 +77,7 @@ namespace UGame_Remove
                     callBack?.Invoke(asset);
                 };
 
-                MonoBehaviourRuntime.Instance.StartCoroutine(load.LoadAssetAsync<TObject>(path, overCallback));
+                CoroutineRunner.OverStartCoroutine(load.LoadAssetAsync<TObject>(path, overCallback));
             }
 
             yield return new WaitForEndOfFrame();
@@ -125,7 +124,7 @@ namespace UGame_Remove
                 tmpResCallback?.Invoke(asset);
             };
 
-            MonoBehaviourRuntime.Instance.StartCoroutine(load.LoadAssetsAsync<TObject>(againLoadPaths, overCallback));
+            CoroutineRunner.OverStartCoroutine(load.LoadAssetsAsync<TObject>(againLoadPaths, overCallback));
 
             yield return new WaitForEndOfFrame();
         }
