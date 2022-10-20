@@ -24,11 +24,13 @@ namespace ILRuntime.Runtime.Generated
         /// </summary>
         public static void Initialize(ILRuntime.Runtime.Enviorment.AppDomain app)
         {
-            UnityEngine_Debug_Binding.Register(app);
-            UnityEngine_ResourceManagement_Util_ComponentSingleton_1_MonoBehaviourRuntime_Binding.Register(app);
-            UnityEngine_MonoBehaviour_Binding.Register(app);
-            UGame_Local_AssetsMapperConst_Binding.Register(app);
+            Google_Protobuf_ProtoPreconditions_Binding.Register(app);
             System_String_Binding.Register(app);
+            Google_Protobuf_CodedOutputStream_Binding.Register(app);
+            Google_Protobuf_CodedInputStream_Binding.Register(app);
+            Google_Protobuf_MessageParser_1_IMessageAdapt_Binding_Adaptor_Binding.Register(app);
+            UnityEngine_Debug_Binding.Register(app);
+            UGame_Local_AssetsMapperConst_Binding.Register(app);
             UnityEngine_WaitForSeconds_Binding.Register(app);
             System_NotSupportedException_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
@@ -83,6 +85,8 @@ namespace ILRuntime.Runtime.Generated
             System_Reflection_Assembly_Binding.Register(app);
             System_Linq_Enumerable_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding.Register(app);
+            UnityEngine_MonoBehaviour_Binding.Register(app);
+            System_Action_Binding.Register(app);
             System_Text_Encoding_Binding.Register(app);
             System_Security_Cryptography_Aes_Binding.Register(app);
             System_Security_Cryptography_SymmetricAlgorithm_Binding.Register(app);
@@ -105,6 +109,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_CanvasScaler_Binding.Register(app);
             UnityEngine_Screen_Binding.Register(app);
             UnityEngine_Vector2_Binding.Register(app);
+            UnityEngine_Application_Binding.Register(app);
 
             ILRuntime.CLR.TypeSystem.CLRType __clrType = null;
             __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Vector2));

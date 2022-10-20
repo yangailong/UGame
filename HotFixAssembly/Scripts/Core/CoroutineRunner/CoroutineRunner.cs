@@ -21,6 +21,16 @@ namespace UGame_Remove
 
 
         /// <summary>
+        /// 结束一个协程
+        /// </summary>
+        /// <param name="routine">要结束的协程</param>
+        public static void OverStopCoroutine(IEnumerator routine)
+        {
+            Instance.StopCoroutine(routine);
+        }
+
+
+        /// <summary>
         /// 等待几秒，执行一个方法
         /// </summary>
         /// <param name="seconds">等待秒数</param>

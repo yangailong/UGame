@@ -8,7 +8,6 @@ public class OpenCSharp : MonoBehaviour
 
     private void Awake()
     {
-       
     }
 
 }
