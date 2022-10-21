@@ -13,7 +13,18 @@ namespace UGame_Remove
         private static Dictionary<string, ScriptableObject> valuePairs = null;
 
 
-        public static void Init()
+        /// <summary>
+        /// 异步初始化是否完成
+        /// true：完成
+        /// false：未完成
+        /// </summary>
+        public static bool AsyncInitComplete { get; set; } = false;
+
+
+        /// <summary>
+        /// 异步初始化·读取配置数据
+        /// </summary>
+        public static void AsyncInit()
         {
             valuePairs = new Dictionary<string, ScriptableObject>();
 
@@ -25,6 +36,7 @@ namespace UGame_Remove
 
             string[] assetsName = arr.Select(type => type.Name).ToArray();
 
+            Debug.Log($"count:{valuePairs.Count}");
 
             ResourceManager.LoadAssetsAsync<ScriptableObject>(assetsName, o =>
             {
@@ -32,7 +44,14 @@ namespace UGame_Remove
                 {
                     valuePairs.Add(o.name, o);
 
-                    Debug.Log($"count:{valuePairs.Count}");
+                    Debug.Log($"CfgData {o.name} load success");
+
+                    if (valuePairs.Count == assetsName.Length)
+                    {
+                        AsyncInitComplete = true;
+
+                        Debug.Log($"{nameof(CfgData)} Async Init Complete ");
+                    }
                 }
             });
         }

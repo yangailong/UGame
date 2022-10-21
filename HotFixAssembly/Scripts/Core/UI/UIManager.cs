@@ -22,7 +22,16 @@ namespace UGame_Remove
         private static Camera m_Camera = null;
 
 
-        public static void Init()
+
+        /// <summary>
+        /// 异步初始化是否完成
+        /// true：完成
+        /// false：未完成
+        /// </summary>
+        public static bool AsyncInitComplete { get; set; } = false;
+
+
+        public static void AsyncInit()
         {
             UIPanelDic = new Dictionary<string, UIPanelBase>();
 
@@ -52,8 +61,14 @@ namespace UGame_Remove
                 }
 
                 DontDestroyOnLoad(m_UIRoot);
+
+                AsyncInitComplete = true;
+
+                Debug.Log($"{nameof(UIManager)} Async Init Complete ");
+
             });
         }
+
 
         public static UIManager UIRoot => m_UIRoot;
 

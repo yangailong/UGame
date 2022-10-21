@@ -12,8 +12,6 @@ namespace UGame_Remove
             Debug.Log($"UGame_Remove StartUp");
 
             CoroutineRunner.OverStartCoroutine(Init());
-
-            //红点系统
         }
 
 
@@ -22,26 +20,32 @@ namespace UGame_Remove
         {
             string path = $"Assets/{AssetsMapperConst.needListenerAssetsRootPath}/{AssetsMapperConst.creatPath}";
 
+            //加载映射表txt
             ResourceManager.LoadAssetAsync<TextAsset>(path, o =>
             {
                 AssetsMapper.Init(o);
                 GlobalEvent.Init();
-                UIManager.Init();
-                CfgData.Init();
                 AudioPlayManager.Init();
+
+                //红点系统
+                //网络系统
+
+                UIManager.AsyncInit();
+                CfgData.AsyncInit();
             });
 
 
-            yield return new WaitForSeconds(2f);
+            //CfgData和UIManager异步初始化完成
+            while (!CfgData.AsyncInitComplete && !UIManager.AsyncInitComplete)
+            {
+                yield return new WaitForEndOfFrame();
+            }
 
-
+            //播放背景音
             ResourceManager.LoadAssetAsync<AudioClip>("Cyberworld", o =>
             {
                 AudioPlayManager.PlayMusic2D(o, 0);
             });
-
-
-            Test.Test test = new Test.Test();
 
 
         }
