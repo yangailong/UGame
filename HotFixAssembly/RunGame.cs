@@ -28,8 +28,6 @@ namespace UGame_Remove
                 AudioPlayManager.Init();
 
                 //红点系统
-                //网络系统
-
                 UIManager.AsyncInit();
                 CfgData.AsyncInit();
             });
@@ -40,6 +38,10 @@ namespace UGame_Remove
             {
                 yield return new WaitForEndOfFrame();
             }
+
+            //NetWebSocket.Instance.Open("", "", WebSocket4Net.WebSocketVersion.Rfc6455);
+
+            Debug.Log($"初始化完毕....");
 
             //播放背景音
             ResourceManager.LoadAssetAsync<AudioClip>("Cyberworld", o =>

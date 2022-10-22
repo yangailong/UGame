@@ -31,7 +31,7 @@ namespace ILRuntime.Runtime.Generated
             Google_Protobuf_MessageParser_1_IMessageAdapt_Binding_Adaptor_Binding.Register(app);
             UnityEngine_Debug_Binding.Register(app);
             UGame_Local_AssetsMapperConst_Binding.Register(app);
-            UnityEngine_WaitForSeconds_Binding.Register(app);
+            UnityEngine_WaitForEndOfFrame_Binding.Register(app);
             System_NotSupportedException_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
             UnityEngine_TextAsset_Binding.Register(app);
@@ -87,6 +87,7 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_List_1_Type_Binding.Register(app);
             UnityEngine_MonoBehaviour_Binding.Register(app);
             System_Action_Binding.Register(app);
+            UnityEngine_WaitForSeconds_Binding.Register(app);
             System_Text_Encoding_Binding.Register(app);
             System_Security_Cryptography_Aes_Binding.Register(app);
             System_Security_Cryptography_SymmetricAlgorithm_Binding.Register(app);
@@ -94,6 +95,18 @@ namespace ILRuntime.Runtime.Generated
             System_Convert_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Enum_ILTypeInstance_Binding.Register(app);
             System_Object_Binding.Register(app);
+            System_Threading_Interlocked_Binding.Register(app);
+            WebSocket4Net_WebSocket_Binding.Register(app);
+            UnityEngine_JsonUtility_Binding.Register(app);
+            System_EventHandler_Binding.Register(app);
+            System_EventHandler_1_ErrorEventArgs_Binding.Register(app);
+            System_EventHandler_1_MessageReceivedEventArgs_Binding.Register(app);
+            System_EventHandler_1_DataReceivedEventArgs_Binding.Register(app);
+            WebSocket4Net_DataReceivedEventArgs_Binding.Register(app);
+            System_MissingMemberException_Binding.Register(app);
+            System_IO_MemoryStream_Binding.Register(app);
+            System_IO_Stream_Binding.Register(app);
+            Google_Protobuf_MessageExtensions_Binding.Register(app);
             UnityEngine_PlayerPrefs_Binding.Register(app);
             System_Exception_Binding.Register(app);
             UnityEngine_AddressableAssets_Addressables_Binding.Register(app);
@@ -104,8 +117,8 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_String_MonoBehaviourAdapter_Binding_Adaptor_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MonoBehaviourAdapter_Binding_Adaptor_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
             System_Array_Binding.Register(app);
-            System_Attribute_Binding.Register(app);
             System_Enum_Binding.Register(app);
+            System_Attribute_Binding.Register(app);
             UnityEngine_UI_CanvasScaler_Binding.Register(app);
             UnityEngine_Screen_Binding.Register(app);
             UnityEngine_Vector2_Binding.Register(app);
