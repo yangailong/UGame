@@ -20,34 +20,37 @@ namespace UGame_Remove
         {
             string path = $"Assets/{AssetsMapperConst.needListenerAssetsRootPath}/{AssetsMapperConst.creatPath}";
 
+            TextAsset result = null;
+
             //加载映射表txt
-            ResourceManager.LoadAssetAsync<TextAsset>(path, o =>
+            ResourceManager.LoadAssetAsync<TextAsset>(path, value => result = value);
+
+            //等待映射表加载结束
+            while (result == null)
             {
-                AssetsMapper.Init(o);
-                GlobalEvent.Init();
-                AudioPlayManager.Init();
-
-                //红点系统
-                UIManager.AsyncInit();
-                CfgData.AsyncInit();
-            });
+                yield return new WaitForEndOfFrame();
+            }
 
 
-            //CfgData和UIManager异步初始化完成
+            //初始化子系统
+            AssetsMapper.Init(result);
+            GlobalEvent.Init();
+            AudioPlayManager.Init();
+
+            UIManager.AsyncInit();
+            CfgData.AsyncInit();
+
+            //NetWebSocket.Instance.Open("", "", WebSocket4Net.WebSocketVersion.Rfc6455);
+
+
+            // 等待子系统异步初始化完成
             while (!CfgData.AsyncInitComplete && !UIManager.AsyncInitComplete)
             {
                 yield return new WaitForEndOfFrame();
             }
 
-            //NetWebSocket.Instance.Open("", "", WebSocket4Net.WebSocketVersion.Rfc6455);
 
-            Debug.Log($"初始化完毕....");
-
-            //播放背景音
-            ResourceManager.LoadAssetAsync<AudioClip>("Cyberworld", o =>
-            {
-                AudioPlayManager.PlayMusic2D(o, 0);
-            });
+            Debug.Log($"子系统全部初始化完毕....");
 
 
         }
