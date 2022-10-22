@@ -29,11 +29,13 @@ namespace UGame_Remove
         {
             //var msg = new T().Descriptor.Parser.ParseFrom(receiveBuffer, startPos, receiveBuffer.Length - startPos);
 
-            //Debug.Log($"recv msgId: {id}, {JsonUtility.ToJson(msg)}");
+            var msg = new T();
 
-          
+            msg.MergeFrom(new CodedInputStream(receiveBuffer, startPos, receiveBuffer.Length - startPos));
 
-            //callback?.Invoke(id, (T)msg);
+            Debug.Log($"recv msgId: {id}, {JsonUtility.ToJson(msg)}");
+
+            callback?.Invoke(id, (T)msg);
         }
 
     }

@@ -107,7 +107,7 @@
       <HintPath>dlls\UnityEngine.UIModule.dll</HintPath>
     </Reference>
     <Reference Include="WebSocket4Net">
-      <HintPath>dlls\WebSocket4Net.dll</HintPath>
+      <HintPath>..\Assets\ThirdParty\WebSocket4Net\WebSocket4Net.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup />
