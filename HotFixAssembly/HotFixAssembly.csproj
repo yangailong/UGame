@@ -51,6 +51,9 @@
     <Compile Include="Scripts\Core\CoroutineRunner\CoroutineRunner.cs" />
     <Compile Include="Scripts\Core\CrypManager\CrypManager.cs" />
     <Compile Include="Scripts\Core\Event\GlobalEvent.cs" />
+    <Compile Include="Scripts\Core\Network\WebSocket\NetWebSocket.cs" />
+    <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketEventArgs.cs" />
+    <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketMsgManager.cs" />
     <Compile Include="Scripts\Core\PrefsManager\PrefsManager.cs" />
     <Compile Include="Scripts\Core\Resource\LoadAddressImpl.cs" />
     <Compile Include="Scripts\Core\Resource\LoadAssetsImpl.cs" />
@@ -72,6 +75,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\Library\ScriptAssemblies\Assembly-CSharp.dll</HintPath>
     </Reference>
+    <Reference Include="SuperSocket.ClientEngine">
+      <HintPath>..\Assets\ThirdParty\WebSocket4Net\SuperSocket.ClientEngine.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="Unity.Addressables">
       <HintPath>dlls\Unity.Addressables.dll</HintPath>
@@ -88,6 +94,9 @@
     <Reference Include="UnityEngine.CoreModule">
       <HintPath>dlls\UnityEngine.CoreModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.JSONSerializeModule">
+      <HintPath>dlls\UnityEngine.JSONSerializeModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityEngine.TextRenderingModule">
       <HintPath>dlls\UnityEngine.TextRenderingModule.dll</HintPath>
     </Reference>
@@ -97,9 +106,10 @@
     <Reference Include="UnityEngine.UIModule">
       <HintPath>dlls\UnityEngine.UIModule.dll</HintPath>
     </Reference>
+    <Reference Include="WebSocket4Net">
+      <HintPath>dlls\WebSocket4Net.dll</HintPath>
+    </Reference>
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Scripts\Core\Network\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
