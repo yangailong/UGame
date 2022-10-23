@@ -24,18 +24,15 @@ namespace UGame_Remove
 
         public static string GetString(string key, string defaultValue = null)
         {
-            if (!PlayerPrefs.HasKey(key))
-            {
-                Debug.LogError($"does not exist key:{key}");
-
-                return defaultValue;
-            }
-
             string decrypt = PlayerPrefs.GetString(key, defaultValue);
 
             try
             {
+                decrypt = decrypt.Replace('-', '+').Replace('_', '/').PadRight(4 * ((decrypt.Length + 3) / 4), '=');
+
                 var result = CrypManager.DecryptStr(defaultEncryptKey, decrypt);
+
+                Debug.Log($" key:{key} PlayerPrefs.GetString:{decrypt}");
 
                 return result;
             }

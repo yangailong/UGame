@@ -32,8 +32,8 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Debug_Binding.Register(app);
             UGame_Local_AssetsMapperConst_Binding.Register(app);
             UnityEngine_WaitForEndOfFrame_Binding.Register(app);
-            System_NotSupportedException_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
+            System_NotSupportedException_Binding.Register(app);
             UnityEngine_TextAsset_Binding.Register(app);
             System_ArgumentNullException_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_String_Binding.Register(app);
