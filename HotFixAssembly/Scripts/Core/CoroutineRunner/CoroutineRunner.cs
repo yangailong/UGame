@@ -41,6 +41,7 @@ namespace UGame_Remove
         }
 
 
+
         /// <summary>
         /// 等待几帧，执行一个方法
         /// </summary>
@@ -49,6 +50,17 @@ namespace UGame_Remove
         public static void WaitForFrames(int frames, Action action)
         {
             Instance.StartCoroutine(Instance.DoWaitForFrames(frames, action));
+        }
+
+
+        /// <summary>
+        /// 在自定义时间范围，实时执行一个方法
+        /// </summary>
+        /// <param name="seconds">自定义时间</param>
+        /// <param name="action">要实时执行的方法</param>
+        public static void InSecondsUpdate(float seconds, Action<float> action)
+        {
+            Instance.DoInSecondsUpdate(seconds, action);
         }
 
 
@@ -82,6 +94,25 @@ namespace UGame_Remove
             action?.Invoke();
         }
 
+
+        /// <summary>
+        /// 在自定义时间范围，实时执行一个方法
+        /// </summary>
+        /// <param name="seconds">自定义时间</param>
+        /// <param name="action">要实时执行的方法</param>
+        private IEnumerator DoInSecondsUpdate(float seconds, Action<float> action)
+        {
+            float time = 0;
+
+            while (time <= seconds)
+            {
+                time += Time.deltaTime;
+
+                action?.Invoke(time);
+
+                yield return null;
+            }
+        }
 
     }
 }
