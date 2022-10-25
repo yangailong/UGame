@@ -64,11 +64,11 @@
     <Compile Include="Scripts\Core\UI\UICycle.cs" />
     <Compile Include="Scripts\Core\UI\UIManager.cs" />
     <Compile Include="Scripts\Core\UI\UIPanelBase.cs" />
+    <Compile Include="Scripts\Core\Utility\CanvasScalerUtil.cs" />
+    <Compile Include="Scripts\Core\Utility\Singleton\ComponentSingleton.cs" />
+    <Compile Include="Scripts\Core\Utility\Singleton\Singleton.cs" />
     <Compile Include="Scripts\Game\EventKey\EventEnum.cs" />
     <Compile Include="Scripts\Game\PB\Test.cs" />
-    <Compile Include="Scripts\Game\Utility\CanvasScalerUtil.cs" />
-    <Compile Include="Scripts\Game\Utility\Singleton\ComponentSingleton.cs" />
-    <Compile Include="Scripts\Game\Utility\Singleton\Singleton.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
