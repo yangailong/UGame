@@ -6,7 +6,7 @@ namespace UGame_Remove
     public class PrefsManager
     {
 
-        private static readonly string defaultEncryptKey = "UGame.Prefs.Keys";
+        private static readonly string defaultEncryptKey = "UGame.Core.Prefs.Keys";
 
 
         public static bool HasKey(string key)
@@ -28,9 +28,11 @@ namespace UGame_Remove
 
             try
             {
-                if (!HasKey(key)) return defaultValue;
+                decrypt = decrypt.Replace('-', '+').Replace('_', '/').PadRight(4 * ((decrypt.Length + 3) / 4), '=');
 
                 var result = CrypManager.DecryptStr(defaultEncryptKey, decrypt);
+
+                Debug.Log($" key:{key} PlayerPrefs.GetString:{decrypt}");
 
                 return result;
             }
