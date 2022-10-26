@@ -13,7 +13,7 @@ namespace UGame_Local_Editor
             string pdbFullName = "HotFixAssembly.pdb";
 
             string originPath = $"{Application.dataPath}/../HotFixAssembly/bin/Debug";
-            string writePath = $"{Application.dataPath}/AddressableAssets/Remote_UnMapping/Dll/";
+            string writePath = $"{Application.dataPath}/AddressableAssets/Remote_UnMapper/Dll/";
 
             if (!Directory.Exists(originPath))
             {

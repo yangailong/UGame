@@ -13,6 +13,8 @@ public class OpenCSharp : MonoBehaviour
        string value= PlayerPrefs.GetString(null,null);
 
         Debug.Log($"{value}");
+
+      
     }
 
 }
