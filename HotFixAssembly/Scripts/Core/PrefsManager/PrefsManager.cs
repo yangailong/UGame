@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Security.Cryptography;
 using UnityEngine;
 
 namespace UGame_Remove
@@ -18,9 +17,8 @@ namespace UGame_Remove
 
         public static void SetString(string key, string value)
         {
-            var encrypt = CrypManager.EncryptStr(defaultEncryptKey, value);
-
-            PlayerPrefs.SetString(key, encrypt);
+            var result = CrypManager.EncryptStr(defaultEncryptKey, value);
+            PlayerPrefs.SetString(key, result);
         }
 
 
