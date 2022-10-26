@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Cryptography;
 using UnityEngine;
 
 namespace UGame_Remove
@@ -6,7 +7,7 @@ namespace UGame_Remove
     public class PrefsManager
     {
 
-        private static readonly string defaultEncryptKey = "UGame.Core.Prefs.Keys";
+        private static readonly string defaultEncryptKey = "UGame.Prefs.Keys";
 
 
         public static bool HasKey(string key)
@@ -17,8 +18,9 @@ namespace UGame_Remove
 
         public static void SetString(string key, string value)
         {
-            var result = CrypManager.EncryptStr(defaultEncryptKey, value);
-            PlayerPrefs.SetString(key, result);
+            var encrypt = CrypManager.EncryptStr(defaultEncryptKey, value);
+
+            PlayerPrefs.SetString(key, encrypt);
         }
 
 
@@ -28,11 +30,9 @@ namespace UGame_Remove
 
             try
             {
-                decrypt = decrypt.Replace('-', '+').Replace('_', '/').PadRight(4 * ((decrypt.Length + 3) / 4), '=');
+                if (!HasKey(key)) return defaultValue;
 
                 var result = CrypManager.DecryptStr(defaultEncryptKey, decrypt);
-
-                Debug.Log($" key:{key} PlayerPrefs.GetString:{decrypt}");
 
                 return result;
             }

@@ -86,6 +86,8 @@ namespace ILRuntime.Runtime.Generated
             System_Linq_Enumerable_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding.Register(app);
             UnityEngine_MonoBehaviour_Binding.Register(app);
+            UnityEngine_Time_Binding.Register(app);
+            System_Action_1_Single_Binding.Register(app);
             System_Action_Binding.Register(app);
             UnityEngine_WaitForSeconds_Binding.Register(app);
             System_Text_Encoding_Binding.Register(app);
