@@ -178,16 +178,18 @@ namespace UGame_Remove
                     return;
                 }
 
-                var panel = GameObject.Instantiate(o).AddComponent<UIPanelBase>();
+                var panel = GameObject.Instantiate(o).AddComponent<T>();
 
 
-                var att = Attribute.GetCustomAttribute(typeof(T), typeof(UILayerAttribute)) as UILayerAttribute;
+                //var att = Attribute.GetCustomAttribute(typeof(T), typeof(UILayerAttribute)) as UILayerAttribute;
 
-                Debug.LogError($"Names:{att}");
+                //Debug.LogError($"Names:{att}");
 
-                panel.transform.SetParent(UIManager.Getlayer(att.layer));
+                //panel.transform.SetParent(UIManager.Getlayer(att.layer));
 
-                Debug.LogError($"layer:{UIManager.Getlayer(att.layer)}");
+                //Debug.LogError($"layer:{UIManager.Getlayer(att.layer)}");
+
+                panel.transform.SetParent(Canvas.transform.Find("Normal"));
 
                 callback.Invoke(panel);
             });

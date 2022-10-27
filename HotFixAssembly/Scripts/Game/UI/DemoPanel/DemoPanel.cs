@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace UGame_Remove
@@ -10,6 +11,8 @@ namespace UGame_Remove
         public override void OnUIAwake()
         {
             //var button = transform.GetMountChind<Button>("");
+
+            Debug.LogError($"Awake");
         }
 
 
