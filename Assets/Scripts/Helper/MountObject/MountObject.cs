@@ -1,26 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Object = UnityEngine.Object;
 
 namespace UGame_Local
 {
-    public class MountChind : MountObjectBase
+    public class MountObject : MonoBehaviour
     {
+        [Tooltip("查找以m_开头的Transform")]
         [SerializeField, FormerlySerializedAs("m_Childs")]
         private List<Component> m_m_Childs = null;
 
+        [Tooltip("挂载的其他Object")]
+        [Space(15), SerializeField, FormerlySerializedAs("m_Others")]
+        private List<Object> m_Others = null;
 
-        public T GetSubChild<T>(string subChildName) where T : Component
+
+        public T GetChild<T>(string childName) where T : Component
         {
-            if (string.IsNullOrEmpty(subChildName))
+            if (string.IsNullOrEmpty(childName))
             {
                 throw new ArgumentException("subChildName is invalid");
             }
 
             foreach (var item in m_m_Childs)
             {
-                if (item.name.Equals(subChildName))
+                if (item.name.Equals(childName))
                 {
                     var result = item.GetComponent<T>();
 
@@ -32,11 +39,23 @@ namespace UGame_Local
         }
 
 
+        public Object GetOther(int index)
+        {
+            if (m_Others == null || m_Others.Count == 0) return null;
+
+            if (index < 0 || index >= m_Others.Count)
+            {
+                throw new ArgumentException("index is invalid");
+            }
+            return m_Others[index];
+        }
+
 
         [ContextMenu("查找挂载Child")]
         private void FindChinds()
         {
             m_m_Childs = new List<Component>();
+
             FindChind(transform);
         }
 
@@ -53,7 +72,7 @@ namespace UGame_Local
                     }
                 }
 
-                if (child.GetComponent<MountChind>() != null) continue;
+                if (child.GetComponent<MountObject>() != null) continue;
 
                 if (child.childCount > 0)
                 {
@@ -67,7 +86,6 @@ namespace UGame_Local
         {
             FindChinds();
         }
-
 
 
     }

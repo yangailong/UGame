@@ -3,37 +3,36 @@ using UnityEngine;
 
 namespace UGame_Remove
 {
-
     [UILayer(layer: UIPanelLayer.Normal)]
 
     public class UIPanelBase : MonoBehaviour, UICycle
     {
 
-        public void OnUIAwake()
+        public virtual void OnUIAwake()
         {
 
         }
 
 
-        public void OnUIStart()
+        public virtual void OnUIStart()
         {
 
         }
 
 
-        public void OnUIEnable()
+        public virtual void OnUIEnable()
         {
 
         }
 
 
-        public void OnUIDisable()
+        public virtual void OnUIDisable()
         {
 
         }
 
 
-        public void OnUIDestroy()
+        public virtual void OnUIDestroy()
         {
 
         }

@@ -15,7 +15,6 @@ namespace UGame_Remove
         }
 
 
-
         private static IEnumerator Init()
         {
             string path = $"Assets/{AssetsMapperConst.needListenerAssetsRootPath}/{AssetsMapperConst.creatPath}";
@@ -40,7 +39,7 @@ namespace UGame_Remove
             UIManager.AsyncInit();
             CfgData.AsyncInit();
 
-            NetWebSocket.Instance.Open("", "", WebSocket4Net.WebSocketVersion.Rfc6455);
+           // NetWebSocket.Instance.Open("", "", WebSocket4Net.WebSocketVersion.Rfc6455);
 
 
             // 等待子系统异步初始化完成
@@ -54,6 +53,7 @@ namespace UGame_Remove
 
 
         }
+
 
     }
 }
