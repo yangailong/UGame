@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using UGame_Local;
 using UnityEngine;
 using UnityEngine.EventSystems;
 namespace UGame_Remove
@@ -196,9 +198,18 @@ namespace UGame_Remove
                     return;
                 }
 
-                var att = Attribute.GetCustomAttribute(typeof(UIPanelBase), typeof(UILayerAttribute)) as UILayerAttribute;
 
-                var panel = GameObject.Instantiate(o, UIManager.Getlayer(att.layer)).GetComponent<UIPanelBase>();
+                Type type = typeof(UIPanelBase);
+
+                var panel = GameObject.Instantiate(o).GetComponent<UIPanelBase>();
+
+                var att = Attribute.GetCustomAttribute(panel.GetType(), typeof(UILayerAttribute)) as UILayerAttribute;
+
+                Debug.LogError($"Names:{att}");
+
+                panel.transform.SetParent(UIManager.Getlayer(att.layer));
+
+                Debug.LogError($"layer:{UIManager.Getlayer(att.layer)}");
 
                 callback.Invoke(panel);
             });
