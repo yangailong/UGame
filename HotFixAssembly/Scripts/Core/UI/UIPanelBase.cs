@@ -3,7 +3,6 @@ using UnityEngine;
 
 namespace UGame_Remove
 {
-    [UILayer(layer: UIPanelLayer.Normal)]
 
     public class UIPanelBase : MonoBehaviour, UICycle
     {

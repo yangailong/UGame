@@ -48,7 +48,7 @@ namespace UGame_Remove
                 yield return new WaitForEndOfFrame();
             }
 
-            UIManager.Open(nameof(DemoPanel));
+            UIManager.Open<DemoPanel>();
 
             Debug.Log($"子系统全部初始化完毕....");
 

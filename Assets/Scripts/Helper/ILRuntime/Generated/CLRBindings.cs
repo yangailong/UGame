@@ -33,6 +33,7 @@ namespace ILRuntime.Runtime.Generated
             UGame_Local_AssetsMapperConst_Binding.Register(app);
             UnityEngine_WaitForEndOfFrame_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
+            System_Array_Binding.Register(app);
             System_NotSupportedException_Binding.Register(app);
             UnityEngine_TextAsset_Binding.Register(app);
             System_ArgumentNullException_Binding.Register(app);
@@ -86,6 +87,8 @@ namespace ILRuntime.Runtime.Generated
             System_Linq_Enumerable_Binding.Register(app);
             System_Collections_Generic_List_1_Type_Binding.Register(app);
             UnityEngine_MonoBehaviour_Binding.Register(app);
+            UnityEngine_Time_Binding.Register(app);
+            System_Action_1_Single_Binding.Register(app);
             System_Action_Binding.Register(app);
             UnityEngine_WaitForSeconds_Binding.Register(app);
             System_Text_Encoding_Binding.Register(app);
@@ -116,9 +119,7 @@ namespace ILRuntime.Runtime.Generated
             System_Action_1_MonoBehaviourAdapter_Binding_Adaptor_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MonoBehaviourAdapter_Binding_Adaptor_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MonoBehaviourAdapter_Binding_Adaptor_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
-            System_Array_Binding.Register(app);
             System_Enum_Binding.Register(app);
-            System_Attribute_Binding.Register(app);
             UnityEngine_UI_CanvasScaler_Binding.Register(app);
             UnityEngine_Screen_Binding.Register(app);
             UnityEngine_Vector2_Binding.Register(app);

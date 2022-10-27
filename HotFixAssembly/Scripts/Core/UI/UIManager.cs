@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using UGame_Local;
 using UnityEngine;
 using UnityEngine.EventSystems;
 namespace UGame_Remove
@@ -87,29 +85,19 @@ namespace UGame_Remove
 
         public static UIPanelBase GetHasPanel<T>()
         {
-            return UIManager.GetHasPanel(typeof(T).Name);
-        }
-
-
-        public static UIPanelBase GetHasPanel(string name)
-        {
-            if (!UIPanelDic.TryGetValue(name, out var panel))
+            if (!UIPanelDic.TryGetValue(nameof(T), out var panel))
             {
-                Debug.LogError($"The {name} panel does not exist");
+                Debug.LogError($"The {nameof(T)} panel does not exist");
             }
 
             return panel;
         }
 
 
-        public static void Open<T>(UICallback callback = null, params object[] param)
+        public static void Open<T>(UICallback callback = null, params object[] param) where T : UIPanelBase
         {
-            UIManager.Open(typeof(T).Name, callback, param);
-        }
+            var panelName = nameof(T);
 
-
-        public static void Open(string name, UICallback callback = null, params object[] param)
-        {
             Action<UIPanelBase> openPanel = panel =>
             {
                 panel.OnUIEnable();
@@ -117,35 +105,33 @@ namespace UGame_Remove
                 UIManager.m_AnimManager.StartEnterAnim(panel, callback, param);
             };
 
-            if (UIPanelDic.ContainsKey(name))
+            if (UIPanelDic.ContainsKey(panelName))
             {
-                openPanel.Invoke(UIPanelDic[name]);
+                openPanel.Invoke(UIPanelDic[panelName]);
             }
             else
             {
-                UIManager.CreatUI(name, creatPanel =>
+                UIManager.CreatUI<T>(creatPanel =>
                 {
                     creatPanel.OnUIAwake();
 
-                    UIPanelDic.Add(name, creatPanel);
+                    UIPanelDic.Add(panelName, creatPanel);
 
                     openPanel.Invoke(creatPanel);
                 });
             }
-
-
         }
 
 
-        public static void Close(string name, bool isPlayAnim = true, UICallback callback = null, params object[] param)
+        public static void Close<T>(bool isPlayAnim = true, UICallback callback = null, params object[] param) where T : UIPanelBase
         {
-            if (!UIPanelDic.ContainsKey(name))
+            if (!UIPanelDic.ContainsKey(nameof(T)))
             {
-                Debug.LogError($"CloseUIWindow Error UI ->{name}<-  not Exist!");
+                Debug.LogError($"CloseUIWindow Error UI ->{nameof(T)}<-  not Exist!");
             }
             else
             {
-                Close(UIPanelDic[name], isPlayAnim, callback, param);
+                Close(UIPanelDic[nameof(T)], isPlayAnim, callback, param);
             }
         }
 
@@ -182,28 +168,20 @@ namespace UGame_Remove
         }
 
 
-        public static void CreatUI<T>(Action<UIPanelBase> callback)
+        public static void CreatUI<T>(Action<UIPanelBase> callback) where T : UIPanelBase
         {
-            UIManager.CreatUI(typeof(T).Name, callback);
-        }
-
-
-        public static void CreatUI(string name, Action<UIPanelBase> callback)
-        {
-            ResourceManager.LoadAssetAsync<GameObject>(name, o =>
+            ResourceManager.LoadAssetAsync<GameObject>(typeof(T).Name, o =>
             {
                 if (o == null)
                 {
-                    Debug.LogError($"no {name} panel exists");
+                    Debug.LogError($"no {typeof(T).Name} panel exists");
                     return;
                 }
 
+                var panel = GameObject.Instantiate(o).AddComponent<UIPanelBase>();
 
-                Type type = typeof(UIPanelBase);
 
-                var panel = GameObject.Instantiate(o).GetComponent<UIPanelBase>();
-
-                var att = Attribute.GetCustomAttribute(panel.GetType(), typeof(UILayerAttribute)) as UILayerAttribute;
+                var att = Attribute.GetCustomAttribute(typeof(T), typeof(UILayerAttribute)) as UILayerAttribute;
 
                 Debug.LogError($"Names:{att}");
 
@@ -216,18 +194,12 @@ namespace UGame_Remove
         }
 
 
-        public static void Destroy<T>()
+        public static void Destroy<T>() where T : UIPanelBase
         {
-            UIManager.Destroy(typeof(T).Name);
-        }
-
-
-        public static void Destroy(string name)
-        {
-            if (UIPanelDic.TryGetValue(name, out var panel))
+            if (UIPanelDic.TryGetValue(nameof(T), out var panel))
             {
                 panel.OnUIDestroy();
-                UIPanelDic.Remove(name);
+                UIPanelDic.Remove(nameof(T));
             }
         }
 
