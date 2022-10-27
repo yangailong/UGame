@@ -123,6 +123,8 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_UI_CanvasScaler_Binding.Register(app);
             UnityEngine_Screen_Binding.Register(app);
             UnityEngine_Vector2_Binding.Register(app);
+            UnityEngine_Events_UnityEventBase_Binding.Register(app);
+            UGame_Local_MountObject_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
 
             ILRuntime.CLR.TypeSystem.CLRType __clrType = null;

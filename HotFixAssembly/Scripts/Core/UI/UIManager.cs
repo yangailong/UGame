@@ -115,6 +115,8 @@ namespace UGame_Remove
                 {
                     creatPanel.OnUIAwake();
 
+                    CoroutineRunner.WaitForFrames(1, creatPanel.OnUIStart);
+
                     UIPanelDic.Add(panelName, creatPanel);
 
                     openPanel.Invoke(creatPanel);
@@ -178,18 +180,21 @@ namespace UGame_Remove
                     return;
                 }
 
-                var panel = GameObject.Instantiate(o).AddComponent<T>();
+                //默认Normal层
+                Transform parent = UIManager.Getlayer(UIPanelLayer.Normal);
 
+                var objects = typeof(T).GetCustomAttributes(typeof(UILayerAttribute), true);
 
-                //var att = Attribute.GetCustomAttribute(typeof(T), typeof(UILayerAttribute)) as UILayerAttribute;
+                if (objects?.Length > 0)
+                {
+                    var layerAttr = objects[0] as UILayerAttribute;
 
-                //Debug.LogError($"Names:{att}");
+                    parent = UIManager.Getlayer(layerAttr.layer);
+                }
 
-                //panel.transform.SetParent(UIManager.Getlayer(att.layer));
+                var panel = GameObject.Instantiate(o, parent).AddComponent<T>();
 
-                //Debug.LogError($"layer:{UIManager.Getlayer(att.layer)}");
-
-                panel.transform.SetParent(Canvas.transform.Find("Normal"));
+                panel.name = o.name;
 
                 callback.Invoke(panel);
             });

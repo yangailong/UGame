@@ -23,6 +23,15 @@ namespace UGame_Local
                 });
             });
 
+            appdomain.DelegateManager.RegisterDelegateConvertor<UnityEngine.Events.UnityAction>((act) =>
+            {
+                return new UnityEngine.Events.UnityAction(() =>
+                {
+                    ((Action)act)();
+                });
+            });
+
+
         }
 
     }

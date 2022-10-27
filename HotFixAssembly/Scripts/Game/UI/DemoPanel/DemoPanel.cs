@@ -1,19 +1,42 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 namespace UGame_Remove
 {
 
-    [UILayer(layer: UIPanelLayer.Normal)]
+    [UILayer(layer: UIPanelLayer.GameUI)]
     public class DemoPanel : UIPanelBase
     {
         public override void OnUIAwake()
         {
-            //var button = transform.GetMountChind<Button>("");
+            Debug.LogError($"OnUIAwake");
 
-            Debug.LogError($"Awake");
         }
+
+        public override void OnUIStart()
+        {
+            Debug.LogError($"OnUIStart");
+        }
+
+        public override void OnUIEnable()
+        {
+            Debug.LogError($"OnUIEnable");
+            transform.GetMountChind<Button>("m_Mask").onClick.AddListener(OnClickMaskBtn);
+        }
+
+
+        public override void OnUIDisable()
+        {
+            transform.GetMountChind<Button>("m_Mask").onClick.RemoveAllListeners();
+        }
+
+
+        void OnClickMaskBtn()
+        {
+            Debug.LogError($"点击.....");
+        }
+
+
 
 
     }

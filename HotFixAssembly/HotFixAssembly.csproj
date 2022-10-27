@@ -70,6 +70,7 @@
     <Compile Include="Scripts\Game\EventKey\EventEnum.cs" />
     <Compile Include="Scripts\Game\PB\Test.cs" />
     <Compile Include="Scripts\Game\UI\DemoPanel\DemoPanel.cs" />
+    <Compile Include="Scripts\Game\Utility\UnityAPIEx.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">

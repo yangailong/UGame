@@ -39,7 +39,7 @@ namespace UGame_Remove
             UIManager.AsyncInit();
             CfgData.AsyncInit();
 
-           // NetWebSocket.Instance.Open("", "", WebSocket4Net.WebSocketVersion.Rfc6455);
+            // NetWebSocket.Instance.Open("", "", WebSocket4Net.WebSocketVersion.Rfc6455);
 
 
             // 等待子系统异步初始化完成
@@ -48,10 +48,12 @@ namespace UGame_Remove
                 yield return new WaitForEndOfFrame();
             }
 
-            UIManager.Open<DemoPanel>();
-
             Debug.Log($"子系统全部初始化完毕....");
 
+
+            yield return ResourceManager.LoadSceneAsync("Login");
+
+            UIManager.Open<DemoPanel>();
 
         }
 
