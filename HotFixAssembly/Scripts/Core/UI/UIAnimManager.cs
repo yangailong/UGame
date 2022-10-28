@@ -2,38 +2,42 @@
 
 namespace UGame_Remove
 {
+    /// <summary>
+    /// 此脚本是为了统一管理页面打开和结束动画
+    /// 激活此脚本，页面动画就会播放，反之，则页面动画不播放
+    /// </summary>
     public class UIAnimManager : MonoBehaviour
     {
 
-        //开始调用进入动画
-        public void StartEnterAnim(UIPanelBase panel, UICallback callBack, params object[] param)
+        /// <summary>
+        /// 播放页面打开动画
+        /// </summary>
+        /// <param name="panel">需要播放打开动画的页面</param>
+        /// <param name="callBack">播放动画回调</param>
+        public void StartEnterAnim(UIPanelBase panel, UICallback callBack)
         {
-            StartCoroutine(panel.EnterAnim(EndEnterAnim, callBack, param));
+            if (panel is IUIAnimation)
+            {
+                StartCoroutine((panel as IUIAnimation).EnterAnim(callBack));
+            }
         }
 
 
-        //进入动画播放完毕回调
-        public void EndEnterAnim(UIPanelBase panel, UICallback callBack, params object[] param)
-        {
-            panel.OnCompleteEnterAnim();
-
-            callBack?.Invoke(panel, param);
-        }
-
-
-        //开始调用退出动画
+        /// <summary>
+        /// 播放页面结束动画
+        /// </summary>
+        /// <param name="panel">需要播放结束动画的页面</param>
+        /// <param name="callBack">播放动画回调</param>
+        /// <param name="param">结束动画参数</param>
         public void StartExitAnim(UIPanelBase panel, UICallback callBack, params object[] param)
         {
-            StartCoroutine(panel.ExitAnim(EndExitAnim, callBack, param));
+            if (panel is IUIAnimation)
+            {
+                StartCoroutine((panel as IUIAnimation).ExitAnim(callBack, param));
+            }
         }
 
 
-        //退出动画播放完毕回调
-        public void EndExitAnim(UIPanelBase panel, UICallback callBack, params object[] param)
-        {
-            panel.OnCompleteExitAnim();
 
-            callBack?.Invoke(panel, param);
-        }
     }
 }

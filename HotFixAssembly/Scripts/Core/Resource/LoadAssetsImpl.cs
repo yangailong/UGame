@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.ResourceManagement.AsyncOperations;
 using UnityEngine.ResourceManagement.ResourceProviders;
 using UnityEngine.SceneManagement;
@@ -18,7 +19,9 @@ namespace UGame_Remove
         /// <summary>资源缓存</summary>
         private Dictionary<string, Object> assetsCaches = new Dictionary<string, Object>();
 
+
         private LoadAddressImpl load = null;
+
 
         public LoadAssetsImpl(LoadAddressImpl load)
         {
@@ -46,9 +49,25 @@ namespace UGame_Remove
         }
 
 
+        public void Release<TObject>(TObject obj)
+        {
+            load.Release<TObject>(obj);
+        }
+
+
+        public AsyncOperationHandle<SceneInstance> UnloadSceneAsync(SceneInstance scene, UnloadSceneOptions unloadOptions, bool autoReleaseHandle = true)
+        {
+            return load.UnloadSceneAsync(scene, unloadOptions, autoReleaseHandle);
+        }
+
+
         /// <summary>清空缓存</summary>
         public void ClearCache()
         {
+            foreach (var item in assetsCaches)
+            {
+                Release(item.Value);
+            }
             assetsCaches.Clear();
         }
 
@@ -128,7 +147,8 @@ namespace UGame_Remove
 
             yield return new WaitForEndOfFrame();
         }
-    }
 
+
+    }
 }
 

@@ -8,12 +8,13 @@ namespace UGame_Remove
 
     public enum UIPanelLayer
     {
+
         GameUI = 0,
 
         Fixed = 1,
 
         Normal = 2,
-
+        
         TopBar = 3,
 
         Upper = 4,

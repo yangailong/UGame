@@ -1,11 +1,16 @@
-﻿using System.Collections;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace UGame_Remove
 {
 
-    public class UIPanelBase : MonoBehaviour, UICycle
+    public abstract class UIPanelBase : MonoBehaviour, UICycle
     {
+
+        protected UIPanelBase() { }
+
+
+        public object[] Params { set; private get; } = null;
+
 
         public virtual void OnUIAwake()
         {
@@ -35,35 +40,6 @@ namespace UGame_Remove
         {
 
         }
-
-
-        public virtual IEnumerator EnterAnim(UIAnimCallback animCompleteCallback, UICallback callBack, params object[] param)
-        {
-            animCompleteCallback?.Invoke(this, callBack, param);
-
-            yield break;
-        }
-
-
-        public virtual void OnCompleteEnterAnim()
-        {
-
-        }
-
-
-        public virtual IEnumerator ExitAnim(UIAnimCallback animCompleteCallback, UICallback callBack, params object[] param)
-        {
-            animCompleteCallback?.Invoke(this, callBack, param);
-
-            yield break;
-        }
-
-
-        public virtual void OnCompleteExitAnim()
-        {
-
-        }
-
 
     }
 }

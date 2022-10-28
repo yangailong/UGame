@@ -65,7 +65,6 @@ namespace UGame_Remove
                 AsyncInitComplete = true;
 
                 Debug.Log($"{nameof(UIManager)} Async Init Complete ");
-
             });
         }
 
@@ -96,13 +95,15 @@ namespace UGame_Remove
 
         public static void Open<T>(UICallback callback = null, params object[] param) where T : UIPanelBase
         {
-            var panelName = nameof(T);
+            var panelName = typeof(T).Name;
 
             Action<UIPanelBase> openPanel = panel =>
             {
+                panel.Params = param;
+
                 panel.OnUIEnable();
 
-                UIManager.m_AnimManager.StartEnterAnim(panel, callback, param);
+                UIManager.m_AnimManager.StartEnterAnim(panel, callback);
             };
 
             if (UIPanelDic.ContainsKey(panelName))
@@ -111,15 +112,17 @@ namespace UGame_Remove
             }
             else
             {
-                UIManager.CreatUI<T>(creatPanel =>
+                UIManager.CreatUI<T>(panel =>
                 {
-                    creatPanel.OnUIAwake();
 
-                    CoroutineRunner.WaitForFrames(1, creatPanel.OnUIStart);
+                    UIPanelDic.Add(typeof(T).Name, panel);
 
-                    UIPanelDic.Add(panelName, creatPanel);
+                    panel.OnUIAwake();
 
-                    openPanel.Invoke(creatPanel);
+                    CoroutineRunner.WaitForFrames(1, panel.OnUIStart);
+
+                    openPanel.Invoke(panel);
+
                 });
             }
         }
@@ -127,13 +130,13 @@ namespace UGame_Remove
 
         public static void Close<T>(bool isPlayAnim = true, UICallback callback = null, params object[] param) where T : UIPanelBase
         {
-            if (!UIPanelDic.ContainsKey(nameof(T)))
+            if (!UIPanelDic.ContainsKey(typeof(T).Name))
             {
                 Debug.LogError($"CloseUIWindow Error UI ->{nameof(T)}<-  not Exist!");
             }
             else
             {
-                Close(UIPanelDic[nameof(T)], isPlayAnim, callback, param);
+                Close(UIPanelDic[typeof(T).Name], isPlayAnim, callback, param);
             }
         }
 
@@ -170,14 +173,13 @@ namespace UGame_Remove
         }
 
 
-        public static void CreatUI<T>(Action<UIPanelBase> callback) where T : UIPanelBase
+        private static void CreatUI<T>(Action<UIPanelBase> callback) where T : UIPanelBase
         {
             ResourceManager.LoadAssetAsync<GameObject>(typeof(T).Name, o =>
             {
                 if (o == null)
                 {
-                    Debug.LogError($"no {typeof(T).Name} panel exists");
-                    return;
+                    throw new ApplicationException($"load {typeof(T).Name} panel fail");
                 }
 
                 //默认Normal层
@@ -192,22 +194,32 @@ namespace UGame_Remove
                     parent = UIManager.Getlayer(layerAttr.layer);
                 }
 
-                var panel = GameObject.Instantiate(o, parent).AddComponent<T>();
+                var newPanel = GameObject.Instantiate(o, parent).AddComponent<T>();
 
-                panel.name = o.name;
+                newPanel.name = o.name;
 
-                callback.Invoke(panel);
+                callback.Invoke(newPanel);
             });
         }
 
 
         public static void Destroy<T>() where T : UIPanelBase
         {
-            if (UIPanelDic.TryGetValue(nameof(T), out var panel))
+            if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
             {
                 panel.OnUIDestroy();
-                UIPanelDic.Remove(nameof(T));
+                UIPanelDic.Remove(typeof(T).Name);
             }
+        }
+
+
+        public static T GetPanel<T>() where T : UIPanelBase
+        {
+            if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
+            {
+                return panel as T;
+            }
+            return null;
         }
 
 
