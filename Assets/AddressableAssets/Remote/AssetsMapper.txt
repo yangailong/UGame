@@ -1,6 +1,5 @@
 Cyberworld	AudioClip/Cyberworld.mp3
 CfgRemoteLang	Data/ScriptableObject/Normal/CfgRemoteLang.asset
-HotFixAssembly	Dll/HotFixAssembly.pdb
 UIRoot	Prefabs/UIRoot.prefab
 Login	Scenes/Login.unity
 Main	Scenes/Main.unity

@@ -59,6 +59,7 @@
     <Compile Include="Scripts\Core\Resource\LoadAssetsImpl.cs" />
     <Compile Include="Scripts\Core\Resource\ResourceManager.cs" />
     <Compile Include="Scripts\Core\UI\Helper\UILayerAttribute.cs" />
+    <Compile Include="Scripts\Core\UI\IUIAnimation.cs" />
     <Compile Include="Scripts\Core\UI\UIAnimManager.cs" />
     <Compile Include="Scripts\Core\UI\UIConst.cs" />
     <Compile Include="Scripts\Core\UI\UICycle.cs" />
