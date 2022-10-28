@@ -6,7 +6,7 @@ namespace UGame_Remove
     public abstract class UIPanelBase : MonoBehaviour, UICycle
     {
 
-        private UIPanelBase() { }
+        protected UIPanelBase() { }
 
 
         public object[] Params { set; private get; } = null;
