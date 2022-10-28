@@ -54,6 +54,7 @@
     <Compile Include="Scripts\Core\Network\WebSocket\NetWebSocket.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketEventArgs.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketMsgManager.cs" />
+    <Compile Include="Scripts\Core\ObjectPoolManager\ObjectPoolManager.cs" />
     <Compile Include="Scripts\Core\PrefsManager\PrefsManager.cs" />
     <Compile Include="Scripts\Core\Resource\LoadAddressImpl.cs" />
     <Compile Include="Scripts\Core\Resource\LoadAssetsImpl.cs" />
