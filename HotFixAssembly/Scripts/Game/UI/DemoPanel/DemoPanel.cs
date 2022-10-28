@@ -26,6 +26,7 @@ namespace UGame_Remove
         {
             Debug.LogError($"OnUIEnable");
             transform.GetMountChind<Button>("m_Mask").onClick.AddListener(OnClickMaskBtn);
+            transform.GetMountChind<Button>("m_CloseBtn").onClick.AddListener(OnClickMaskBtn);
         }
 
 

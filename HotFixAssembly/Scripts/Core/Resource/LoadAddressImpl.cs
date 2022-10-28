@@ -43,5 +43,18 @@ namespace UGame_Remove
             return Addressables.LoadSceneAsync(name, loadMode, activateOnLoad, priority);
         }
 
+
+        public AsyncOperationHandle<SceneInstance> UnloadSceneAsync(SceneInstance scene, UnloadSceneOptions unloadOptions, bool autoReleaseHandle = true)
+        {
+            return Addressables.UnloadSceneAsync(scene, unloadOptions, autoReleaseHandle);
+        }
+
+
+        public void Release<TObject>(TObject obj)
+        {
+            Addressables.Release(obj);
+        }
+
+
     }
 }

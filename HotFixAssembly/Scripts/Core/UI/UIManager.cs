@@ -65,7 +65,6 @@ namespace UGame_Remove
                 AsyncInitComplete = true;
 
                 Debug.Log($"{nameof(UIManager)} Async Init Complete ");
-
             });
         }
 
@@ -206,11 +205,21 @@ namespace UGame_Remove
 
         public static void Destroy<T>() where T : UIPanelBase
         {
-            if (UIPanelDic.TryGetValue(nameof(T), out var panel))
+            if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
             {
                 panel.OnUIDestroy();
-                UIPanelDic.Remove(nameof(T));
+                UIPanelDic.Remove(typeof(T).Name);
             }
+        }
+
+
+        public static T GetPanel<T>() where T : UIPanelBase
+        {
+            if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
+            {
+                return panel as T;
+            }
+            return null;
         }
 
 

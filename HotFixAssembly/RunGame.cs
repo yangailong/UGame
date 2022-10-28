@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using UGame_Local;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace UGame_Remove
 {
@@ -43,7 +44,7 @@ namespace UGame_Remove
 
 
             // 等待子系统异步初始化完成
-            while (!CfgData.AsyncInitComplete && !UIManager.AsyncInitComplete)
+            while (!CfgData.AsyncInitComplete || !UIManager.AsyncInitComplete)
             {
                 yield return new WaitForEndOfFrame();
             }
@@ -55,8 +56,13 @@ namespace UGame_Remove
 
             UIManager.Open<DemoPanel>();
 
-        }
 
+            yield return new WaitForSeconds(5f);
+
+            Debug.LogError($"卸载资源 哈哈哈");
+
+             
+        }
 
     }
 }
