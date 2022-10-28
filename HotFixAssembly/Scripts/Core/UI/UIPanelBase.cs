@@ -3,8 +3,11 @@
 namespace UGame_Remove
 {
 
-    public class UIPanelBase : MonoBehaviour, UICycle
+    public abstract class UIPanelBase : MonoBehaviour, UICycle
     {
+
+        private UIPanelBase() { }
+
 
         public object[] Params { set; private get; } = null;
 
@@ -37,7 +40,7 @@ namespace UGame_Remove
         {
 
         }
-        
+
     }
 }
 
