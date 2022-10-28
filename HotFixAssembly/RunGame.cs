@@ -36,6 +36,8 @@ namespace UGame_Remove
             AssetsMapper.Init(result);
             GlobalEvent.Init();
             AudioPlayManager.Init();
+            ObjectPoolManager.Init();
+
 
             UIManager.AsyncInit();
             CfgData.AsyncInit();
