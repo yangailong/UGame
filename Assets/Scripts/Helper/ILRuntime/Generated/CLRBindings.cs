@@ -110,6 +110,7 @@ namespace ILRuntime.Runtime.Generated
             System_IO_MemoryStream_Binding.Register(app);
             System_IO_Stream_Binding.Register(app);
             Google_Protobuf_MessageExtensions_Binding.Register(app);
+            UnityEngine_Pool_ObjectPool_1_Component_Binding.Register(app);
             UnityEngine_PlayerPrefs_Binding.Register(app);
             System_Exception_Binding.Register(app);
             UnityEngine_AddressableAssets_Addressables_Binding.Register(app);
