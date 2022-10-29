@@ -12,7 +12,7 @@ namespace UGame_Local_Editor
         [InitializeOnLoadMethod]
         private static void Add()
         {
-            EditorApplication.update += ProjectWindowChanged;
+            EditorApplication.projectChanged += ProjectChanged;
         }
 
         private static object[] onCreateAsset = null;
@@ -25,7 +25,7 @@ namespace UGame_Local_Editor
         public static Action<AssetMoveResult, string, string> OnMoveAssetCallback = null;
         public static Action<AssetDeleteResult, string, RemoveAssetOptions> OnDeleteAssetCallback = null;
 
-        private static void ProjectWindowChanged()
+        private static void ProjectChanged()
         {
             if (onCreateAsset != null)
             {
@@ -52,20 +52,15 @@ namespace UGame_Local_Editor
             }
         }
 
-        /// <summary>有新资源</summary>
-        private static Action<string> OnWillCreateAssetCallback = null;
+
         private static void OnWillCreateAsset(string path)
         {
-            OnWillCreateAssetCallback?.Invoke(path);
             onCreateAsset = new object[] { path };
         }
 
 
-        /// <summary>保存资源</summary>
-        public static Func<string[], string[]> OnWillSaveAssetsCallback = null;
         private static string[] OnWillSaveAssets(string[] paths)
         {
-            OnWillSaveAssetsCallback?.Invoke(paths);
             List<string> result = new List<string>();
             foreach (string path in paths)
             {
@@ -85,11 +80,8 @@ namespace UGame_Local_Editor
         }
 
 
-        /// <summary>移动资源</summary>
-        public static Func<string, string, AssetMoveResult> OnWillMoveAssetCallback = null;
         private static AssetMoveResult OnWillMoveAsset(string oldPath, string newPath)
         {
-            OnWillMoveAssetCallback?.Invoke(oldPath, newPath);
 
             AssetMoveResult result = AssetMoveResult.DidNotMove;
 
@@ -111,12 +103,10 @@ namespace UGame_Local_Editor
         }
 
 
-        /// <summary>删除资源</summary>
-        public static Func<string, RemoveAssetOptions, AssetDeleteResult> OnWillDeleteAssetCallback = null;
         private static AssetDeleteResult OnWillDeleteAsset(string assetPath, RemoveAssetOptions option)
         {
-            OnWillDeleteAssetCallback?.Invoke(assetPath, option);
             AssetDeleteResult res = AssetDeleteResult.DidDelete;
+
             if (IsLocked(assetPath))
             {
                 Debug.LogError($"Could not delete {assetPath} because it is locked!");

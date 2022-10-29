@@ -12,12 +12,6 @@ namespace UGame_Local_Editor
             ProjectAssetModificationProcessor.OnSaveAssetsCallback += OnSaveAsset;
             ProjectAssetModificationProcessor.OnMoveAssetCallback += OnMoveAsset;
             ProjectAssetModificationProcessor.OnDeleteAssetCallback += OnDeleteAsse;
-            EditorApplication.projectChanged += OnProjectWindowChanged;
-        }
-
-        private static void OnProjectWindowChanged()
-        {
-            UpdateAsset(null);
         }
 
         private static void OnCreateAsset(string path)
@@ -49,13 +43,13 @@ namespace UGame_Local_Editor
             UpdateAsset(pathArr);
         }
 
-        public static void UpdateAsset(List<string> pathArr)
+        public static void UpdateAsset(List<string> paths)
         {
-            if (pathArr == null || pathArr.Count == 0) return;
+            if (paths == null || paths.Count == 0) return;
 
             bool update = false;
 
-            foreach (var path in pathArr)
+            foreach (var path in paths)
             {
                 if (AssetsMapperImpl.InListenerAssetsRootPath(path))
                 {
@@ -72,6 +66,7 @@ namespace UGame_Local_Editor
             }
 
         }
+
 
     }
 }
