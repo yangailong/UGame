@@ -1,0 +1,14 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="top" style="flex-direction: row; margin-left: 5px; margin-right: 5px; margin-top: 5px; margin-bottom: 5px; height: 38px;">
+        <uie:ObjectField label="Object Field" style="flex-grow: 1;" />
+        <ui:Button text="Button" display-tooltip-when-elided="true" name="CreatBtn" style="width: 100px; background-color: rgb(33, 113, 14);" />
+    </ui:VisualElement>
+    <ui:VisualElement name="mid" style="height: 164px; flex-grow: 1; margin-left: 1px; margin-right: 1px; margin-top: 1px; margin-bottom: 1px; flex-direction: row;">
+        <ui:ListView focusable="true" style="width: 200px; border-top-width: 1px; border-right-width: 1px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-bottom-width: 1px;" />
+        <ui:VisualElement style="flex-direction: column; flex-grow: 1; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); border-top-width: 1px; border-bottom-width: 1px;">
+            <ui:Label text="物体信息" display-tooltip-when-elided="true" style="flex-direction: row; height: 40px; font-size: 24px;" />
+            <ui:Foldout text="Foldout" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:Button text="Refresh" display-tooltip-when-elided="true" style="height: 40px;" />
+</ui:UXML>
