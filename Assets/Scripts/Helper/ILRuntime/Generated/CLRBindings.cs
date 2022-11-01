@@ -1,7 +1,11 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
-
+#if DEBUG && !DISABLE_ILRUNTIME_DEBUG
+using AutoList = System.Collections.Generic.List<object>;
+#else
+using AutoList = ILRuntime.Other.UncheckedList<object>;
+#endif
 namespace ILRuntime.Runtime.Generated
 {
     class CLRBindings
@@ -114,21 +118,28 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_PlayerPrefs_Binding.Register(app);
             System_Exception_Binding.Register(app);
             UnityEngine_AddressableAssets_Addressables_Binding.Register(app);
+            UnityEngine_ResourceManagement_AsyncOperations_AsyncOperationHandle_1_TextAsset_Binding.Register(app);
+            System_Action_1_TextAsset_Binding.Register(app);
+            UnityEngine_ResourceManagement_AsyncOperations_AsyncOperationHandle_1_GameObject_Binding.Register(app);
+            System_Action_1_GameObject_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Object_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_Object_Binding_Enumerator_Binding.Register(app);
             System_Collections_Generic_KeyValuePair_2_String_Object_Binding.Register(app);
+            System_Action_1_ScriptableObject_Binding.Register(app);
+            System_IO_Path_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MonoBehaviourAdapter_Binding_Adaptor_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Int32_RectTransform_Binding.Register(app);
             System_Action_1_MonoBehaviourAdapter_Binding_Adaptor_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MonoBehaviourAdapter_Binding_Adaptor_Binding_ValueCollection_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_String_MonoBehaviourAdapter_Binding_Adaptor_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
             System_Enum_Binding.Register(app);
+            System_ApplicationException_Binding.Register(app);
             UnityEngine_UI_CanvasScaler_Binding.Register(app);
             UnityEngine_Screen_Binding.Register(app);
             UnityEngine_Vector2_Binding.Register(app);
+            UnityEngine_Application_Binding.Register(app);
             UnityEngine_Events_UnityEventBase_Binding.Register(app);
             UGame_Local_MountObject_Binding.Register(app);
-            UnityEngine_Application_Binding.Register(app);
 
             ILRuntime.CLR.TypeSystem.CLRType __clrType = null;
             __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Vector2));

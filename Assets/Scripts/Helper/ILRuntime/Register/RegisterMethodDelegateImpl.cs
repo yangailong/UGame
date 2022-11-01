@@ -5,8 +5,9 @@ namespace UGame_Local
     {
         public void Register(AppDomain appdomain)
         {
-            appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<UnityEngine.ResourceManagement.ResourceProviders.SceneInstance>>();
+              appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.ResourceManagement.AsyncOperations.AsyncOperationHandle<UnityEngine.ResourceManagement.ResourceProviders.SceneInstance>>();
             appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.ScriptableObject>();
+            appdomain.DelegateManager.RegisterMethodDelegate<UnityEngine.Component>();
 
         }
     }

@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class DownDll
 {
-    public const string DllPath = "AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.dll";
+    public const string DllPath = "AddressableAssets/Remote_UnMapper/Dll/Dll~/HotFixAssembly.dll";
 
-    public const string PDBPath = "AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.pdb";
+    public const string PDBPath = "AddressableAssets/Remote_UnMapper/Dll/Dll~/HotFixAssembly.pdb";
 
     public static byte[] PDBData()
     {

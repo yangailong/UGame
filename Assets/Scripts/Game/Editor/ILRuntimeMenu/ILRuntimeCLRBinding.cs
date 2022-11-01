@@ -15,7 +15,7 @@ namespace UGame_Local_Editor
         {
             //用新的分析热更dll调用引用来生成绑定代码
             AppDomain domain = new AppDomain();
-            using (FileStream fs = new FileStream("Assets/AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.dll", FileMode.Open, FileAccess.Read))
+            using (FileStream fs = new FileStream("Assets/AddressableAssets/Remote_UnMapper/Dll/Dll~/HotFixAssembly.dll", FileMode.Open, FileAccess.Read))
             {
                 domain.LoadAssembly(fs);
 

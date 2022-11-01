@@ -27,7 +27,7 @@ namespace UGame_Local_Editor
 
             string content = ParseMappingData(mapping);
 
-            string path = $"{Application.dataPath}/{AssetsMapperConst.needListenerAssetsRootPath}/{AssetsMapperConst.creatPath}";
+            string path = $"{Application.dataPath}/{AssetsMapperConst.needListenerAssetsRootPath}/{AssetsMapperConst.fullName}";
 
             WriteStringByFile(path, content);
 

@@ -17,7 +17,7 @@ namespace UGame_Remove
 
         private static IEnumerator Init()
         {
-            string path = $"Assets/{AssetsMapperConst.needListenerAssetsRootPath}/{AssetsMapperConst.creatPath}";
+            string path = $"Assets/{AssetsMapperConst.needListenerAssetsRootPath}/{AssetsMapperConst.fullName}";
 
             TextAsset result = null;
 
