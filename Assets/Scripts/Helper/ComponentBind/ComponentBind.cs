@@ -27,17 +27,17 @@ namespace UGame_Local
                 return;
             }
 
-            AppMain.hotFixAssembly.appDomain.LoadedTypes.TryGetValue($"{m_ClassNamespace}.{m_ClassName}", out var type);
+            AppMain.appDomain.LoadedTypes.TryGetValue($"{m_ClassNamespace}.{m_ClassName}", out var type);
 
             var clrInstance = gameObject.AddComponent<MonoBehaviourAdapter.Adaptor>();
 
             clrInstance.ILInstance = new ILTypeInstance(type as ILType, false);
 
-            clrInstance.AppDomain = AppMain.hotFixAssembly.appDomain;
+            clrInstance.AppDomain = AppMain.appDomain;
 
             var awake = clrInstance.ILInstance.Type.GetMethod("Awake", 0);
 
-            AppMain.hotFixAssembly.appDomain.Invoke(awake, clrInstance.ILInstance);
+            AppMain.appDomain.Invoke(awake, clrInstance.ILInstance);
 
             Destroy(this);
         }

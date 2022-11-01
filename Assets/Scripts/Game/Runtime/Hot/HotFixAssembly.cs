@@ -1,36 +1,27 @@
 using UnityEngine;
 using System.IO;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
+using System;
+
 namespace UGame_Local
 {
     public class HotFixAssembly
     {
-        public AppDomain appDomain = null;
+        private AppDomain appDomain = null;
 
-        public HotFixAssembly()
+        public HotFixAssembly(AppDomain appDomain)
         {
-            appDomain = new AppDomain();
-        }
-
-        public void Run()
-        {
-            Load();
-            InitializeILRuntime();
-            OnHotFixLoaded();
+            this.appDomain = appDomain;
         }
 
 
-
-
-        public void Load()
+        public void LoadAssembly(byte[] dll, byte[] pdb = null)
         {
             //获取dll
-            byte[] dll = DownDll.DllData();
             MemoryStream fs = new MemoryStream(dll);
 
 
             //PDB文件是调试数据库，如需要在日志中显示报错的行号，则必须提供PDB文件，不过由于会额外耗用内存，正式发布时请将PDB去掉，下面LoadAssembly的时候pdb传null即可
-            byte[] pdb = DownDll.PDBData();
             MemoryStream p = new MemoryStream(pdb);
 
             try
@@ -43,7 +34,10 @@ namespace UGame_Local
             }
         }
 
-        private void InitializeILRuntime()
+
+
+
+        public void InitializeILRuntime()
         {
 
 #if DEBUG && (UNITY_EDITOR || UNITY_ANDROID || UNITY_IPHONE)
@@ -61,11 +55,13 @@ namespace UGame_Local
             RegisterLitJsonImpl.Instance.Register(appDomain);
         }
 
-        private void OnHotFixLoaded()
-        {
-            appDomain.Invoke("UGame_Remove.RunGame", "StartUp", null, null);
-        }
 
+
+
+        public void CallRemoveRunGame(string type, string method, object instance, params object[] p)
+        {
+            appDomain.Invoke(type, method, instance, p);
+        }
 
 
     }

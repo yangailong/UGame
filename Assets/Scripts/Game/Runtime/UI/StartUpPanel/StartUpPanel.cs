@@ -38,6 +38,7 @@ namespace UGame_Local
         private IEnumerator DownLoadAssets()
         {
             StartCoroutine(AssetsDownLoad.StartDownAsync(AssetsDownLoadCallback));
+
             yield return new WaitForEndOfFrame();
 
             while (!isCallback)
@@ -84,26 +85,15 @@ namespace UGame_Local
             }
             else//下载成功
             {
-                new EnterGame().Enter();
+                new GameObject($"{typeof(AppMain).Name}").AddComponent<AppMain>();
+
             }
         }
 
 
-        
+
     }
 
-    public class EnterGame
-    {
-        public void Enter()
-        {
-            //资源映射表
-            //dll 绑定
-            //游戏读取数据准备
-
-            new GameObject(typeof(AppMain).Name).AddComponent<AppMain>();
-
-
-        }
-    }
+   
 
 }

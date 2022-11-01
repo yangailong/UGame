@@ -3,23 +3,20 @@ using UnityEngine;
 
 public class DownDll
 {
-    public const string DllPath = "AddressableAssets/Remote_UnMapper/Dll/Dll~/HotFixAssembly.dll";
 
-    public const string PDBPath = "AddressableAssets/Remote_UnMapper/Dll/Dll~/HotFixAssembly.pdb";
-
-    public static byte[] PDBData()
+    public static byte[] PDBData(string pdbPath)
     {
-        return FileToByte($"{Application.dataPath}/{PDBPath}");
+        return FileToByte($"{Application.dataPath}/{pdbPath}");
     }
 
 
-    public static byte[] DllData()
+    public static byte[] DllData(string dllPath)
     {
-        return FileToByte($"{Application.dataPath}/{DllPath}");
+        return FileToByte($"{Application.dataPath}/{dllPath}");
     }
 
 
-    public static byte[] FileToByte(string path)
+    private static byte[] FileToByte(string path)
     {
         try
         {
