@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 namespace UGame_Local
 {
@@ -6,13 +7,13 @@ namespace UGame_Local
     public class AppMain : MonoBehaviour
     {
         //加载Dll
+        
+        public const string DllPath = "Assets/AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.dlls";
 
-        public const string DllPath = "AddressableAssets/Remote_UnMapper/Dll/Dll~/HotFixAssembly.dll";
-
-        public const string PDBPath = "AddressableAssets/Remote_UnMapper/Dll/Dll~/HotFixAssembly.pdb";
+        public const string PDBPath = "Assets/AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.pdb";
 
 
-        public  static AppDomain appDomain = null;
+        public static AppDomain appDomain = null;
 
         public static HotFixAssembly hotFixAssembly = null;
 
@@ -24,12 +25,13 @@ namespace UGame_Local
 
             hotFixAssembly = new HotFixAssembly(appDomain);
 
+            byte[] dllData = Addressables.LoadAssetAsync<TextAsset>(DllPath).WaitForCompletion().bytes;
 
-            byte[] dllData = DownDll.DllData(DllPath);
+            byte[] pdbData = Addressables.LoadAssetAsync<TextAsset>(PDBPath).WaitForCompletion().bytes;
 
-            byte[] pdbData = DownDll.PDBData(PDBPath);
 
             hotFixAssembly.LoadAssembly(dllData, pdbData);
+
 
             hotFixAssembly.InitializeILRuntime();
 
