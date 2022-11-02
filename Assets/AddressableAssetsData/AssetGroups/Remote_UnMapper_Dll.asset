@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
-  m_Name: Packed Assets Remove
+  m_Name: Remote_UnMapper_Dll
   m_EditorClassIdentifier: 
-  m_GroupName: Packed Assets Remove
+  m_GroupName: Remote_UnMapper_Dll
   m_Data:
     m_SerializedData: []
   m_GUID: 46027879fc20ebd4188c487fbc800450
   m_SerializeEntries:
-  - m_GUID: 2c53591b88c26de4b92e2898f3c45994
-    m_Address: Assets/AddressableAssets/Remote_UnMapper
+  - m_GUID: 375b7313359342144900bcc51ca82a51
+    m_Address: Assets/AddressableAssets/Remote_UnMapper/Dll
     m_ReadOnly: 0
     m_SerializedLabels: []
   m_ReadOnly: 0

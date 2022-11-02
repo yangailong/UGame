@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+
 namespace UGame_Local_Editor
 {
     /// <summary> 说明</summary>
-    public class CopyDllToProject : Editor
+    public class DllToBytes : Editor
     {
-        [MenuItem("Tools/Dll/CopyDllToProject")]
-        public static void Copy()
+        [MenuItem("Tools/Dll/DLLToBytes")]
+        public static void DLLToBytes()
         {
             string dllFullName = "HotFixAssembly.dll";
             string pdbFullName = "HotFixAssembly.pdb";
@@ -25,14 +26,39 @@ namespace UGame_Local_Editor
             var dll = new FileInfo($"{originPath}/{dllFullName}");
             var pdb = new FileInfo($"{originPath}/{pdbFullName}");
 
-            dll.CopyTo($"{writePath}{dll.Name}", true);//覆盖
-            pdb.CopyTo($"{writePath}{pdb.Name}", true);
 
             dll.Refresh();
             pdb.Refresh();
 
+            var dllBytes = File.ReadAllBytes(dll.FullName);
+            var pdbBytes = File.ReadAllBytes(pdb.FullName);
+
+
+            foreach (string p in Directory.GetFileSystemEntries(writePath))
+            {
+                if (File.Exists(p))
+                {
+                    // 删除文件
+                    File.Delete(p);
+                }
+            }
+
+
+            //TODO...加密dll
+            File.WriteAllBytes($"{writePath}{dllFullName}.bytes", dllBytes);
+
+            File.WriteAllBytes($"{writePath}{pdbFullName}.bytes", pdbBytes);
+
             AssetDatabase.Refresh();
         }
+
+
+
+
+
+
+
+
     }
 }
 

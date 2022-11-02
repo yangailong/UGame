@@ -1,3 +1,5 @@
+using System.Collections;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
@@ -7,30 +9,26 @@ namespace UGame_Local
     public class AppMain : MonoBehaviour
     {
         //加载Dll
-        
-        public const string DllPath = "Assets/AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.dlls";
 
-        public const string PDBPath = "Assets/AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.pdb";
+        public const string DllPath = "Assets/AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.dll.bytes";
 
+        public const string PDBPath = "Assets/AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.pdb.bytes";
 
         public static AppDomain appDomain = null;
 
         public static HotFixAssembly hotFixAssembly = null;
 
 
-        private void Awake()
+        void Start()
         {
-
             appDomain = new AppDomain();
 
             hotFixAssembly = new HotFixAssembly(appDomain);
 
-            byte[] dllData = Addressables.LoadAssetAsync<TextAsset>(DllPath).WaitForCompletion().bytes;
+            var dll = Addressables.LoadAssetAsync<TextAsset>(DllPath).WaitForCompletion();
+            var pdb = Addressables.LoadAssetAsync<TextAsset>(PDBPath).WaitForCompletion();
 
-            byte[] pdbData = Addressables.LoadAssetAsync<TextAsset>(PDBPath).WaitForCompletion().bytes;
-
-
-            hotFixAssembly.LoadAssembly(dllData, pdbData);
+            hotFixAssembly.LoadAssembly(dll.bytes, pdb.bytes);
 
 
             hotFixAssembly.InitializeILRuntime();
@@ -40,10 +38,8 @@ namespace UGame_Local
         }
 
 
-        private void Start()
-        {
-            DontDestroyOnLoad(gameObject);
-        }
+
+
 
 
 
