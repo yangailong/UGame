@@ -58,11 +58,6 @@ namespace UGame_Remove
             UIManager.Open<DemoPanel>();
 
 
-            yield return new WaitForSeconds(5f);
-
-            Debug.LogError($"卸载资源 哈哈哈");
-
-
         }
 
     }

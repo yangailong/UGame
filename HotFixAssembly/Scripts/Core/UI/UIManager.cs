@@ -82,17 +82,6 @@ namespace UGame_Remove
         public static RectTransform Getlayer(UIPanelLayer layer) => layers[layer];
 
 
-        public static UIPanelBase GetHasPanel<T>()
-        {
-            if (!UIPanelDic.TryGetValue(nameof(T), out var panel))
-            {
-                Debug.LogError($"The {nameof(T)} panel does not exist");
-            }
-
-            return panel;
-        }
-
-
         public static void Open<T>(UICallback callback = null, params object[] param) where T : UIPanelBase
         {
             var panelName = typeof(T).Name;
@@ -112,7 +101,7 @@ namespace UGame_Remove
             }
             else
             {
-                UIManager.CreatUI<T>(panel =>
+                UIManager.Creat<T>(panel =>
                 {
 
                     UIPanelDic.Add(typeof(T).Name, panel);
@@ -164,7 +153,7 @@ namespace UGame_Remove
         }
 
 
-        public static void CloseAllUI(bool isPlayerAnim = false)
+        public static void CloseAll(bool isPlayerAnim = false)
         {
             foreach (var item in UIPanelDic.Values)
             {
@@ -173,7 +162,7 @@ namespace UGame_Remove
         }
 
 
-        private static void CreatUI<T>(Action<UIPanelBase> callback) where T : UIPanelBase
+        private static void Creat<T>(Action<UIPanelBase> callback) where T : UIPanelBase
         {
             ResourceManager.LoadAssetAsync<GameObject>(typeof(T).Name, o =>
             {
@@ -213,7 +202,7 @@ namespace UGame_Remove
         }
 
 
-        public static T GetPanel<T>() where T : UIPanelBase
+        public static T Get<T>() where T : UIPanelBase
         {
             if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
             {

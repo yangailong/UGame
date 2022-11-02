@@ -38,7 +38,6 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_WaitForEndOfFrame_Binding.Register(app);
             UnityEngine_Object_Binding.Register(app);
             System_Array_Binding.Register(app);
-            UnityEngine_WaitForSeconds_Binding.Register(app);
             System_NotSupportedException_Binding.Register(app);
             UnityEngine_TextAsset_Binding.Register(app);
             System_ArgumentNullException_Binding.Register(app);
@@ -95,6 +94,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Time_Binding.Register(app);
             System_Action_1_Single_Binding.Register(app);
             System_Action_Binding.Register(app);
+            UnityEngine_WaitForSeconds_Binding.Register(app);
             System_Text_Encoding_Binding.Register(app);
             System_Security_Cryptography_Aes_Binding.Register(app);
             System_Security_Cryptography_SymmetricAlgorithm_Binding.Register(app);
