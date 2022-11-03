@@ -30,7 +30,6 @@ namespace UGame_Local
 
             hotFixAssembly.LoadAssembly(dll.bytes, pdb.bytes);
 
-
             hotFixAssembly.InitializeILRuntime();
 
             hotFixAssembly.CallRemoveRunGame("UGame_Remove.RunGame", "StartUp", null, null);

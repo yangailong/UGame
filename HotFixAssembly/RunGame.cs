@@ -56,8 +56,6 @@ namespace UGame_Remove
             yield return ResourceManager.LoadSceneAsync("Login");
 
             UIManager.Open<DemoPanel>();
-
-
         }
 
     }

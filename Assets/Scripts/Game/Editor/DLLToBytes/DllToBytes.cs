@@ -7,20 +7,22 @@ namespace UGame_Local_Editor
     /// <summary> 说明</summary>
     public class DllToBytes : Editor
     {
+        private static readonly string originPath = $"{Application.dataPath}/AddressableAssets/Remote_UnMapper/Dll/Dll~";
+
+        private static readonly string writePath = $"{Application.dataPath}/AddressableAssets/Remote_UnMapper/Dll";
+
+
+        private static readonly string dllFullName = "HotFixAssembly.dll";
+
+        private static readonly string pdbFullName = "HotFixAssembly.pdb";
+
+
         [MenuItem("Tools/Dll/DLLToBytes")]
         public static void DLLToBytes()
         {
-            string dllFullName = "HotFixAssembly.dll";
-            string pdbFullName = "HotFixAssembly.pdb";
-
-            string originPath = $"{Application.dataPath}/AddressableAssets/Remote_UnMapper/Dll/Dll~";
-
-            string writePath = $"{Application.dataPath}/AddressableAssets/Remote_UnMapper/Dll/";
-
             if (!Directory.Exists(originPath))
             {
-                Debug.LogError($"no find path   {originPath}");
-                return;
+                throw new DirectoryNotFoundException($"the {originPath} path does not exist");
             }
 
             var dll = new FileInfo($"{originPath}/{dllFullName}");
@@ -38,26 +40,33 @@ namespace UGame_Local_Editor
             {
                 if (File.Exists(p))
                 {
-                    // 删除文件
                     File.Delete(p);
                 }
             }
 
 
             //TODO...加密dll
-            File.WriteAllBytes($"{writePath}{dllFullName}.bytes", dllBytes);
+            File.WriteAllBytes($"{writePath}/{dllFullName}.bytes", dllBytes);
 
-            File.WriteAllBytes($"{writePath}{pdbFullName}.bytes", pdbBytes);
+            File.WriteAllBytes($"{writePath}/{pdbFullName}.bytes", pdbBytes);
 
             AssetDatabase.Refresh();
         }
 
 
+        [RuntimeInitializeOnLoadMethod(RuntimeInitializeLoadType.BeforeSplashScreen)]
 
+        public static void RuntimeInitDllToBytes()
+        {
+            var dllCreationTim = File.GetLastWriteTime($"{originPath}/{dllFullName}");
+            var bytesCreationTim = File.GetLastWriteTime($"{writePath}/{dllFullName}.bytes");
 
-
-
-
+            //unity运行，检测最新的dll文件是否转成dll.bytes
+            if (dllCreationTim > bytesCreationTim)
+            {
+                DLLToBytes();
+            }
+        }
 
     }
 }
