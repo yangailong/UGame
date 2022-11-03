@@ -8,7 +8,7 @@ namespace UGame_Local_Editor
 {
     public class UGame : EditorWindow
     {
-        [MenuItem("Window/UI Toolkit/UGame")]
+        [MenuItem("Tools/UGame")]
         public static void ShowExample()
         {
             UGame wnd = GetWindow<UGame>();
