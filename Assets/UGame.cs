@@ -46,17 +46,18 @@ namespace UGame_Local
 
 
 
-    public enum ILRuntimeJITFlags
-    {
-        None = 0,
-
-        JITOnDemand = 1,
-
-        JITImmediately = 2,
-
-        NoJIT = 4,
-
-        ForceInline = 8,
-    }
+   
 }
 
+public enum ILRuntimeJITFlags
+{
+    None = 0,
+
+    JITOnDemand = 1,
+
+    JITImmediately = 2,
+
+    NoJIT = 4,
+
+    ForceInline = 8,
+}
