@@ -28,7 +28,7 @@ namespace UGame_Remove
         {
             valuePairs = new Dictionary<string, ScriptableObject>();
 
-            Assembly assembly = typeof(AppMain).Assembly;
+            Assembly assembly = typeof(UGame).Assembly;
 
             Predicate<Type> typeMatch = type => type.BaseType == typeof(ScriptableObject) && !string.IsNullOrEmpty(type.Namespace) && type.Namespace.Equals("UGame_Local_Out_CfgData");
 
