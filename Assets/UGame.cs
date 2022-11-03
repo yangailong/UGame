@@ -5,9 +5,16 @@ using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 namespace UGame_Local
 {
     /// <summary> 说明</summary>
-    public class AppMain : MonoBehaviour
+    public class UGame : MonoBehaviour
     {
-        //加载Dll
+        //Custom
+
+        public string m_Key = string.Empty;
+
+        public string Type = string.Empty;
+
+        public bool Debug = true;
+
 
         public const string DllPath = "Assets/AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.dll.bytes";
 

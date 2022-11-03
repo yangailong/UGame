@@ -85,7 +85,7 @@ namespace UGame_Local
             }
             else//下载成功
             {
-                new GameObject($"{typeof(AppMain).Name}").AddComponent<AppMain>();
+                new GameObject($"{typeof(UGame).Name}").AddComponent<UGame>();
 
             }
         }
