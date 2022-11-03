@@ -1,8 +1,7 @@
-using System.Collections;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.AddressableAssets;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
+
 namespace UGame_Local
 {
     /// <summary> 说明</summary>
@@ -35,14 +34,6 @@ namespace UGame_Local
             hotFixAssembly.CallRemoveRunGame("UGame_Remove.RunGame", "StartUp", null, null);
 
         }
-
-
-
-
-
-
-
-
     }
 
 }

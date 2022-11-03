@@ -45,8 +45,6 @@ namespace UGame_Local_Editor
 
         public static void UpdateAsset(List<string> paths)
         {
-            UnityEngine.Debug.LogError("-----------");
-
             if (paths == null || paths.Count == 0) return;
 
             bool update = false;
@@ -66,7 +64,6 @@ namespace UGame_Local_Editor
             {
                 AssetsMapperImpl.Creat();
             }
-
         }
 
 
