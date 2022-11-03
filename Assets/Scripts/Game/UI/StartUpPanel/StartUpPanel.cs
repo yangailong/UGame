@@ -39,6 +39,8 @@ namespace UGame_Local
         {
             StartCoroutine(AssetsDownLoad.StartDownAsync(AssetsDownLoadCallback));
 
+          
+
             yield return new WaitForEndOfFrame();
 
             while (!isCallback)

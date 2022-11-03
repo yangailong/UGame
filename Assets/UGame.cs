@@ -7,13 +7,12 @@ namespace UGame_Local
     /// <summary> 说明</summary>
     public class UGame : MonoBehaviour
     {
-        //Custom
 
-        public string m_Key = string.Empty;
+        public string m_Key = "UGame.Prefs.Keys";
 
-        public string Type = string.Empty;
+        public ILRuntimeJITFlags jITFlags = ILRuntimeJITFlags.None;
 
-        public bool Debug = true;
+        public bool usePdb = true;
 
 
         public const string DllPath = "Assets/AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.dll.bytes";
@@ -27,12 +26,13 @@ namespace UGame_Local
 
         void Start()
         {
-            appDomain = new AppDomain();
+            appDomain = new AppDomain((int)jITFlags);
 
             hotFixAssembly = new HotFixAssembly(appDomain);
 
             var dll = Addressables.LoadAssetAsync<TextAsset>(DllPath).WaitForCompletion();
-            var pdb = Addressables.LoadAssetAsync<TextAsset>(PDBPath).WaitForCompletion();
+
+            var pdb = !usePdb ? null : Addressables.LoadAssetAsync<TextAsset>(PDBPath).WaitForCompletion();
 
             hotFixAssembly.LoadAssembly(dll.bytes, pdb.bytes);
 
@@ -41,7 +41,22 @@ namespace UGame_Local
             hotFixAssembly.CallRemoveRunGame("UGame_Remove.RunGame", "StartUp", null, null);
 
         }
+      
     }
 
+
+
+    public enum ILRuntimeJITFlags
+    {
+        None = 0,
+
+        JITOnDemand = 1,
+
+        JITImmediately = 2,
+
+        NoJIT = 4,
+
+        ForceInline = 8,
+    }
 }
 
