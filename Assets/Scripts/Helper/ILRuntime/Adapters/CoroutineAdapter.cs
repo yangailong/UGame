@@ -1,6 +1,4 @@
-﻿using UnityEngine;
-using System.Collections.Generic;
-using ILRuntime.Other;
+﻿using System.Collections.Generic;
 using System;
 using System.Collections;
 using ILRuntime.Runtime.Enviorment;
@@ -10,13 +8,8 @@ using ILRuntime.CLR.Method;
 
 public class CoroutineAdapter : CrossBindingAdaptor
 {
-    public override Type BaseCLRType
-    {
-        get
-        {
-            return null;
-        }
-    }
+    public override Type BaseCLRType => null;
+
 
     public override Type[] BaseCLRTypes
     {
@@ -29,13 +22,9 @@ public class CoroutineAdapter : CrossBindingAdaptor
         }
     }
 
-    public override Type AdaptorType
-    {
-        get
-        {
-            return typeof(Adaptor);
-        }
-    }
+
+    public override Type AdaptorType => typeof(Adaptor);
+
 
     public override object CreateCLRInstance(ILRuntime.Runtime.Enviorment.AppDomain appdomain, ILTypeInstance instance)
     {

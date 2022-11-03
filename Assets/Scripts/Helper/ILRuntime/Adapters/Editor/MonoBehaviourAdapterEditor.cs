@@ -1,14 +1,5 @@
 using UnityEngine;
 using UnityEditor;
-using System.Collections;
-using System.Collections.Generic;
-using System.IO;
-using ILRuntime.CLR.TypeSystem;
-using ILRuntime.CLR.Method;
-using ILRuntime.CLR.Utils;
-using ILRuntime.Runtime.Intepreter;
-using ILRuntime.Runtime.Stack;
-using ILRuntime.Runtime.Enviorment;
 
 [CustomEditor(typeof(MonoBehaviourAdapter.Adaptor), true)]
 public class MonoBehaviourAdapterEditor : UnityEditor.UI.GraphicEditor

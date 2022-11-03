@@ -1,21 +1,62 @@
-﻿
+﻿using System.Collections;
+using UGame_Local;
 using UnityEngine;
 
 namespace UGame_Remove
 {
     public class RunGame
     {
+
         public static void StartUp()
         {
             Debug.Log($"UGame_Remove StartUp");
 
-
-            Init();
+            CoroutineRunner.OverStartCoroutine(Init());
         }
 
-        public static void Init()
+
+        private static IEnumerator Init()
         {
-            UIManager.Init();
+            string path = $"Assets/{AssetsMapperConst.needListenerAssetsRootPath}/{AssetsMapperConst.fullName}";
+
+            TextAsset result = null;
+
+            //加载映射表txt
+            ResourceManager.LoadAssetAsync<TextAsset>(path, value => result = value);
+
+            //等待映射表加载结束
+            while (result == null)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+
+            //初始化子系统
+            AssetsMapper.Init(result);
+            GlobalEvent.Init();
+            AudioPlayManager.Init();
+            ObjectPoolManager.Init();
+
+
+            UIManager.AsyncInit();
+            CfgData.AsyncInit();
+
+            // NetWebSocket.Instance.Open("", "", WebSocket4Net.WebSocketVersion.Rfc6455);
+
+
+            // 等待子系统异步初始化完成
+            while (!CfgData.AsyncInitComplete || !UIManager.AsyncInitComplete)
+            {
+                yield return new WaitForEndOfFrame();
+            }
+
+            Debug.Log($"子系统全部初始化完毕....");
+
+
+            yield return ResourceManager.LoadSceneAsync("Login");
+
+            UIManager.Open<DemoPanel>();
         }
+
     }
 }
