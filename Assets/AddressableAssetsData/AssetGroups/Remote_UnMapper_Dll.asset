@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bbb281ee3bf0b054c82ac2347e9e782c, type: 3}
+  m_Name: Remote_UnMapper_Dll
+  m_EditorClassIdentifier: 
+  m_GroupName: Remote_UnMapper_Dll
+  m_Data:
+    m_SerializedData: []
+  m_GUID: 46027879fc20ebd4188c487fbc800450
+  m_SerializeEntries:
+  - m_GUID: 375b7313359342144900bcc51ca82a51
+    m_Address: Assets/AddressableAssets/Remote_UnMapper/Dll
+    m_ReadOnly: 0
+    m_SerializedLabels: []
+  m_ReadOnly: 0
+  m_Settings: {fileID: 11400000, guid: e6216f8b0313dc64fa657615c662a1ce, type: 2}
+  m_SchemaSet:
+    m_Schemas:
+    - {fileID: 11400000, guid: ea7445122eac05845a44771851212ca9, type: 2}
+    - {fileID: 11400000, guid: 117a0a8f8b820b944be662c168dafa6c, type: 2}
