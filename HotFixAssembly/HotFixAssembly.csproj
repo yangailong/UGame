@@ -51,6 +51,7 @@
     <Compile Include="Scripts\Core\CoroutineRunner\CoroutineRunner.cs" />
     <Compile Include="Scripts\Core\CrypManager\CrypManager.cs" />
     <Compile Include="Scripts\Core\Event\GlobalEvent.cs" />
+    <Compile Include="Scripts\Core\Network\Http\Http.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\NetWebSocket.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketEventArgs.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketMsgManager.cs" />
