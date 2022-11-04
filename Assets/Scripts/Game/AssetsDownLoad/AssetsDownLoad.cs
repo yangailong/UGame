@@ -13,18 +13,38 @@ namespace UGame_Local
     /// </summary>
     public class AssetsDownLoad
     {
-        private static Action<bool> callback = null;
+        private static Action<bool> downloadEnd = null;
 
         private static AsyncOperationHandle downloadDependencies;//下载句柄
 
         private static DownLoadHandleInfoCarrier downLoadPercent = null;
 
+        /// <summary>资源下载进度</summary>
+        public static float DownLoadPercent
+        {
+            get
+            {
+                if (downLoadPercent == null) return 0;
+
+                if (downLoadPercent.downLoadHandle.IsValid())
+                {
+                    downLoadPercent.precent = downloadDependencies.GetDownloadStatus().Percent;
+                }
+                else if (downLoadPercent.downLoadHandle.GetDownloadStatus().IsDone)
+                {
+                    downLoadPercent.precent = downLoadPercent.downLoadHandle.Status == AsyncOperationStatus.Succeeded ? 1f : 0;
+                }
+                return downLoadPercent.precent;
+            }
+        }
+
+        /// <summary>下载资源大小</summary>
+        public static float DownLoadSize => downLoadPercent == null ? 0 : downLoadPercent.downLoadSize;
 
 
         /// <summary>开始下载热更资源</summary>
-        public static IEnumerator StartDownAsync(Action<bool> callback)
+        public static IEnumerator StartDownAsync(Action<bool> downloadEnd)
         {
-            yield return null;
 
 #if UNITY_EDITOR
             //BuildScriptPackedPlayMode-->Use Existing Build
@@ -32,15 +52,24 @@ namespace UGame_Local
                   UnityEditor.AddressableAssets.Build.DataBuilders.BuildScriptPackedPlayMode))
             {
                 Debug.Log("curr not Use Existing Build,not hot assets ");
-                callback?.Invoke(true);
+                downloadEnd?.Invoke(true);
                 yield break;
             }
 #endif
 
-            AssetsDownLoad.callback = callback;
+            AssetsDownLoad.downloadEnd = downloadEnd;
 
             yield return DownAsync();
 
+        }
+
+
+        /// <summary>
+        /// 删除包缓存中不再引用的所有AssetBundle
+        /// </summary>
+        public static void CleanBundleCache()
+        {
+            Addressables.CleanBundleCache().WaitForCompletion();
         }
 
 
@@ -99,8 +128,8 @@ namespace UGame_Local
             }
 
 
-            AssetsDownLoad.callback?.Invoke(result);
-            AssetsDownLoad.callback = null;
+            AssetsDownLoad.downloadEnd?.Invoke(result);
+            AssetsDownLoad.downloadEnd = null;
             downLoadPercent = null;
 
             Debug.Log($"down finish -->result:{result}");
@@ -111,28 +140,6 @@ namespace UGame_Local
 
 
         }
-
-
-        /// <summary>资源下载进度</summary>
-        public static float DownLoadPercent
-        {
-            get
-            {
-                if (downLoadPercent == null) return 0;
-
-                if (downLoadPercent.downLoadHandle.IsValid())
-                {
-                    downLoadPercent.precent = downloadDependencies.GetDownloadStatus().Percent;
-                }
-                else if (downLoadPercent.downLoadHandle.GetDownloadStatus().IsDone)
-                {
-                    downLoadPercent.precent = downLoadPercent.downLoadHandle.Status == AsyncOperationStatus.Succeeded ? 1f : 0;
-                }
-                return downLoadPercent.precent;
-            }
-        }
-
-        public static float DownLoadSize => downLoadPercent == null ? 0 : downLoadPercent.downLoadSize;
 
 
         /// <summary>下载句柄信息</summary>

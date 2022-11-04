@@ -16,22 +16,19 @@ namespace UGame_Local
         [Space(15), SerializeField, FormerlySerializedAs("m_Others")]
         private List<Object> m_Others = null;
 
+        private Dictionary<string, Component[]> valuePairs = null;
+
 
         public T GetChild<T>(string childName) where T : Component
         {
-            if (string.IsNullOrEmpty(childName))
+            if (string.IsNullOrEmpty(childName) || !valuePairs.TryGetValue(childName, out var components))
             {
-                throw new ArgumentException("subChildName is invalid");
+                throw new ArgumentException($"{nameof(childName)} is invalid");
             }
 
-            foreach (var item in m_m_Childs)
+            foreach (var item in components)
             {
-                if (item.name.Equals(childName))
-                {
-                    var result = item.GetComponent<T>();
-
-                    if (result != null) return result;
-                }
+                if (item is T) return item as T;
             }
 
             return null;
@@ -44,7 +41,7 @@ namespace UGame_Local
 
             if (index < 0 || index >= m_Others.Count)
             {
-                throw new ArgumentException("index is invalid");
+                throw new ArgumentException($"{nameof(index)} is invalid");
             }
             return m_Others[index];
         }
@@ -54,8 +51,18 @@ namespace UGame_Local
         private void FindChinds()
         {
             m_m_Childs = new List<Component>();
+            valuePairs = new Dictionary<string, Component[]>();
 
             FindChind(transform);
+
+            foreach (Transform item in m_m_Childs)
+            {
+                if (!valuePairs.ContainsKey(item.name))
+                {
+                    var coms = item.GetComponents<Component>();
+                    valuePairs.Add(item.name, coms);
+                }
+            }
         }
 
 

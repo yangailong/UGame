@@ -1,21 +1,27 @@
 ﻿using System;
 using UnityEngine;
 using UnityEngine.UI;
+
 namespace UGame_Local
 {
     public class TipPanel : MonoBehaviour
     {
         private Text m_Text = null;
 
-        private Button m_CancelBtn = null, m_OkBtn = null;
+        private Button m_CancelBtn = null, m_OkBtn = null, m_MaskBtn = null;
 
-        private Action<bool> OnClickCallback = null;
+        private Action<bool> OnClickBtnCallback = null;
 
-        private void Awake()
+
+        private void GetComponent()
         {
-            m_Text = transform.Find("Content/Text").GetComponent<Text>();
-            m_CancelBtn = transform.Find("Content/CancelBtn").GetComponent<Button>();
-            m_OkBtn = transform.Find("Content/OkBtn").GetComponent<Button>();
+            m_Text = transform.Find("Content/m_Text").GetComponent<Text>();
+
+            m_CancelBtn = transform.Find("Content/m_CancelBtn").GetComponent<Button>();
+
+            m_OkBtn = transform.Find("Content/m_OkBtn").GetComponent<Button>();
+
+            m_MaskBtn = transform.Find("BG/m_MaskBtn").GetComponent<Button>();
         }
 
 
@@ -23,6 +29,7 @@ namespace UGame_Local
         {
             m_CancelBtn?.onClick.AddListener(OnClickCancelBtn);
             m_OkBtn?.onClick.AddListener(OnClickOkBtn);
+            m_MaskBtn.onClick.AddListener(OnClickMaskBtn);
         }
 
 
@@ -30,29 +37,40 @@ namespace UGame_Local
         {
             m_CancelBtn?.onClick.RemoveAllListeners();
             m_OkBtn?.onClick.RemoveAllListeners();
+            m_MaskBtn.onClick.RemoveAllListeners();
+
+            OnClickBtnCallback = null;
         }
 
 
         public void OnClickCancelBtn()
         {
-            OnClickCallback?.Invoke(false);
+            OnClickBtnCallback?.Invoke(false);
             gameObject.SetActive(false);
+            OnClickBtnCallback = null;
         }
 
 
         public void OnClickOkBtn()
         {
-            OnClickCallback?.Invoke(false);
+            OnClickBtnCallback?.Invoke(true);
             gameObject.SetActive(false);
+            OnClickBtnCallback = null;
         }
 
 
-        public void SetData(string message, Action<bool> onClickCallabck)
+        public void OnClickMaskBtn()
         {
+            OnClickOkBtn();
+        }
+
+
+        public void Open(string message, Action<bool> onClickBtnCallabck)
+        {
+            GetComponent();
             gameObject.SetActive(true);
-            Awake();
             m_Text.text = message;
-            OnClickCallback = onClickCallabck;
+            OnClickBtnCallback = onClickBtnCallabck;
         }
 
 

@@ -1,8 +1,5 @@
-using System;
-using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
-
 
 namespace UGame_Local
 {
@@ -10,6 +7,7 @@ namespace UGame_Local
     public class StartUpPanel : MonoBehaviour
     {
         private Slider m_Slider = null;
+
         private Text m_Text = null;
 
         private void Awake()
@@ -19,83 +17,26 @@ namespace UGame_Local
         }
 
 
-        private void OnEnable()
+        public void SetSliderValue(float value)
         {
-            m_Slider.interactable = false;
-            m_Slider.value = 0;
-            m_Text.text = "检查更新......";
-            isCallback = false;
+            m_Slider.value = value;
         }
 
 
-        private void Start()
+        public void SetText(string text)
         {
-            StopAllCoroutines();
-            StartCoroutine(DownLoadAssets());
+            m_Text.text = text;
         }
 
 
-        private IEnumerator DownLoadAssets()
+        public void SetData(string text,float sliderValue)
         {
-            StartCoroutine(AssetsDownLoad.StartDownAsync(AssetsDownLoadCallback));
-
-          
-
-            yield return new WaitForEndOfFrame();
-
-            while (!isCallback)
-            {
-                if (AssetsDownLoad.DownLoadSize != 0)
-                {
-                    m_Text.text = "当前下载进度";
-                    float currDownLoad = AssetsDownLoad.DownLoadPercent * (AssetsDownLoad.DownLoadSize / (1024 * 1024));//已下载size
-                    m_Text.text = $"{m_Text.text}  {currDownLoad.ToString("0.00")} / {(AssetsDownLoad.DownLoadSize / (1024 * 1024)).ToString("0.00")} MB";//已下载size/总下载size
-                    m_Text.text = $"{m_Text.text}  {Mathf.CeilToInt(AssetsDownLoad.DownLoadPercent * 100)}%";//下载百分比
-                }
-
-                m_Slider.value = AssetsDownLoad.DownLoadPercent;
-
-                yield return new WaitForEndOfFrame();
-            }
-
+            SetText(text);
+            SetSliderValue(sliderValue);
         }
-
-
-        private bool isCallback = false;
-        private void AssetsDownLoadCallback(bool succeeded)
-        {
-            isCallback = true;
-            if (!succeeded)//下载失败
-            {
-                Action<bool> downLoadFail = (b) =>
-                {
-                    if (b)
-                    {
-                        OnEnable();
-                        StopAllCoroutines();
-                        StartCoroutine(DownLoadAssets());
-                    }
-                    else
-                    {
-                        Application.Quit();
-                    }
-                };
-
-
-                FindObjectOfType<TipPanel>()?.SetData("资源下载失败,请重新尝试!", downLoadFail);
-
-            }
-            else//下载成功
-            {
-                new GameObject($"{typeof(UGame).Name}").AddComponent<UGame>();
-
-            }
-        }
-
-
 
     }
 
-   
+
 
 }

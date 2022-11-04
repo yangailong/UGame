@@ -2,13 +2,12 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
-using UGame_Local;
 
 namespace UGame_Local_Editor
 {
     public class UGame : EditorWindow
     {
-        [MenuItem("Tools/UGame")]
+        [MenuItem("Tools/UGame %G")]
         public static void ShowExample()
         {
             UGame wnd = GetWindow<UGame>();
@@ -19,7 +18,7 @@ namespace UGame_Local_Editor
         {
             // Each editor window contains a root VisualElement object
             VisualElement root = rootVisualElement;
-          
+
 
             // Import UXML
             var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/UI Toolkit/UGame/UGame.uxml");
@@ -30,3 +29,4 @@ namespace UGame_Local_Editor
         }
     }
 }
+
