@@ -3,30 +3,12 @@ using UnityEngine;
 using UnityEngine.AddressableAssets;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
-public enum ILRuntimeJITFlags
-{
-    None = 0,
-
-    JITOnDemand = 1,
-
-    JITImmediately = 2,
-
-    NoJIT = 4,
-
-    ForceInline = 8,
-}
-
 namespace UGame_Local
 {
     /// <summary> 说明</summary>
     public class UGame : MonoBehaviour
     {
-
-        public string m_Key = "UGame.Prefs.Keys";
-
-        public ILRuntimeJITFlags jITFlags = ILRuntimeJITFlags.None;
-
-        public bool usePdb = true;
+        public CfgUGame CfgUGame = null;
 
         public const string DllPath = "Assets/AddressableAssets/Remote_UnMapper/Dll/HotFixAssembly.dll.bytes";
 
@@ -37,12 +19,12 @@ namespace UGame_Local
         public static HotFixAssembly hotFixAssembly = null;
 
 
-
         private void Awake()
         {
             StopAllCoroutines();
             StartCoroutine(DownLoadAssets());
         }
+
 
         /// <summary>
         /// 下载资源
@@ -73,7 +55,6 @@ namespace UGame_Local
                 yield return new WaitForEndOfFrame();
             }
         }
-
 
         private bool isDownLoadEnd = false;
 
@@ -118,13 +99,13 @@ namespace UGame_Local
         /// </summary>
         private void RunHotDll()
         {
-            appDomain = new AppDomain((int)jITFlags);
+            appDomain = new AppDomain((int)CfgUGame.jITFlags);
 
             hotFixAssembly = new HotFixAssembly(appDomain);
 
             var dll = Addressables.LoadAssetAsync<TextAsset>(DllPath).WaitForCompletion();
 
-            var pdb = !usePdb ? null : Addressables.LoadAssetAsync<TextAsset>(PDBPath).WaitForCompletion();
+            var pdb = !CfgUGame.usePdb ? null : Addressables.LoadAssetAsync<TextAsset>(PDBPath).WaitForCompletion();
 
             hotFixAssembly.LoadAssembly(dll.bytes, pdb?.bytes);
 
@@ -132,7 +113,7 @@ namespace UGame_Local
 
             hotFixAssembly.CallRemoveRunGame("UGame_Remove.RunGame", "StartUp", null, null);
         }
-       
+
 
     }
 
