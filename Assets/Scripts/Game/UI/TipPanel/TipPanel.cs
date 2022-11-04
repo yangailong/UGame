@@ -8,7 +8,7 @@ namespace UGame_Local
     {
         private Text m_Text = null;
 
-        private Button m_CancelBtn = null, m_OkBtn = null, m_MaskBtn = null;
+        private Button m_CancelBtn = null, m_OkBtn = null;
 
         private Action<bool> OnClickBtnCallback = null;
 
@@ -21,7 +21,6 @@ namespace UGame_Local
 
             m_OkBtn = transform.Find("Content/m_OkBtn").GetComponent<Button>();
 
-            m_MaskBtn = transform.Find("BG/m_MaskBtn").GetComponent<Button>();
         }
 
 
@@ -29,7 +28,6 @@ namespace UGame_Local
         {
             m_CancelBtn?.onClick.AddListener(OnClickCancelBtn);
             m_OkBtn?.onClick.AddListener(OnClickOkBtn);
-            m_MaskBtn.onClick.AddListener(OnClickMaskBtn);
         }
 
 
@@ -37,8 +35,7 @@ namespace UGame_Local
         {
             m_CancelBtn?.onClick.RemoveAllListeners();
             m_OkBtn?.onClick.RemoveAllListeners();
-            m_MaskBtn.onClick.RemoveAllListeners();
-
+          
             OnClickBtnCallback = null;
         }
 
@@ -56,12 +53,6 @@ namespace UGame_Local
             OnClickBtnCallback?.Invoke(true);
             gameObject.SetActive(false);
             OnClickBtnCallback = null;
-        }
-
-
-        public void OnClickMaskBtn()
-        {
-            OnClickOkBtn();
         }
 
 
