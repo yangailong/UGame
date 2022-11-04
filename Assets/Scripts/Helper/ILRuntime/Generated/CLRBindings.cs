@@ -102,6 +102,11 @@ namespace ILRuntime.Runtime.Generated
             System_Convert_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Enum_ILTypeInstance_Binding.Register(app);
             System_Object_Binding.Register(app);
+            UnityEngine_Networking_UnityWebRequest_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_String_Binding_Enumerator_Binding.Register(app);
+            System_Collections_Generic_KeyValuePair_2_String_String_Binding.Register(app);
+            UnityEngine_Networking_DownloadHandler_Binding.Register(app);
+            UnityEngine_Networking_UploadHandlerRaw_Binding.Register(app);
             System_Threading_Interlocked_Binding.Register(app);
             WebSocket4Net_WebSocket_Binding.Register(app);
             UnityEngine_JsonUtility_Binding.Register(app);

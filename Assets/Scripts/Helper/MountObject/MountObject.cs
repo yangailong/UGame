@@ -8,20 +8,43 @@ namespace UGame_Local
 {
     public class MountObject : MonoBehaviour
     {
-        [Tooltip("查找以m_开头的Transform")]
-        [SerializeField, FormerlySerializedAs("m_Childs")]
+
+        [Tooltip("查找以m_开头的Transform"), SerializeField, FormerlySerializedAs("m_Childs")]
         private List<Component> m_m_Childs = null;
 
-        [Tooltip("挂载的其他Object")]
-        [Space(15), SerializeField, FormerlySerializedAs("m_Others")]
+
+        [Tooltip("挂载的其他Object"), Space(15), SerializeField, FormerlySerializedAs("m_Others")]
         private List<Object> m_Others = null;
 
+
         private Dictionary<string, Component[]> valuePairs = null;
+
+        private Dictionary<string, Component[]> ValuePairs
+        {
+            get
+            {
+                if (valuePairs == null)
+                {
+                    valuePairs = new Dictionary<string, Component[]>();
+
+                    foreach (Transform item in m_m_Childs)
+                    {
+                        if (!valuePairs.ContainsKey(item.name))
+                        {
+                            var coms = item.GetComponents<Component>();
+                            valuePairs.Add(item.name, coms);
+                        }
+                    }
+                }
+                return valuePairs;
+            }
+        }
+
 
 
         public T GetChild<T>(string childName) where T : Component
         {
-            if (string.IsNullOrEmpty(childName) || !valuePairs.TryGetValue(childName, out var components))
+            if (string.IsNullOrEmpty(childName) || !ValuePairs.TryGetValue(childName, out var components))
             {
                 throw new ArgumentException($"{nameof(childName)} is invalid");
             }
@@ -47,22 +70,11 @@ namespace UGame_Local
         }
 
 
-        [ContextMenu("查找挂载Child")]
+        [ContextMenu("Find m_Child Object")]
         private void FindChinds()
         {
             m_m_Childs = new List<Component>();
-            valuePairs = new Dictionary<string, Component[]>();
-
             FindChind(transform);
-
-            foreach (Transform item in m_m_Childs)
-            {
-                if (!valuePairs.ContainsKey(item.name))
-                {
-                    var coms = item.GetComponents<Component>();
-                    valuePairs.Add(item.name, coms);
-                }
-            }
         }
 
 
@@ -92,6 +104,8 @@ namespace UGame_Local
         {
             FindChinds();
         }
+
+
 
 
     }

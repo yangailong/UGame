@@ -51,7 +51,7 @@
     <Compile Include="Scripts\Core\CoroutineRunner\CoroutineRunner.cs" />
     <Compile Include="Scripts\Core\CrypManager\CrypManager.cs" />
     <Compile Include="Scripts\Core\Event\GlobalEvent.cs" />
-    <Compile Include="Scripts\Core\Network\Http\Http.cs" />
+    <Compile Include="Scripts\Core\Network\WebRequest\WebRequest.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\NetWebSocket.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketEventArgs.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketMsgManager.cs" />
@@ -125,6 +125,10 @@
     </Reference>
     <Reference Include="UnityEngine.UIModule">
       <HintPath>dlls\UnityEngine.UIModule.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="UnityEngine.UnityWebRequestModule">
+      <HintPath>dlls\UnityEngine.UnityWebRequestModule.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="WebSocket4Net">
