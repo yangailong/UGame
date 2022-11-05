@@ -20,10 +20,10 @@
             "generate_tostring_method": true
         },
         {
-            "excel_name": "Excels/CfgRemoteLang.xlsx",
-            "script_directory": "Assets/Scripts/Game/Runtime/Data/Normal/ScriptableObject",
-            "asset_directory": "Assets/AddressableAssets/Remote/Data/ScriptableObject/Normal",
-            "name_space": "UGame_Local_Out_CfgData",
+            "excel_name": "",
+            "script_directory": "Assets",
+            "asset_directory": "Assets",
+            "name_space": "",
             "use_hash_string": false,
             "hide_asset_properties": true,
             "generate_get_method_if_possible": true,
@@ -31,7 +31,7 @@
             "use_public_items_getter": false,
             "compress_color_into_int": true,
             "treat_unknown_types_as_enum": false,
-            "generate_tostring_method": false
+            "generate_tostring_method": true
         }
     ]
 }

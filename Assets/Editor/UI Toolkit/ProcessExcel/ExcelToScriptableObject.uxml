@@ -1,0 +1,44 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
+    <ui:VisualElement name="Top" style="flex-grow: 0; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px; background-color: rgb(43, 51, 47); -unity-slice-top: 0; border-top-width: 0; -unity-text-align: upper-left; justify-content: space-around; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; height: 141px; font-size: 13px; -unity-font-style: bold-and-italic; color: rgb(255, 255, 255); flex-direction: row; align-items: stretch; flex-wrap: nowrap; -unity-background-image-tint-color: rgb(0, 0, 0); border-bottom-width: 0; border-bottom-color: rgb(91, 91, 91);">
+        <ui:VisualElement name="Left" style="flex-grow: 1; justify-content: space-around; align-items: stretch; height: auto; background-color: rgba(255, 255, 255, 0); margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px; -unity-text-outline-color: rgb(255, 255, 255); border-left-width: 0; border-right-color: rgb(96, 96, 96); border-left-color: rgb(96, 96, 96); border-top-color: rgb(96, 96, 96); border-bottom-color: rgb(96, 96, 96); border-right-width: 1px; width: 650px; -unity-font-style: bold;">
+            <uie:IntegerField label="FieldRow" value="0" name="FieldRow" />
+            <uie:IntegerField label="TypeRow" value="1" name="TypeRow" />
+            <uie:IntegerField label="DataFromRow" value="4" name="DataFromRow" />
+        </ui:VisualElement>
+        <ui:VisualElement name="Right" style="align-items: stretch; justify-content: space-around; flex-direction: column; white-space: nowrap; flex-grow: 1; flex-wrap: wrap-reverse; height: auto; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0); margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px; -unity-text-align: middle-left; -unity-font-style: bold;">
+            <ui:Button text="Process All" display-tooltip-when-elided="true" name="ProcessAll" style="font-size: 13px; height: 33px; color: rgb(255, 255, 255); background-color: rgb(47, 89, 61);" />
+            <ui:Button text="Add New Excel" display-tooltip-when-elided="true" name="AddNewExcel" style="font-size: 13px; height: 33px; background-color: rgb(47, 89, 61);" />
+        </ui:VisualElement>
+    </ui:VisualElement>
+    <ui:ScrollView style="flex-grow: 1; background-color: rgb(43, 51, 47); font-size: 13px; -unity-font-style: bold; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px; border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-top-color: rgb(84, 84, 84); border-bottom-color: rgb(0, 0, 0);">
+        <ui:VisualElement name="Item" focusable="false" style="max-height: initial; height: 230px; border-left-color: rgb(108, 108, 108); border-right-color: rgb(108, 108, 108); border-top-color: rgb(108, 108, 108); border-bottom-color: rgb(108, 108, 108); border-bottom-width: 1px; border-left-width: 1px; border-right-width: 1px; border-top-width: 1px; margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; background-color: rgba(0, 0, 0, 0); flex-direction: row; display: flex; opacity: 1;">
+            <ui:VisualElement name="Left" style="flex-grow: 1; justify-content: space-around; align-items: stretch; height: auto; background-color: rgba(255, 255, 255, 0); margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px; -unity-text-outline-color: rgb(255, 255, 255); border-left-width: 0; border-right-color: rgb(96, 96, 96); border-left-color: rgb(96, 96, 96); border-top-color: rgb(96, 96, 96); border-bottom-color: rgb(96, 96, 96); border-right-width: 1px; width: 590px; -unity-font-style: bold;">
+                <ui:TextField picking-mode="Ignore" label="Text Field" value="filler text" text="filler text" />
+                <ui:DropdownField label="Dropdown" index="-1" choices="System.Collections.Generic.List`1[System.String]" />
+                <ui:DropdownField label="Dropdown" index="-1" choices="System.Collections.Generic.List`1[System.String]" />
+                <ui:TextField picking-mode="Ignore" label="NameSpace" value="filler text" name="NameSpace" />
+                <ui:VisualElement name="Row_1" style="flex-direction: row; justify-content: space-between;">
+                    <ui:Toggle label="UseHashString" name="UseHashString" style="flex-direction: row-reverse; width: 210px;" />
+                    <ui:Toggle label="Public Item Getter" name="PublicItemGetter" style="flex-direction: row-reverse; width: 210px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Row_2" style="flex-direction: row; justify-content: space-between;">
+                    <ui:Toggle label="Hide Asset Properties" name="HideAssetProperties" style="flex-direction: row-reverse; width: 210px;" />
+                    <ui:Toggle label="Compress Color Into Integer" name="CompressColorIntoInteger" style="flex-direction: row-reverse; width: 210px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Row_3" style="flex-direction: row; justify-content: space-between;">
+                    <ui:Toggle label="Generate GetMethod If Possible" name="GenerateGetMethodIfPossible" style="flex-direction: row-reverse; width: 230px;" />
+                    <ui:Toggle label="Treat Unknow Type As Enum" name="TreatUnknowTypeAsEnum" style="flex-direction: row-reverse; width: 210px;" />
+                </ui:VisualElement>
+                <ui:VisualElement name="Row_4" style="flex-direction: row; justify-content: space-between;">
+                    <ui:Toggle label="ID Or Key Multi Values" name="IDOrKeyMultiValues" style="flex-direction: row-reverse; width: 200px;" />
+                    <ui:Toggle label="Generate To String Method" name="GenerateToStringMethod" style="flex-direction: row-reverse; width: 210px;" />
+                </ui:VisualElement>
+            </ui:VisualElement>
+            <ui:VisualElement focusable="false" usage-hints="None" tabindex="0" name="Right" style="align-items: stretch; justify-content: space-around; flex-direction: column; white-space: normal; flex-grow: 1; flex-wrap: wrap-reverse; height: auto; -unity-background-image-tint-color: rgb(255, 255, 255); background-color: rgba(255, 255, 255, 0); margin-left: 3px; margin-right: 3px; margin-top: 3px; margin-bottom: 3px; -unity-text-outline-color: rgb(0, 0, 0); -unity-text-align: middle-left; opacity: 1; overflow: visible; display: flex; padding-left: 0; padding-right: 0; padding-top: 40px; padding-bottom: 40px;">
+                <ui:Button text="Insert" display-tooltip-when-elided="true" name="Insert" style="font-size: 13px; height: 33px; background-color: rgb(64, 70, 70); margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; margin-left: 0; margin-right: 0;" />
+                <ui:Button text="Delete" display-tooltip-when-elided="true" name="Delete" style="font-size: 13px; height: 33px; background-color: rgb(65, 11, 11); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0;" />
+                <ui:Button text="ProcessExcel" display-tooltip-when-elided="true" name="ProcessExcel" style="font-size: 13px; height: 33px; background-color: rgb(47, 89, 61); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:ScrollView>
+</ui:UXML>
