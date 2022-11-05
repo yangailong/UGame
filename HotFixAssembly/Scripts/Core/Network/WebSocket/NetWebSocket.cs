@@ -10,7 +10,7 @@ namespace UGame_Remove
     {
         private WebSocket m_WebSocket = null;
 
-        private WebSocketEventManager m_SocketMessages = new WebSocketEventManager();
+        private WebSocketEvent webSocketEvent = new WebSocketEvent();
 
         public event EventHandler Opened;
         public event EventHandler Closed;
@@ -19,10 +19,16 @@ namespace UGame_Remove
         public event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
 
-        void Awake()
+        public void Open(string url, string subProtocol, WebSocketVersion socketVersion)
         {
-            this.Open("192.168.....", "", WebSocketVersion.Rfc6455);
+            m_WebSocket = new WebSocket(url, subProtocol, socketVersion);
+
+            m_WebSocket.EnableAutoSendPing = true;
+            m_WebSocket.AutoSendPingInterval = 1;
+
+            m_WebSocket.Open();
         }
+        
 
 
         void OnEnable()
@@ -52,15 +58,6 @@ namespace UGame_Remove
         }
 
 
-        public void Open(string url, string subProtocol, WebSocketVersion socketVersion)
-        {
-            m_WebSocket = new WebSocket(url, subProtocol, socketVersion);
-
-            m_WebSocket.EnableAutoSendPing = true;
-            m_WebSocket.AutoSendPingInterval = 1;
-
-            m_WebSocket.Open();
-        }
 
 
         public void Close()
@@ -77,6 +74,18 @@ namespace UGame_Remove
 
             var buffer = Serialize(id, msg);
             m_WebSocket.Send(buffer, 0, buffer.Length);
+        }
+
+
+        public void Register<T>(int id, Action<int, T> callback) where T : IMessage, new()
+        {
+            webSocketEvent.Register<T>(id, callback);
+        }
+
+
+        public void Unregister(int id)
+        {
+            webSocketEvent.Unregister(id);
         }
 
 
@@ -125,9 +134,9 @@ namespace UGame_Remove
 
             var id = Bytes2Int(buffer, 4);
 
-            if (m_SocketMessages.ContainsMsg(id))
+            if (webSocketEvent.ContainsMsg(id))
             {
-                m_SocketMessages.Dispatch(id, buffer);
+                webSocketEvent.Dispatch(id, buffer);
             }
             else
             {

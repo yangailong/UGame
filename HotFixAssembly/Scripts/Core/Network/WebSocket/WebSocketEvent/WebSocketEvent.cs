@@ -3,11 +3,11 @@ using Google.Protobuf;
 using System.Collections.Generic;
 namespace UGame_Remove
 {
-    public class WebSocketEventManager
+    public class WebSocketEvent
     {
         private Dictionary<int, IWebSocketEvent> eventPairs = null;
 
-        public WebSocketEventManager()
+        public WebSocketEvent()
         {
             eventPairs = new Dictionary<int, IWebSocketEvent>();
         }

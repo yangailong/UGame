@@ -1,0 +1,11 @@
+syntax = "proto3";
+package UGame_Remove;
+
+enum MsgID
+{
+    None = 0;
+
+    C2S_Demo=1;
+    
+    S2C_Demo=2;
+}
