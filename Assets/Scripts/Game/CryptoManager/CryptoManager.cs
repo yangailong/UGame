@@ -120,55 +120,25 @@ namespace UGame_Local
         }
 
 
-        /// <summary>
-        /// AES 算法加密(ECB模式) 无padding填充，用于分块解密
-        /// </summary>
-        /// <param name="toEncryptArray">明文</param>
-        /// <param name="key">密钥</param>
-        /// <returns>加密后base64编码的密文</returns>
-        public static byte[] AesEncryptWithNoPadding(string key, byte[] toEncryptArray)
+
+        public static string MD5Encrypt(string text)
         {
-            try
-            {
-                byte[] keyArray = Encoding.UTF8.GetBytes(key);
-                var aes = Aes.Create();
-                aes.Key = keyArray;
-                aes.Mode = CipherMode.ECB;
-                aes.Padding = PaddingMode.None;
-                return aes.CreateEncryptor().TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-                return null;
-            }
+            var md5 = MD5.Create();
+
+            Byte[] buffer = Encoding.Default.GetBytes(text);
+
+            Byte[] MD5buffer = md5.ComputeHash(buffer);
+
+            string ciphertext = BitConverter.ToString(MD5buffer, 4, 8);
+
+            return ciphertext.Replace("-", "");
         }
 
 
-        /// <summary>
-        /// AES 算法解密(ECB模式) 无padding填充，用于分块解密
-        /// </summary>
-        /// <param name="toDecryptArray">密文</param>
-        /// <param name="key">密钥</param>
-        /// <returns>明文</returns>
-        public static byte[] AesDecryptWithNoPadding(string key, byte[] toDecryptArray)
-        {
-            try
-            {
-                byte[] keyArray = Encoding.UTF8.GetBytes(key);
 
-                var aes = Aes.Create();
-                aes.Key = keyArray;
-                aes.Mode = CipherMode.ECB;
-                aes.Padding = PaddingMode.None;
-                return aes.CreateDecryptor().TransformFinalBlock(toDecryptArray, 0, toDecryptArray.Length);
-            }
-            catch (Exception e)
-            {
-                Debug.LogError(e);
-                return null;
-            }
-        }
+
+
+
 
 
     }

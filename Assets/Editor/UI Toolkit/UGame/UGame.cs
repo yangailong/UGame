@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using UGame_Local;
+using System.Globalization;
 
 namespace UGame_Local_Editor
 {
@@ -46,12 +47,10 @@ namespace UGame_Local_Editor
             {
                 CfgUGame cfg = cfgUgame.value as CfgUGame;
 
-                cfg.m_Key = rootVisualElement.Q<TextField>("Key").text;
-
+                var key = rootVisualElement.Q<TextField>("Key").text;
+                cfg.md5Key = CryptoManager.MD5Encrypt(key);
                 cfg.jITFlags = (ILRuntimeJITFlags)rootVisualElement.Q<EnumField>("ILJITFlags").value;
-
                 cfg.usePdb = rootVisualElement.Q<Toggle>("UsePdb").value;
-
             }
 
         }

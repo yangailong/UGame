@@ -18,6 +18,7 @@ namespace UGame_Remove
 
         public static void SetString(string key, string value)
         {
+           
             var result = CryptoManager.EncryptStr(defaultEncryptKey, value);
 
             PlayerPrefs.SetString(key, result);

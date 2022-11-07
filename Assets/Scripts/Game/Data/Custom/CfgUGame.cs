@@ -1,14 +1,17 @@
 using UnityEngine;
 namespace UGame_Local
 {
-    [CreateAssetMenu(fileName ="UGame",menuName ="UGame/CfgUGame")]
+    [CreateAssetMenu(fileName = "UGame", menuName = "UGame/CfgUGame")]
     public class CfgUGame : ScriptableObject
     {
-        public string m_Key = "UGame.Prefs.Keys";
+        public string md5Key { set; get; } = "UGame.Prefs.Keys";
 
-        public ILRuntimeJITFlags jITFlags = ILRuntimeJITFlags.None;
 
-        public bool usePdb = true;
+        public ILRuntimeJITFlags jITFlags { set; get; }= ILRuntimeJITFlags.None;
+
+
+        public bool usePdb { set; get; }= true;
+
 
     }
 

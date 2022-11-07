@@ -5,7 +5,7 @@ using UGame_Local;
 
 namespace UGame_Local_Editor
 {
-    /// <summary> 说明</summary>
+    /// <summary>生成加密dll文件,文件后缀名追加.bytes</summary>
     public class DllToBytes : Editor
     {
         private static readonly string originPath = $"{Application.dataPath}/AddressableAssets/Remote_UnMapper/Dll/Dll~";
@@ -46,11 +46,10 @@ namespace UGame_Local_Editor
             }
 
 
+            var uGame = AssetDatabase.LoadAssetAtPath<CfgUGame>($"Assets/UGame.asset");
+
             //加密dll
-            var cfgGame = AssetDatabase.LoadAssetAtPath<CfgUGame>($"Assets/UGame.asset");
-
-
-            var encrypt = CryptoManager.AesEncrypt(cfgGame.m_Key, dllBytes);
+            var encrypt = CryptoManager.AesEncrypt(uGame.md5Key, dllBytes);
 
             File.WriteAllBytes($"{writePath}/{dllFullName}.bytes", encrypt);
 
