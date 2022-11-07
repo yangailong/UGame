@@ -10,10 +10,12 @@ namespace UGame_Remove
     public class DemoPanel : UIPanelBase, IUIAnimation
     {
 
+        public override object[] Params { set => base.Params = value; }
+
+
         public override void OnUIAwake()
         {
             Debug.LogError($"OnUIAwake");
-
         }
 
 
@@ -28,9 +30,6 @@ namespace UGame_Remove
             Debug.LogError($"OnUIEnable");
             transform.GetMountChind<Button>("m_Mask").onClick.AddListener(OnClickMaskBtn);
             transform.GetMountChind<Button>("m_CloseBtn").onClick.AddListener(OnClickMaskBtn);
-
-
-            NetWebSocket.Instance.Register<S2C_Protoc>((int)MsgID.S2CDemo, S2CMessage);
         }
 
 
@@ -38,8 +37,6 @@ namespace UGame_Remove
         public override void OnUIDisable()
         {
             transform.GetMountChind<Button>("m_Mask").onClick.RemoveAllListeners();
-
-            NetWebSocket.Instance.Unregister((int)MsgID.S2CDemo);
         }
 
 
@@ -63,26 +60,15 @@ namespace UGame_Remove
         }
 
 
+     
 
         void OnClickMaskBtn()
         {
             Debug.LogError($"点击.....");
 
-            //NetWebSocket.Instance.Send(0,);
+            NetProxy.Instance.C2S_Demo();
         }
 
-        public void S2CMessage(int id, S2C_Protoc message)
-        {
-
-        }
-
-        public void C2SMessage()
-        {
-            C2S_Protoc c2S_Protoc = new C2S_Protoc();
-            c2S_Protoc.Message = "请问你收到了没";
-
-            NetWebSocket.Instance.Send((int)MsgID.C2SDemo, c2S_Protoc);
-        }
 
     }
 }

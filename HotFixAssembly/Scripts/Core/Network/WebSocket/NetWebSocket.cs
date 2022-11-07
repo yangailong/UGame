@@ -1,37 +1,76 @@
-﻿using System;
+﻿using Google.Protobuf;
+using System;
 using System.IO;
 using UnityEngine;
 using WebSocket4Net;
-using Google.Protobuf;
 
 namespace UGame_Remove
 {
-    public class NetWebSocket : ComponentSingleton<NetWebSocket>
+    public class NetWebSocket : MonoBehaviour
     {
-        private WebSocket m_WebSocket = null;
+        private static WebSocket m_WebSocket = null;
+        private static WebSocketEvent webSocketEvent = null;
 
-        private WebSocketEvent webSocketEvent = new WebSocketEvent();
-
-        public event EventHandler Opened;
-        public event EventHandler Closed;
-        public event EventHandler<SuperSocket.ClientEngine.ErrorEventArgs> Error;
-        public event EventHandler<DataReceivedEventArgs> DataReceived;
-        public event EventHandler<MessageReceivedEventArgs> MessageReceived;
+        public static event EventHandler Opened;
+        public static event EventHandler Closed;
+        public static event EventHandler<SuperSocket.ClientEngine.ErrorEventArgs> Error;
+        public static event EventHandler<DataReceivedEventArgs> DataReceived;
+        public static event EventHandler<MessageReceivedEventArgs> MessageReceived;
 
 
-        public void Open(string url, string subProtocol, WebSocketVersion socketVersion)
+        public static void Init()
         {
-            m_WebSocket = new WebSocket(url, subProtocol, socketVersion);
+            var go = new GameObject($"[{typeof(NetWebSocket).Name}]");
+            go.AddComponent<NetWebSocket>();
+            DontDestroyOnLoad(go);
+        }
 
+
+        public static void Open(string url, string subProtocol, WebSocketVersion socketVersion)
+        {
+            webSocketEvent = new WebSocketEvent();
+
+            m_WebSocket = new WebSocket(url, subProtocol, socketVersion);
             m_WebSocket.EnableAutoSendPing = true;
             m_WebSocket.AutoSendPingInterval = 1;
 
+            AddEvent();
+
             m_WebSocket.Open();
         }
-        
 
 
-        void OnEnable()
+        public static void Close()
+        {
+            m_WebSocket.Close();
+            RemoveEvent();
+            m_WebSocket.Dispose();
+        }
+
+
+        public static void Send(int id, IMessage msg)
+        {
+            Debug.Log($"send msgId: {id}, {JsonUtility.ToJson(msg)}");
+
+            var buffer = Serialize(id, msg);
+            m_WebSocket.Send(buffer, 0, buffer.Length);
+        }
+
+
+        public static void Register<T>(int id, Action<int, T> callback) where T : IMessage, new()
+        {
+            webSocketEvent.Register<T>(id, callback);
+        }
+
+
+        public static void Unregister(int id)
+        {
+            webSocketEvent.Unregister(id);
+        }
+
+
+
+        private static void AddEvent()
         {
             m_WebSocket.Opened += WebSocket_Opened;
             m_WebSocket.Closed += WebSocket_Closed;
@@ -42,7 +81,7 @@ namespace UGame_Remove
         }
 
 
-        void OnDisable()
+        private static void RemoveEvent()
         {
             m_WebSocket.Opened -= WebSocket_Opened;
             m_WebSocket.Closed -= WebSocket_Closed;
@@ -52,44 +91,7 @@ namespace UGame_Remove
         }
 
 
-        void OnDestory()
-        {
-            this.Close();
-        }
-
-
-
-
-        public void Close()
-        {
-            m_WebSocket.Close();
-
-            m_WebSocket.Dispose();
-        }
-
-
-        public void Send(int id, IMessage msg)
-        {
-            Debug.Log($"send msgId: {id}, {JsonUtility.ToJson(msg)}");
-
-            var buffer = Serialize(id, msg);
-            m_WebSocket.Send(buffer, 0, buffer.Length);
-        }
-
-
-        public void Register<T>(int id, Action<int, T> callback) where T : IMessage, new()
-        {
-            webSocketEvent.Register<T>(id, callback);
-        }
-
-
-        public void Unregister(int id)
-        {
-            webSocketEvent.Unregister(id);
-        }
-
-
-        private void WebSocket_Opened(object sender, EventArgs e)
+        private static void WebSocket_Opened(object sender, EventArgs e)
         {
             Debug.Log($"WebSocket_Opened args:{e}");
             Opened?.Invoke(sender, e);
@@ -97,31 +99,29 @@ namespace UGame_Remove
         }
 
 
-        private void WebSocket_Closed(object sender, EventArgs e)
+        private static void WebSocket_Closed(object sender, EventArgs e)
         {
             Debug.Log($"WebSocket_Closed args:{e}");
             Closed?.Invoke(sender, e);
-
             //结束 心跳
         }
 
 
-        private void M_WebSocket_Error(object sender, SuperSocket.ClientEngine.ErrorEventArgs e)
+        private static void M_WebSocket_Error(object sender, SuperSocket.ClientEngine.ErrorEventArgs e)
         {
             Debug.Log($"M_WebSocket_Error args:{e}");
             Error?.Invoke(sender, e);
         }
 
 
-
-        private void WebSocket_MessageReceived(object sender, MessageReceivedEventArgs e)
+        private static void WebSocket_MessageReceived(object sender, MessageReceivedEventArgs e)
         {
             Debug.Log($"WebSocket_MessageReceived args:{e}");
             MessageReceived?.Invoke(sender, e);
         }
 
 
-        private void WebSocket_DataReceived(object sender, DataReceivedEventArgs e)
+        private static void WebSocket_DataReceived(object sender, DataReceivedEventArgs e)
         {
             DataReceived?.Invoke(sender, e);
 
@@ -146,7 +146,7 @@ namespace UGame_Remove
         }
 
 
-        private int Bytes2Int(byte[] bytes, int offset)
+        private static int Bytes2Int(byte[] bytes, int offset)
         {
             int value = 0;
             value = (int)((bytes[offset + 3] & 0xFF) | ((bytes[offset + 2] & 0xFF) << 8) | ((bytes[offset + 1] & 0xFF) << 16) | ((bytes[offset + 0] & 0xFF) << 24));
@@ -154,7 +154,7 @@ namespace UGame_Remove
         }
 
 
-        private byte[] Serialize(int msgId, IMessage msg)
+        private static byte[] Serialize(int msgId, IMessage msg)
         {
             using (var ms = new MemoryStream())
             {
@@ -168,7 +168,7 @@ namespace UGame_Remove
         }
 
 
-        private void WriteNum(MemoryStream buffer, uint num)
+        private static void WriteNum(MemoryStream buffer, uint num)
         {
             var b0 = (byte)(num & 0xFF);
             var b1 = (byte)((num >> 8) & 0xFF);
@@ -179,6 +179,7 @@ namespace UGame_Remove
             buffer.WriteByte(b1);
             buffer.WriteByte(b0);
         }
+
 
     }
 }

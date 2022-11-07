@@ -51,8 +51,8 @@
     <Compile Include="Scripts\Core\CoroutineRunner\CoroutineRunner.cs" />
     <Compile Include="Scripts\Core\CrypManager\CrypManager.cs" />
     <Compile Include="Scripts\Core\Event\GlobalEvent.cs" />
-    <Compile Include="Scripts\Core\Network\WebRequest\WebRequest.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\NetWebSocket.cs" />
+    <Compile Include="Scripts\Core\Network\WebRequest\WebRequest.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketEventArgs.cs" />
     <Compile Include="Scripts\Core\Network\WebSocket\WebSocketEvent\WebSocketEvent.cs" />
     <Compile Include="Scripts\Core\ObjectPoolManager\ObjectPoolManager.cs" />
@@ -72,6 +72,7 @@
     <Compile Include="Scripts\Core\Utility\Singleton\Singleton.cs" />
     <Compile Include="Scripts\Game\EventKey\EventEnum.cs" />
     <Compile Include="Scripts\Game\NetProxy\NetProxy.cs" />
+    <Compile Include="Scripts\Game\NetProxy\NetProxy_Shop.cs" />
     <Compile Include="Scripts\Game\PB\MsgId.cs" />
     <Compile Include="Scripts\Game\PB\Test.cs" />
     <Compile Include="Scripts\Game\PB\TestDemo.cs" />

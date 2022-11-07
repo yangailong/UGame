@@ -36,12 +36,12 @@ namespace UGame_Remove
             GlobalEvent.Init();
             AudioPlayManager.Init();
             ObjectPoolManager.Init();
-
+            NetWebSocket.Init();
 
             UIManager.AsyncInit();
             CfgData.AsyncInit();
 
-            NetWebSocket.Instance.Open("", "", WebSocket4Net.WebSocketVersion.Rfc6455);
+            //NetWebSocket.Open("", "", WebSocket4Net.WebSocketVersion.Rfc6455);
 
 
             // 等待子系统异步初始化完成
