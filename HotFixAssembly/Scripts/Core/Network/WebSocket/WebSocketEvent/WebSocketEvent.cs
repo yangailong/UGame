@@ -43,7 +43,7 @@ namespace UGame_Remove
         {
             if (eventPairs.TryGetValue(id, out var webSocketEvent))
             {
-                webSocketEvent.Dispatch(buffer, 8);
+                webSocketEvent.Dispatch(buffer, 4);
             }
         }
 

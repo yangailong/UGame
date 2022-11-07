@@ -126,30 +126,36 @@ namespace UGame_Remove
             DataReceived?.Invoke(sender, e);
 
             var buffer = e.Data;
+            Debug.Log($"接受到数据：{buffer.Length}");
 
-            if (buffer == null || buffer.Length < 8)
+            byte[] data = null;
+            int id = 0;
+            //将数据放到MemoryStream中
+            using (MemoryStream ms = new MemoryStream(buffer))
             {
-                throw new ArgumentException("message resoive failed");
+                using (BinaryReader br = new BinaryReader(ms))
+                {
+                    id = br.ReadInt32();//读取一个int类型的长度数据4字节
+                    Debug.Log("id:" + id);
+                    //Position = 4
+                    //得到真实proto数据
+                    data = br.ReadBytes(buffer.Length - (int)ms.Position);
+                }
             }
-
-            var id = Bytes2Int(buffer, 4);
-
             if (webSocketEvent.ContainsMsg(id))
             {
-                webSocketEvent.Dispatch(id, buffer);
+                webSocketEvent.Dispatch(id, data);
             }
             else
             {
                 throw new MissingMemberException($"收到一条未注册处理的消息  msgID：{id}");
             }
-
         }
 
 
         private static int Bytes2Int(byte[] bytes, int offset)
         {
-            int value = 0;
-            value = (int)((bytes[offset + 3] & 0xFF) | ((bytes[offset + 2] & 0xFF) << 8) | ((bytes[offset + 1] & 0xFF) << 16) | ((bytes[offset + 0] & 0xFF) << 24));
+            int value = (int)((bytes[offset + 3] & 0xFF) | ((bytes[offset + 2] & 0xFF) << 8) | ((bytes[offset + 1] & 0xFF) << 16) | ((bytes[offset + 0] & 0xFF) << 24));
             return value;
         }
 
@@ -158,27 +164,22 @@ namespace UGame_Remove
         {
             using (var ms = new MemoryStream())
             {
-                ms.Position = 8;
-                msg.WriteTo(ms);
                 ms.Position = 0;
-                WriteNum(ms, (uint)ms.Length);
-                WriteNum(ms, (uint)msgId);
+                using (BinaryWriter bw = new BinaryWriter(ms))
+                {
+                    bw.Write(msgId);
+                    if (msg != null)
+                    {
+                        msg.WriteTo(ms);
+                    }
+                }
+
                 return ms.ToArray();
             }
         }
 
 
-        private static void WriteNum(MemoryStream buffer, uint num)
-        {
-            var b0 = (byte)(num & 0xFF);
-            var b1 = (byte)((num >> 8) & 0xFF);
-            var b2 = (byte)((num >> 16) & 0xFF);
-            var b3 = (byte)((num >> 24) & 0xFF);
-            buffer.WriteByte(b3);
-            buffer.WriteByte(b2);
-            buffer.WriteByte(b1);
-            buffer.WriteByte(b0);
-        }
+
 
 
     }

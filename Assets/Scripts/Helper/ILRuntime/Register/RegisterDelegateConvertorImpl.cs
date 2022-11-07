@@ -31,6 +31,35 @@ namespace UGame_Local
                 });
             });
 
+            appdomain.DelegateManager.RegisterDelegateConvertor<System.EventHandler>((act) =>
+            {
+                return new System.EventHandler((sender, e) =>
+                {
+                    ((Action<System.Object, System.EventArgs>)act)(sender, e);
+                });
+            });
+            appdomain.DelegateManager.RegisterDelegateConvertor<System.EventHandler<SuperSocket.ClientEngine.ErrorEventArgs>>((act) =>
+            {
+                return new System.EventHandler<SuperSocket.ClientEngine.ErrorEventArgs>((sender, e) =>
+                {
+                    ((Action<System.Object, SuperSocket.ClientEngine.ErrorEventArgs>)act)(sender, e);
+                });
+            });
+            appdomain.DelegateManager.RegisterDelegateConvertor<System.EventHandler<WebSocket4Net.MessageReceivedEventArgs>>((act) =>
+            {
+                return new System.EventHandler<WebSocket4Net.MessageReceivedEventArgs>((sender, e) =>
+                {
+                    ((Action<System.Object, WebSocket4Net.MessageReceivedEventArgs>)act)(sender, e);
+                });
+            });
+            appdomain.DelegateManager.RegisterDelegateConvertor<System.EventHandler<WebSocket4Net.DataReceivedEventArgs>>((act) =>
+            {
+                return new System.EventHandler<WebSocket4Net.DataReceivedEventArgs>((sender, e) =>
+                {
+                    ((Action<System.Object, WebSocket4Net.DataReceivedEventArgs>)act)(sender, e);
+                });
+            });
+
 
         }
 

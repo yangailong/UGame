@@ -9,6 +9,7 @@ namespace UGame_Local
             appdomain.DelegateManager.RegisterFunctionDelegate<System.Type, System.String>();
             appdomain.DelegateManager.RegisterFunctionDelegate<System.String, System.Boolean>();
             appdomain.DelegateManager.RegisterFunctionDelegate<UnityEngine.Component>();
+            appdomain.DelegateManager.RegisterFunctionDelegate<global::IMessageAdapt.Adaptor>();
 
         }
     }
