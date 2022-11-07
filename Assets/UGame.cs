@@ -107,7 +107,10 @@ namespace UGame_Local
 
             var pdb = !CfgUGame.usePdb ? null : Addressables.LoadAssetAsync<TextAsset>(PDBPath).WaitForCompletion();
 
-            hotFixAssembly.LoadAssembly(dll.bytes, pdb?.bytes);
+            //解密
+            var dllByte = CryptoManager.AesDecrypt(CfgUGame.m_Key, dll.bytes);
+
+            hotFixAssembly.LoadAssembly(dllByte, pdb?.bytes);
 
             hotFixAssembly.InitializeILRuntime();
 

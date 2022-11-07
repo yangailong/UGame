@@ -32,7 +32,6 @@ namespace UGame_Remove
             Debug.LogError($"收到服务器消息...");
 
             UIManager.Get<DemoPanel>().Params = new object[] { arg2 };
-
         }
 
 

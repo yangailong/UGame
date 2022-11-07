@@ -1,4 +1,5 @@
 ﻿using System;
+using UGame_Local;
 using UnityEngine;
 
 namespace UGame_Remove
@@ -17,7 +18,7 @@ namespace UGame_Remove
 
         public static void SetString(string key, string value)
         {
-            var result = CrypManager.EncryptStr(defaultEncryptKey, value);
+            var result = CryptoManager.EncryptStr(defaultEncryptKey, value);
 
             PlayerPrefs.SetString(key, result);
         }
@@ -31,7 +32,7 @@ namespace UGame_Remove
             {
                 if (!HasKey(key)) return defaultValue;
 
-                var result = CrypManager.DecryptStr(defaultEncryptKey, decrypt);
+                var result = CryptoManager.DecryptStr(defaultEncryptKey, decrypt);
 
                 return result;
             }

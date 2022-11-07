@@ -1,6 +1,7 @@
 using UnityEngine;
 using UnityEditor;
 using System.IO;
+using UGame_Local;
 
 namespace UGame_Local_Editor
 {
@@ -45,8 +46,13 @@ namespace UGame_Local_Editor
             }
 
 
-            //TODO...加密dll
-            File.WriteAllBytes($"{writePath}/{dllFullName}.bytes", dllBytes);
+            //加密dll
+            var cfgGame = AssetDatabase.LoadAssetAtPath<CfgUGame>($"Assets/UGame.asset");
+
+
+            var encrypt = CryptoManager.AesEncrypt(cfgGame.m_Key, dllBytes);
+
+            File.WriteAllBytes($"{writePath}/{dllFullName}.bytes", encrypt);
 
             File.WriteAllBytes($"{writePath}/{pdbFullName}.bytes", pdbBytes);
 

@@ -3,9 +3,9 @@ using System.Security.Cryptography;
 using System.Text;
 using UnityEngine;
 
-namespace UGame_Remove
+namespace UGame_Local
 {
-    public class CrypManager
+    public class CryptoManager
     {
 
         /// <summary>
@@ -25,9 +25,8 @@ namespace UGame_Remove
                 aes.Key = keyByte;
                 aes.Mode = CipherMode.ECB;
                 aes.Padding = PaddingMode.PKCS7;
-                ICryptoTransform cTransform = aes.CreateEncryptor();
 
-                Byte[] resultArray = cTransform.TransformFinalBlock(encrypt, 0, encrypt.Length);
+                Byte[] resultArray = aes.CreateEncryptor().TransformFinalBlock(encrypt, 0, encrypt.Length);
 
                 return Convert.ToBase64String(resultArray, 0, resultArray.Length);
             }
@@ -57,8 +56,7 @@ namespace UGame_Remove
                 aes.Key = keyArray;
                 aes.Mode = CipherMode.ECB;
                 aes.Padding = PaddingMode.PKCS7;
-                ICryptoTransform cTransform = aes.CreateDecryptor();
-                Byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
+                Byte[] resultArray = aes.CreateDecryptor().TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
                 return Encoding.UTF8.GetString(resultArray);
             }
             catch (Exception ex)
@@ -80,16 +78,11 @@ namespace UGame_Remove
             try
             {
                 byte[] keyArray = Encoding.UTF8.GetBytes(key);
-
                 var aes = Aes.Create();
                 aes.Key = keyArray;
                 aes.Mode = CipherMode.ECB;
                 aes.Padding = PaddingMode.PKCS7;
-
-                ICryptoTransform cTransform = aes.CreateEncryptor();
-                byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
-
-                return resultArray;
+                return aes.CreateEncryptor().TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
             }
             catch (Exception e)
             {
@@ -112,13 +105,12 @@ namespace UGame_Remove
                 byte[] keyArray = Encoding.UTF8.GetBytes(key);
 
                 var aes = Aes.Create();
+
                 aes.Key = keyArray;
                 aes.Mode = CipherMode.ECB;
                 aes.Padding = PaddingMode.PKCS7;
-
-                ICryptoTransform cTransform = aes.CreateDecryptor();
-                byte[] resultArray = cTransform.TransformFinalBlock(toDecryptArray, 0, toDecryptArray.Length);
-                return resultArray;
+                aes.Padding = PaddingMode.PKCS7;
+                return aes.CreateDecryptor().TransformFinalBlock(toDecryptArray, 0, toDecryptArray.Length);
             }
             catch (Exception e)
             {
@@ -139,16 +131,11 @@ namespace UGame_Remove
             try
             {
                 byte[] keyArray = Encoding.UTF8.GetBytes(key);
-
                 var aes = Aes.Create();
                 aes.Key = keyArray;
                 aes.Mode = CipherMode.ECB;
                 aes.Padding = PaddingMode.None;
-
-                ICryptoTransform cTransform = aes.CreateEncryptor();
-                byte[] resultArray = cTransform.TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
-
-                return resultArray;
+                return aes.CreateEncryptor().TransformFinalBlock(toEncryptArray, 0, toEncryptArray.Length);
             }
             catch (Exception e)
             {
@@ -174,10 +161,7 @@ namespace UGame_Remove
                 aes.Key = keyArray;
                 aes.Mode = CipherMode.ECB;
                 aes.Padding = PaddingMode.None;
-
-                ICryptoTransform cTransform = aes.CreateDecryptor();
-                byte[] resultArray = cTransform.TransformFinalBlock(toDecryptArray, 0, toDecryptArray.Length);
-                return resultArray;
+                return aes.CreateDecryptor().TransformFinalBlock(toDecryptArray, 0, toDecryptArray.Length);
             }
             catch (Exception e)
             {
