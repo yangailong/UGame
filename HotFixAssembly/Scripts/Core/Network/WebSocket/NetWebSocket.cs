@@ -50,7 +50,7 @@ namespace UGame_Remove
 
         public static void Send(int id, IMessage msg)
         {
-            Debug.Log($"send msgId: {id}, {JsonUtility.ToJson(msg)}");
+            Debug.Log($"Send msg  id:{id},  msg：{JsonUtility.ToJson(msg)}");
 
             var buffer = Serialize(id, msg);
             m_WebSocket.Send(buffer, 0, buffer.Length);
@@ -126,38 +126,32 @@ namespace UGame_Remove
             DataReceived?.Invoke(sender, e);
 
             var buffer = e.Data;
-            Debug.Log($"接受到数据：{buffer.Length}");
+            Debug.Log($"接收到数据：{buffer.Length}");
 
-            byte[] data = null;
-            int id = 0;
+
             //将数据放到MemoryStream中
             using (MemoryStream ms = new MemoryStream(buffer))
+            using (BinaryReader br = new BinaryReader(ms))
             {
-                using (BinaryReader br = new BinaryReader(ms))
+                //获取id，读取一个int类型的长度数据4字节
+                int id = br.ReadInt32();
+
+                //msg 数据
+                byte[] data = br.ReadBytes(buffer.Length - (int)ms.Position);
+
+                if (webSocketEvent.ContainsMsg(id))
                 {
-                    id = br.ReadInt32();//读取一个int类型的长度数据4字节
-                    Debug.Log("id:" + id);
-                    //Position = 4
-                    //得到真实proto数据
-                    data = br.ReadBytes(buffer.Length - (int)ms.Position);
+                    webSocketEvent.Dispatch(id, data);
+                }
+                else
+                {
+                    throw new MissingMemberException($"收到一条未注册处理的消息  msgID：{id}");
                 }
             }
-            if (webSocketEvent.ContainsMsg(id))
-            {
-                webSocketEvent.Dispatch(id, data);
-            }
-            else
-            {
-                throw new MissingMemberException($"收到一条未注册处理的消息  msgID：{id}");
-            }
         }
 
 
-        private static int Bytes2Int(byte[] bytes, int offset)
-        {
-            int value = (int)((bytes[offset + 3] & 0xFF) | ((bytes[offset + 2] & 0xFF) << 8) | ((bytes[offset + 1] & 0xFF) << 16) | ((bytes[offset + 0] & 0xFF) << 24));
-            return value;
-        }
+
 
 
         private static byte[] Serialize(int msgId, IMessage msg)
@@ -176,6 +170,10 @@ namespace UGame_Remove
 
                 return ms.ToArray();
             }
+
+
+
+
         }
 
 

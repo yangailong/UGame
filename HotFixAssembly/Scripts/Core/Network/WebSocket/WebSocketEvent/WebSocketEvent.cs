@@ -5,7 +5,9 @@ namespace UGame_Remove
 {
     public class WebSocketEvent
     {
+
         private Dictionary<int, IWebSocketEvent> eventPairs = null;
+
 
         public WebSocketEvent()
         {
@@ -43,7 +45,7 @@ namespace UGame_Remove
         {
             if (eventPairs.TryGetValue(id, out var webSocketEvent))
             {
-                webSocketEvent.Dispatch(buffer, 4);
+                webSocketEvent.Dispatch(buffer);
             }
         }
 

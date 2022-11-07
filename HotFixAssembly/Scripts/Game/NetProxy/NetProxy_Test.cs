@@ -1,4 +1,5 @@
 ﻿
+using Test;
 using UGameRemove;
 using UnityEngine;
 
@@ -6,34 +7,37 @@ namespace UGame_Remove
 {
     public partial class NetProxy
     {
+        [NetProxy(NetProxyAttribute.AutonType.AutoRegister)]
         public void Register_Demo()
         {
-            NetWebSocket.Register<S2C_Protoc>((int)MsgID.S2CDemo, S2C_Demo);
+            NetWebSocket.Register<TestRes>((int)MsgID.S2CDemo, S2CMessage);
         }
 
 
+        [NetProxy(NetProxyAttribute.AutonType.AutoUnregister)]
         public void Unregister_Demo()
         {
             NetWebSocket.Unregister((int)MsgID.S2CDemo);
         }
 
 
-        public void C2S_Demo()
+
+        public void S2CMessage(int id, TestRes message)
         {
-            C2S_Protoc c2S_Protoc = new C2S_Protoc();
-            c2S_Protoc.Message = "请问你收到了没";
+            Debug.Log($"接受到数据:{message.Name}");
+            Debug.Log($"接受到数据:{message.Id}");
+        }
+
+
+        public void C2SMessage()
+        {
+            TestReq c2S_Protoc = new TestReq();
+            c2S_Protoc.Name = "请问你收到了没";
+            c2S_Protoc.Id = 1234;
+            c2S_Protoc.Psd = "请问你收到了没";
 
             NetWebSocket.Send((int)MsgID.C2SDemo, c2S_Protoc);
         }
-
-
-        public void S2C_Demo(int arg1, S2C_Protoc arg2)
-        {
-            Debug.LogError($"收到服务器消息...");
-
-            UIManager.Get<DemoPanel>().Params = new object[] { arg2 };
-        }
-
 
     }
 }

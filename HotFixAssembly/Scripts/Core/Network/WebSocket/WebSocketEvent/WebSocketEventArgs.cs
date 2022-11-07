@@ -6,7 +6,7 @@ namespace UGame_Remove
 
     public interface IWebSocketEvent
     {
-        void Dispatch(byte[] receiveBuffer, int startPos);
+        void Dispatch(byte[] receiveBuffer);
     }
 
 
@@ -24,7 +24,7 @@ namespace UGame_Remove
         }
 
 
-        public void Dispatch(byte[] receiveBuffer, int startPos)
+        public void Dispatch(byte[] receiveBuffer)
         {
             MessageParser<T> parser = new MessageParser<T>(() => new T());
             var msg = parser.ParseFrom(receiveBuffer);

@@ -36,7 +36,7 @@ namespace UGame_Remove
             GlobalEvent.Init();
             AudioPlayManager.Init();
             ObjectPoolManager.Init();
-            NetWebSocket.Init();
+           
 
             UIManager.AsyncInit();
             CfgData.AsyncInit();

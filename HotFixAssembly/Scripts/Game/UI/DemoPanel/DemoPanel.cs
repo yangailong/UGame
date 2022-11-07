@@ -1,6 +1,4 @@
 ﻿using System.Collections;
-using Test;
-using UGameRemove;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -31,8 +29,6 @@ namespace UGame_Remove
             Debug.LogError($"OnUIEnable");
             transform.GetMountChind<Button>("m_Mask").onClick.AddListener(OnClickMaskBtn);
             transform.GetMountChind<Button>("m_CloseBtn").onClick.AddListener(OnClickMaskBtn);
-
-            NetWebSocket.Register<TestRes>((int)MsgID.S2CDemo, S2CMessage);
         }
 
 
@@ -40,8 +36,6 @@ namespace UGame_Remove
         public override void OnUIDisable()
         {
             transform.GetMountChind<Button>("m_Mask").onClick.RemoveAllListeners();
-
-            NetWebSocket.Unregister((int)MsgID.S2CDemo);
         }
 
 
@@ -65,34 +59,20 @@ namespace UGame_Remove
         }
 
 
-     
+
 
         void OnClickMaskBtn()
         {
             Debug.LogError($"点击.....");
 
-            //NetProxy.Instance.C2S_Demo();
+            NetProxy.Instance.C2SMessage();
 
-            C2SMessage();
+
         }
 
 
 
-        public void S2CMessage(int id, TestRes message)
-        {
-            Debug.Log($"接受到数据:{message.Name}");
-            Debug.Log($"接受到数据:{message.Id}");
-        }
 
-        public void C2SMessage()
-        {
-            TestReq c2S_Protoc = new TestReq();
-            c2S_Protoc.Name = "请问你收到了没";
-            c2S_Protoc.Id = 1234;
-            c2S_Protoc.Psd = "请问你收到了没";
-
-            NetWebSocket.Send((int)MsgID.C2SDemo, c2S_Protoc);
-        }
 
     }
 }
