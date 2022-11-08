@@ -41,7 +41,7 @@ namespace UGame_Remove
             UIManager.AsyncInit();
             CfgData.AsyncInit();
 
-            NetWebSocket.Open("ws://127.0.0.1:8088/ws", "", WebSocket4Net.WebSocketVersion.Rfc6455);
+            //NetWebSocket.Open("ws://127.0.0.1:8088/ws", "", WebSocket4Net.WebSocketVersion.Rfc6455);
 
 
             // 等待子系统异步初始化完成

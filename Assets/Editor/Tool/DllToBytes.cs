@@ -46,10 +46,10 @@ namespace UGame_Local_Editor
             }
 
 
-            var uGame = AssetDatabase.LoadAssetAtPath<CfgUGame>($"Assets/UGame.asset");
+            var uGame = AssetDatabase.LoadAssetAtPath<CfgUGame>($"Assets/AddressableAssets/Local/Data/ScriptableObject/Custom/UGame.asset");
 
             //加密dll
-            var encrypt = CryptoManager.AesEncrypt(uGame.md5Key, dllBytes);
+            var encrypt = CryptoManager.AesEncrypt(uGame.key, dllBytes);
 
             File.WriteAllBytes($"{writePath}/{dllFullName}.bytes", encrypt);
 

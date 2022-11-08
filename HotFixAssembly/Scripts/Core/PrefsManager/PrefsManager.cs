@@ -7,19 +7,20 @@ namespace UGame_Remove
     public class PrefsManager
     {
 
-        private static readonly string defaultEncryptKey = "UGame.Prefs.Keys";
+        private static string Key=UGame.Instance.cfgUGame.key;
 
 
         public static bool HasKey(string key)
         {
+
             return PlayerPrefs.HasKey(key);
         }
 
 
         public static void SetString(string key, string value)
         {
-           
-            var result = CryptoManager.EncryptStr(defaultEncryptKey, value);
+
+            var result = CryptoManager.EncryptStr(Key, value);
 
             PlayerPrefs.SetString(key, result);
         }
@@ -33,7 +34,7 @@ namespace UGame_Remove
             {
                 if (!HasKey(key)) return defaultValue;
 
-                var result = CryptoManager.DecryptStr(defaultEncryptKey, decrypt);
+                var result = CryptoManager.DecryptStr(Key, decrypt);
 
                 return result;
             }

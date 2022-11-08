@@ -879,7 +879,7 @@ GameObject:
   - component: {fileID: 694787793}
   - component: {fileID: 694787796}
   m_Layer: 5
-  m_Name: StartUp
+  m_Name: SamplePanel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1601,7 +1601,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2aa3afad2871f644bbe3c1ecdc5ab300, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CfgUGame: {fileID: 11400000, guid: eff0928e56e7d6f4699ee0f03a6a4a48, type: 2}
+  cfgUGame: {fileID: 11400000, guid: eff0928e56e7d6f4699ee0f03a6a4a48, type: 2}
 --- !u!1 &1663145487
 GameObject:
   m_ObjectHideFlags: 0

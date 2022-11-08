@@ -12,6 +12,9 @@ namespace UGame_Local
         public void Register(AppDomain appdomain)
         {
             Assembly assembly = typeof(UGame).Assembly;
+
+           // Debug.Log($"ugame:{assembly.FullName}  hot:{System.AppDomain.CurrentDomain.GetAssemblies()}");
+
             var crossBindingAsaptor = assembly.GetTypes().ToList().FindAll(t => t.IsSubclassOf(typeof(CrossBindingAdaptor)));
 
             foreach (var type in crossBindingAsaptor)

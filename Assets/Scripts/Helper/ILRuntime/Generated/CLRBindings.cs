@@ -107,7 +107,6 @@ namespace ILRuntime.Runtime.Generated
             WebSocket4Net_DataReceivedEventArgs_Binding.Register(app);
             System_IO_MemoryStream_Binding.Register(app);
             System_IO_BinaryReader_Binding.Register(app);
-            System_Int32_Binding.Register(app);
             System_IO_Stream_Binding.Register(app);
             System_MissingMemberException_Binding.Register(app);
             System_IO_BinaryWriter_Binding.Register(app);
@@ -124,6 +123,8 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_PlayerPrefs_Binding.Register(app);
             UGame_Local_CryptoManager_Binding.Register(app);
             System_Exception_Binding.Register(app);
+            UGame_Local_UGame_Binding.Register(app);
+            UGame_Local_CfgUGame_Binding.Register(app);
             UnityEngine_AddressableAssets_Addressables_Binding.Register(app);
             UnityEngine_ResourceManagement_AsyncOperations_AsyncOperationHandle_1_TextAsset_Binding.Register(app);
             System_Action_1_TextAsset_Binding.Register(app);
@@ -145,6 +146,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Screen_Binding.Register(app);
             UnityEngine_Vector2_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
+            System_Reflection_MethodBase_Binding.Register(app);
             UnityEngine_Events_UnityEventBase_Binding.Register(app);
             UGame_Local_MountObject_Binding.Register(app);
 

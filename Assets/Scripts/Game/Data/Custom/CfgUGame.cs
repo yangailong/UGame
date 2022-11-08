@@ -4,7 +4,7 @@ namespace UGame_Local
     [CreateAssetMenu(fileName = "UGame", menuName = "UGame/CfgUGame")]
     public class CfgUGame : ScriptableObject
     {
-        public string md5Key { set; get; } = "UGame.Prefs.Keys";
+        public string key { set; get; }
 
 
         public ILRuntimeJITFlags jITFlags { set; get; }= ILRuntimeJITFlags.None;

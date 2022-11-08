@@ -4,7 +4,7 @@ using UnityEngine.UI;
 namespace UGame_Local
 {
     /// <summary>启动场景</summary>
-    public class StartUpPanel : MonoBehaviour
+    public class SamplePanel : MonoBehaviour
     {
         private Slider m_Slider = null;
 
