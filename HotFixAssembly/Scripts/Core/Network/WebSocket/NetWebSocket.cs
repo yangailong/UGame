@@ -11,19 +11,11 @@ namespace UGame_Remove
         private static WebSocket m_WebSocket = null;
         private static WebSocketEvent webSocketEvent = null;
 
-        public static event EventHandler Opened;
-        public static event EventHandler Closed;
-        public static event EventHandler<SuperSocket.ClientEngine.ErrorEventArgs> Error;
-        public static event EventHandler<DataReceivedEventArgs> DataReceived;
-        public static event EventHandler<MessageReceivedEventArgs> MessageReceived;
-
-
-        public static void Init()
-        {
-            var go = new GameObject($"[{typeof(NetWebSocket).Name}]");
-            go.AddComponent<NetWebSocket>();
-            DontDestroyOnLoad(go);
-        }
+        public static event EventHandler Opened = null;
+        public static event EventHandler Closed = null;
+        public static event EventHandler<SuperSocket.ClientEngine.ErrorEventArgs> Error = null;
+        public static event EventHandler<DataReceivedEventArgs> DataReceived = null;
+        public static event EventHandler<MessageReceivedEventArgs> MessageReceived = null;
 
 
         public static void Open(string url, string subProtocol, WebSocketVersion socketVersion)
@@ -31,10 +23,17 @@ namespace UGame_Remove
             webSocketEvent = new WebSocketEvent();
 
             m_WebSocket = new WebSocket(url, subProtocol, socketVersion);
+           
             m_WebSocket.EnableAutoSendPing = true;
             m_WebSocket.AutoSendPingInterval = 1;
 
-            AddEvent();
+            m_WebSocket.Opened += WebSocket_Opened;
+            m_WebSocket.Closed += WebSocket_Closed;
+            m_WebSocket.Error += M_WebSocket_Error;
+
+            m_WebSocket.MessageReceived += WebSocket_MessageReceived;
+            m_WebSocket.DataReceived += WebSocket_DataReceived;
+
 
             m_WebSocket.Open();
         }
@@ -43,8 +42,14 @@ namespace UGame_Remove
         public static void Close()
         {
             m_WebSocket.Close();
-            RemoveEvent();
             m_WebSocket.Dispose();
+
+
+            m_WebSocket.Opened -= WebSocket_Opened;
+            m_WebSocket.Closed -= WebSocket_Closed;
+            m_WebSocket.Error -= M_WebSocket_Error;
+            m_WebSocket.MessageReceived -= WebSocket_MessageReceived;
+            m_WebSocket.DataReceived -= WebSocket_DataReceived;
         }
 
 
@@ -66,28 +71,6 @@ namespace UGame_Remove
         public static void Unregister(int id)
         {
             webSocketEvent.Unregister(id);
-        }
-
-
-
-        private static void AddEvent()
-        {
-            m_WebSocket.Opened += WebSocket_Opened;
-            m_WebSocket.Closed += WebSocket_Closed;
-            m_WebSocket.Error += M_WebSocket_Error;
-
-            m_WebSocket.MessageReceived += WebSocket_MessageReceived;
-            m_WebSocket.DataReceived += WebSocket_DataReceived;
-        }
-
-
-        private static void RemoveEvent()
-        {
-            m_WebSocket.Opened -= WebSocket_Opened;
-            m_WebSocket.Closed -= WebSocket_Closed;
-            m_WebSocket.Error -= M_WebSocket_Error;
-            m_WebSocket.MessageReceived -= WebSocket_MessageReceived;
-            m_WebSocket.DataReceived -= WebSocket_DataReceived;
         }
 
 
@@ -151,9 +134,6 @@ namespace UGame_Remove
         }
 
 
-
-
-
         private static byte[] Serialize(int msgId, IMessage msg)
         {
             using (var ms = new MemoryStream())
@@ -175,10 +155,6 @@ namespace UGame_Remove
 
 
         }
-
-
-
-
 
     }
 }

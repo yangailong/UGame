@@ -41,7 +41,7 @@ namespace UGame_Local_Editor
             textField.value = EditorPrefs.GetString("UGameSecretKey", "UGame.Secret.Key");
 
             var cfgUGame = AssetDatabase.LoadAssetAtPath<CfgUGame>($"Assets/AddressableAssets/Local/Data/ScriptableObject/Custom/UGame.asset");
-            
+
             ObjectField.objectType = typeof(CfgUGame);
             ObjectField.allowSceneObjects = false;
             ObjectField.value = cfgUGame;
@@ -69,6 +69,8 @@ namespace UGame_Local_Editor
 
                 EditorPrefs.SetString("UGameSecretKey", textField.value);
 
+                //修改密码后需要重新加密dll文件
+                DllToBytes.DLLToBytes();
 
                 Debug.Log($" key:{textField.value} to md5:{cfg.key}  save success......  ");
 
