@@ -54,9 +54,8 @@ namespace UGame_Local
             RegisterLitJsonImpl.Instance.Register(appDomain);
 
 
-            //appDomain.InitializeBindings();
+            appDomain.InitializeBindings();
 
-            //ILRuntime.Runtime.Generated.CLRBindings.Initialize(appDomain);
         }
 
 
