@@ -72,6 +72,8 @@ namespace UGame_Local_Editor
                 //修改密码后需要重新加密dll文件
                 DllToBytes.DLLToBytes();
 
+                EditorUtility.SetDirty(cfg);
+
                 Debug.Log($" key:{textField.value} to md5:{cfg.key}  save success......  ");
 
             }
