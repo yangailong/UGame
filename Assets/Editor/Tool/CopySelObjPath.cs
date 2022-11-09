@@ -6,9 +6,7 @@ using UnityEngine;
 /// </summary>
 public class CopySelObjPath
 {
-
-    [MenuItem("Tools/CopyFllPath")]
-    [MenuItem("GameObject/CopyFllPath")]
+    [MenuItem("GameObject/Copy FllPath",false,0)]
     public static void CopyGoFllPath()
     {
         TextEditor textEditor = new TextEditor();

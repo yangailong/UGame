@@ -22,6 +22,7 @@ namespace ILRuntime.Runtime.Generated
 
         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2> s_UnityEngine_Vector2_Binding_Binder = null;
         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3> s_UnityEngine_Vector3_Binding_Binder = null;
+        internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Quaternion> s_UnityEngine_Quaternion_Binding_Binder = null;
 
         /// <summary>
         /// Initialize the CLR binding, please invoke this AFTER CLR Redirection registration
@@ -99,6 +100,7 @@ namespace ILRuntime.Runtime.Generated
             System_Object_Binding.Register(app);
             System_Threading_Interlocked_Binding.Register(app);
             WebSocket4Net_WebSocket_Binding.Register(app);
+            System_Exception_Binding.Register(app);
             UnityEngine_JsonUtility_Binding.Register(app);
             System_EventHandler_Binding.Register(app);
             System_EventHandler_1_ErrorEventArgs_Binding.Register(app);
@@ -122,7 +124,6 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Pool_ObjectPool_1_Component_Binding.Register(app);
             UnityEngine_PlayerPrefs_Binding.Register(app);
             UGame_Local_CryptoManager_Binding.Register(app);
-            System_Exception_Binding.Register(app);
             UGame_Local_UGame_Binding.Register(app);
             UGame_Local_CfgUGame_Binding.Register(app);
             UnityEngine_AddressableAssets_Addressables_Binding.Register(app);
@@ -155,6 +156,8 @@ namespace ILRuntime.Runtime.Generated
             s_UnityEngine_Vector2_Binding_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2>;
             __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Vector3));
             s_UnityEngine_Vector3_Binding_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3>;
+            __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Quaternion));
+            s_UnityEngine_Quaternion_Binding_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Quaternion>;
         }
 
         /// <summary>
@@ -164,6 +167,7 @@ namespace ILRuntime.Runtime.Generated
         {
             s_UnityEngine_Vector2_Binding_Binder = null;
             s_UnityEngine_Vector3_Binding_Binder = null;
+            s_UnityEngine_Quaternion_Binding_Binder = null;
         }
     }
 }

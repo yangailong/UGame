@@ -2,7 +2,6 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
-using Unity.VisualScripting;
 using System.Collections.Generic;
 
 namespace UGame_Local_Editor
@@ -10,7 +9,7 @@ namespace UGame_Local_Editor
     public class ExcelToScriptableObject : EditorWindow
     {
 
-        [MenuItem("Tools/UGame/ExcelToScriptableObject %E")]
+        [MenuItem("Tools/UGame/Excel表数据转ScriptableObject %E")]
         public static void ShowExample()
         {
             ExcelToScriptableObject wnd = GetWindow<ExcelToScriptableObject>();
@@ -26,6 +25,8 @@ namespace UGame_Local_Editor
         private Button processAll = null;
         private Button addNewExcel = null;
 
+        private ScrollView ecrollView = null;
+
         private ExcelItem excelItem = null;
 
         private List<ExcelItem> excelItems = null;
@@ -36,7 +37,7 @@ namespace UGame_Local_Editor
             VisualElement root = rootVisualElement;
 
             // Import UXML
-            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/UI Toolkit/ProcessExcel/ExcelToScriptableObject.uxml");
+            var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/UI Toolkit/ProcessExcelWindow/ExcelToScriptableObjectWindow.uxml");
             VisualElement labelFromUXML = visualTree.Instantiate();
             root.Add(labelFromUXML);
 
@@ -49,9 +50,12 @@ namespace UGame_Local_Editor
             processAll = root.Q<Button>("ProcessAll");
             addNewExcel = root.Q<Button>("AddNewExcel");
 
+            ecrollView = root.Q<ScrollView>();
             excelItem = new ExcelItem(root.Q<VisualElement>("Item"));
 
             //excelItem.root.visible = false;
+
+            //VisualElement cell=new VisualElement().contentRect;
 
             excelItems = new List<ExcelItem>();
 
@@ -67,7 +71,7 @@ namespace UGame_Local_Editor
 
         }
 
-     
+
 
         private void AddNewExcel_clicked()
         {

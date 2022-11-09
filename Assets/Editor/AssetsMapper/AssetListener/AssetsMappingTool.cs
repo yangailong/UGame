@@ -1,14 +1,16 @@
 using UnityEditor;
+using UnityEngine;
 
 namespace UGame_Local_Editor
 {
     public class AssetsMapperTool
     {
-        [MenuItem("Tools/Assets/AssetsMapper/资源重命名检测")]
-        [MenuItem("Assets/Refresh AssetsMapper  %M")]
+        [MenuItem("Tools/UGame/重新生成资源映射表【此方法是自动调用，防止出错，预留手动入口】")]
         public static void AssetsMappingRefresh()
         {
             AssetsMapperImpl.Creat();
+
+            Debug.Log("成功生成资源映射表");
         }
     }
 }

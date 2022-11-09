@@ -8,7 +8,7 @@ namespace UGame_Local_Editor
 {
     public class UGameWindow : EditorWindow
     {
-        [MenuItem("Tools/UGame/CfgUGame %G")]
+        [MenuItem("Tools/UGame/配置UGame全局参数 %G")]
         public static void ShowExample()
         {
             UGameWindow wnd = GetWindow<UGameWindow>();

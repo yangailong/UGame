@@ -18,7 +18,7 @@ namespace UGame_Local_Editor
         private static readonly string pdbFullName = "HotFixAssembly.pdb";
 
 
-        [MenuItem("Tools/Dll/DLLToBytes")]
+        [MenuItem("Tools/UGame/通过密钥生成加密Dll文件【此方法是自动调用，防止出错，预留手动入口】")]
         public static void DLLToBytes()
         {
             if (!Directory.Exists(originPath))
@@ -56,6 +56,8 @@ namespace UGame_Local_Editor
             File.WriteAllBytes($"{writePath}/{pdbFullName}.bytes", pdbBytes);
 
             AssetDatabase.Refresh();
+
+            Debug.Log("成功生成加密Dll文件");
         }
 
 
