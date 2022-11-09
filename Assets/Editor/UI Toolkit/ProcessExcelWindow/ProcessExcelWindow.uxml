@@ -1,6 +1,22 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <ui:VisualElement style="flex-grow: 1; height: 259px; flex-direction: row; justify-content: space-between;">
-        <ui:VisualElement />
-        <ui:VisualElement />
+    <ui:VisualElement style="flex-grow: 1; height: 259px; flex-direction: column; justify-content: flex-start; background-color: rgb(22, 22, 22);">
+        <ui:VisualElement style="width: auto; height: 132px; border-bottom-color: rgb(87, 87, 87); border-bottom-width: 1px; justify-content: space-between; opacity: 1;">
+            <uie:IntegerField label="Int Field" value="42" />
+            <uie:IntegerField label="Int Field" value="42" />
+            <uie:IntegerField label="Int Field" value="42" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" />
+            <ui:Button text="Button" display-tooltip-when-elided="true" />
+        </ui:VisualElement>
+        <ui:VisualElement style="flex-grow: 1; flex-direction: row;">
+            <ui:ScrollView style="width: 143px; border-right-color: rgb(87, 87, 87); border-right-width: 1px;">
+                <ui:Button text="Button" display-tooltip-when-elided="true" />
+                <ui:Button text="Button" display-tooltip-when-elided="true" />
+                <ui:Button text="Button" display-tooltip-when-elided="true" />
+                <ui:Button text="Button" display-tooltip-when-elided="true" />
+                <ui:Button text="Button" display-tooltip-when-elided="true" />
+                <ui:Button text="Button" display-tooltip-when-elided="true" />
+            </ui:ScrollView>
+            <ui:VisualElement style="flex-grow: 1;" />
+        </ui:VisualElement>
     </ui:VisualElement>
 </ui:UXML>
