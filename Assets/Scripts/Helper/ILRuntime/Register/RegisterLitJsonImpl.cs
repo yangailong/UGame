@@ -5,7 +5,7 @@ namespace UGame_Local
     {
         public void Register(AppDomain appdomain)
         {
-
+            LitJson.JsonMapper.RegisterILRuntimeCLRRedirection(appdomain);
         }
     }
 }

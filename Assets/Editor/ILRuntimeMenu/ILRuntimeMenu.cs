@@ -7,14 +7,6 @@ namespace UGame_Local_Editor
     [System.Reflection.Obfuscation(Exclude = true)]
     public class ILRuntimeMenu
     {
-        [MenuItem("Tools/ILRuntime/安装VS调试插件")]
-        static void InstallDebugger()
-        {
-            //EditorUtility.OpenWithDefaultApp("Assets/Samples/ILRuntime/2.0.2/Demo/Debugger~/ILRuntimeDebuggerLauncher.vsix");
-        
-            EditorUtility.OpenWithDefaultApp("Assets/Scripts/Game/Editor/ILRuntimeMenu/Debugger/ILRuntimeDebuggerLauncher.vsix");
-
-        }
 
         [MenuItem("Tools/ILRuntime/打开ILRuntime中文文档")]
         static void OpenDocumentation()

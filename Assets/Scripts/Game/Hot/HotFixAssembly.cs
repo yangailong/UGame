@@ -52,6 +52,11 @@ namespace UGame_Local
             RegisterMethodDelegateImpl.Instance.Register(appDomain);
             RegisterValueTypeBinderImpl.Instance.Register(appDomain);
             RegisterLitJsonImpl.Instance.Register(appDomain);
+
+
+            //appDomain.InitializeBindings();
+
+            //ILRuntime.Runtime.Generated.CLRBindings.Initialize(appDomain);
         }
 
 
