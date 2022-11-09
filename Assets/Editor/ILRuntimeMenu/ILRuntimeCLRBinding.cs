@@ -33,7 +33,7 @@ namespace UGame_Local_Editor
         [MenuItem("Tools/ILRuntime/删除所有CLR绑定")]
         static void DeleteCLRBindins()
         {
-            Directory.Delete("Assets/Samples/ILRuntime/Generated", true);
+            Directory.Delete("Assets/Scripts/Helper/ILRuntime/Generated", true);
             AssetDatabase.Refresh();
         }
 
