@@ -150,7 +150,7 @@ namespace UGame_Local
             hotFixAssembly.InitializeILRuntime();
 
 
-            hotFixAssembly.CallRemoveRunGame("UGame_Remove.RunGame", "StartUp", null, cfgUGame.key);
+            hotFixAssembly.CallRemoveRunGame("UGame_Remove.RunGame", "StartUp", null, null);
         }
 
 
