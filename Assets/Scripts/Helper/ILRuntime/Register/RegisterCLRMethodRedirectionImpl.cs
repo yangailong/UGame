@@ -1,18 +1,16 @@
 ﻿using ILRuntime.CLR.Method;
 using ILRuntime.CLR.TypeSystem;
-using ILRuntime.CLR.Utils;
 using ILRuntime.Runtime.Intepreter;
 using ILRuntime.Runtime.Stack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
 namespace UGame_Local
 {
-    public class RegisterCLRMethodRedirectionImpl : Singleton<RegisterCLRMethodRedirectionImpl>, ILRuntimeRegister
+    public class RegisterCLRMethodRedirectionImpl:ILRuntimeRegister
     {
         public unsafe void Register(AppDomain appdomain)
         {

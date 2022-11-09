@@ -3,7 +3,7 @@ using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
 namespace UGame_Local
 {
-    public class RegisterDelegateConvertorImpl : Singleton<RegisterDelegateConvertorImpl>, ILRuntimeRegister
+    public class RegisterDelegateConvertorImpl :ILRuntimeRegister
     {
         public void Register(AppDomain appdomain)
         {

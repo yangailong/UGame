@@ -1,7 +1,7 @@
 ﻿using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 namespace UGame_Local
 {
-    public class RegisterFunctionDelegateImpl : Singleton<RegisterFunctionDelegateImpl>, ILRuntimeRegister
+    public class RegisterFunctionDelegateImpl : ILRuntimeRegister
     {
         public void Register(AppDomain appdomain)
         {

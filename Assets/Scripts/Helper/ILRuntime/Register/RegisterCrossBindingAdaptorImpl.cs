@@ -7,7 +7,7 @@ using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
 namespace UGame_Local
 {
-    public class RegisterCrossBindingAdaptorImpl : Singleton<RegisterCrossBindingAdaptorImpl>, ILRuntimeRegister
+    public class RegisterCrossBindingAdaptorImpl :  ILRuntimeRegister
     {
         public void Register(AppDomain appdomain)
         {

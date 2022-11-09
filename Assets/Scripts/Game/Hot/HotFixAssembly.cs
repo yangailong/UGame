@@ -45,13 +45,13 @@ namespace UGame_Local
             appDomain.UnityMainThreadID = System.Threading.Thread.CurrentThread.ManagedThreadId;
             appDomain.DebugService.StartDebugService(56000);
 #endif
-            RegisterCLRMethodRedirectionImpl.Instance.Register(appDomain);
-            RegisterCrossBindingAdaptorImpl.Instance.Register(appDomain);
-            RegisterDelegateConvertorImpl.Instance.Register(appDomain);
-            RegisterFunctionDelegateImpl.Instance.Register(appDomain);
-            RegisterMethodDelegateImpl.Instance.Register(appDomain);
-            RegisterValueTypeBinderImpl.Instance.Register(appDomain);
-            RegisterLitJsonImpl.Instance.Register(appDomain);
+            new RegisterCLRMethodRedirectionImpl().Register(appDomain);
+            new RegisterCrossBindingAdaptorImpl().Register(appDomain);
+            new RegisterDelegateConvertorImpl().Register(appDomain);
+            new RegisterFunctionDelegateImpl().Register(appDomain);
+            new RegisterMethodDelegateImpl().Register(appDomain);
+            new RegisterValueTypeBinderImpl().Register(appDomain);
+            new RegisterLitJsonImpl().Register(appDomain);
 
 
             appDomain.InitializeBindings();
