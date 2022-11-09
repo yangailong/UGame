@@ -131,6 +131,7 @@ namespace UGame_Local
         /// </summary>
         private void RunHotDll()
         {
+            //首先实例化ILRuntime的AppDomain，AppDomain是一个应用程序域，每个AppDomain都是一个独立的沙盒
             appDomain = new AppDomain((int)cfgUGame.jITFlags);
 
             hotFixAssembly = new HotFixAssembly(appDomain);
