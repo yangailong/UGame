@@ -23,7 +23,7 @@ namespace UGame_Remove
             webSocketEvent = new WebSocketEvent();
 
             m_WebSocket = new WebSocket(url, subProtocol, socketVersion);
-           
+
             m_WebSocket.EnableAutoSendPing = true;
             m_WebSocket.AutoSendPingInterval = 1;
 
@@ -55,6 +55,16 @@ namespace UGame_Remove
 
         public static void Send(int id, IMessage msg)
         {
+            if (m_WebSocket == null)
+            {
+                throw new MethodAccessException("WebSocket 不能为空，请先执行 WebSocket.Open 方法，确保WebSocket不为空");
+            }
+
+            if (msg == null)
+            {
+                throw new ArgumentException($"{nameof(msg)} 发送参数不能为空");
+            }
+
             Debug.Log($"Send msg  id:{id},  msg：{JsonUtility.ToJson(msg)}");
 
             var buffer = Serialize(id, msg);

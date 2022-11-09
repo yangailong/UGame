@@ -5,7 +5,9 @@ namespace UGame_Remove
 
     public partial class NetProxy : Singleton<NetProxy>
     {
-
+        /// <summary>
+        /// 注册所有网络通信消息
+        /// </summary>
         public void Register()
         {
             MethodInfo[] methohs = typeof(NetProxy).GetMethods();
@@ -24,7 +26,9 @@ namespace UGame_Remove
         }
 
 
-
+        /// <summary>
+        /// 取消注册所有网络通信消息
+        /// </summary>
         public void Unregister()
         {
             MethodInfo[] methohs = typeof(NetProxy).GetMethods();

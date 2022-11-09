@@ -36,12 +36,12 @@ namespace UGame_Remove
             GlobalEvent.Init();
             AudioPlayManager.Init();
             ObjectPoolManager.Init();
-           
+
 
             UIManager.AsyncInit();
             CfgData.AsyncInit();
 
-           
+
             //NetWebSocket.Open("ws://127.0.0.1:8088/ws", "", WebSocket4Net.WebSocketVersion.Rfc6455);
 
 
@@ -53,6 +53,9 @@ namespace UGame_Remove
 
             Debug.Log($"子系统全部初始化完毕....");
 
+            
+            NetWebSocket.Opened += (p1, p2) => { NetProxy.Instance.Register(); };
+            NetWebSocket.Closed += (p1, p2) => { NetProxy.Instance.Unregister(); };
 
             yield return ResourceManager.LoadSceneAsync("Login");
 
