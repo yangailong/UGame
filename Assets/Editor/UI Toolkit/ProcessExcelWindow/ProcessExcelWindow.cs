@@ -13,7 +13,6 @@ namespace UGame_Local_Editor
     public class ProcessExcelWindow : EditorWindow
     {
 
-
         [MenuItem("Tools/UGame/Excel表数据转ScriptableObject %E")]
         public static void ShowExample()
         {
@@ -155,6 +154,11 @@ namespace UGame_Local_Editor
         private void OnClickProcessBtnCallback()
         {
             Debug.Log($"解析excel");
+
+            foreach (var item in keyValuePairs.Values)
+            {
+                impl.Process(item, true);
+            }
         }
 
 
