@@ -1,37 +1,21 @@
 ﻿{
-    "configs": {
-        "field_row": 0,
-        "type_row": 1,
-        "data_from_row": 4
-    },
+    "FieldRow": 0,
+    "TypeRow": 1,
+    "DataFromRow": 6,
     "excels": [
         {
-            "excel_name": "Excels/CfgLocalLang.xlsx",
-            "script_directory": "Assets/Scripts/Game/Runtime/Data/Normal/ScriptableObject",
-            "asset_directory": "Assets/AddressableAssets/Local/Data/ScriptableObject/Normal",
-            "name_space": "UGame_Local_In_CfgData",
-            "use_hash_string": false,
-            "hide_asset_properties": true,
-            "generate_get_method_if_possible": true,
-            "key_to_multi_values": false,
-            "use_public_items_getter": false,
-            "compress_color_into_int": true,
-            "treat_unknown_types_as_enum": false,
-            "generate_tostring_method": true
-        },
-        {
-            "excel_name": "",
-            "script_directory": "Assets",
-            "asset_directory": "Assets",
-            "name_space": "",
-            "use_hash_string": false,
-            "hide_asset_properties": true,
-            "generate_get_method_if_possible": true,
-            "key_to_multi_values": false,
-            "use_public_items_getter": false,
-            "compress_color_into_int": true,
-            "treat_unknown_types_as_enum": false,
-            "generate_tostring_method": true
+            "ExcelPath": "F:/Project/Unity/Dev/UGame/Excels/CfgRemoteLang.xlsx",
+            "NameSpace": "UGame.Remove",
+            "ScriptFolder": "F:/Project/Unity/Dev/UGame/Assets/Text/Data/Scripts",
+            "AssetFolder": "Select",
+            "UseHashString": false,
+            "PublicItemsGetter": false,
+            "HideaAssetProperties": true,
+            "CompressColorintoInteger": false,
+            "GenerateGetMethodIfPossoble": true,
+            "TreaUnknowTypesasEnum": false,
+            "IDorKeytoMuitiValues": false,
+            "GengrateToStringMethod": false
         }
     ]
 }
