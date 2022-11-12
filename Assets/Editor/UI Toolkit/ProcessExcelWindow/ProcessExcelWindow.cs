@@ -157,7 +157,7 @@ namespace UGame_Local_Editor
 
             foreach (var item in keyValuePairs.Values)
             {
-                impl.Process(item, true);
+                impl.Process(new ExcelToScriptableObjectSettings() { FieldRow = 0, TypeRow = 1, DataFromRow = 4 }, item, true);
             }
         }
 
@@ -285,7 +285,7 @@ namespace UGame_Local_Editor
             private void IDorKeytoMuitiValuesRegisterCallback(ChangeEvent<bool> value)
             {
                 if (elementParams == null) return;
-                elementParams.IDorKeytoMuitiValues = value.newValue;
+                elementParams.IDorKeytoMultiValues = value.newValue;
             }
 
 
@@ -317,7 +317,7 @@ namespace UGame_Local_Editor
                 this.CompressColorintoInteger.value = elementParams.CompressColorintoInteger;
                 this.GenerateGetMethodIfPossoble.value = elementParams.GenerateGetMethodIfPossoble;
                 this.TreaUnknowTypesasEnum.value = elementParams.TreaUnknowTypesasEnum;
-                this.IDorKeytoMuitiValues.value = elementParams.IDorKeytoMuitiValues;
+                this.IDorKeytoMuitiValues.value = elementParams.IDorKeytoMultiValues;
                 this.GengrateToStringMethod.value = elementParams.GengrateToStringMethod;
             }
 
@@ -329,7 +329,29 @@ namespace UGame_Local_Editor
         {
             public string ExcelPath = "", NameSpace = "UGame.Remove", ScriptFolder = "Select", AssetFolder = "Select";
 
-            public bool UseHashString = false, PublicItemsGetter = false, HideaAssetProperties = false, CompressColorintoInteger = false, GenerateGetMethodIfPossoble = false, TreaUnknowTypesasEnum = false, IDorKeytoMuitiValues = false, GengrateToStringMethod = false;
+
+            public bool UseHashString = false;
+
+
+            public bool PublicItemsGetter = false;
+
+            /// <summary>inspector不显示属性变量</summary>
+            public bool HideaAssetProperties = false;
+
+
+            public bool CompressColorintoInteger = false;
+
+            /// <summary>如果可能，生成获取方法 </summary>
+            public bool GenerateGetMethodIfPossoble = false;
+
+            /// <summary>字段设置为枚举</summary>
+            public bool TreaUnknowTypesasEnum = false;
+
+            /// <summary>id或者key多值</summary>
+            public bool IDorKeytoMultiValues = false;
+
+            public bool GengrateToStringMethod = false;
+
         }
 
 
