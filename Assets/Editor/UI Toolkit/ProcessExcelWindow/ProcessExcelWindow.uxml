@@ -19,19 +19,19 @@
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
                     <ui:Toggle label="Use hash string" name="UseHashString" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
-                    <ui:Toggle label="Public Items Getter" name="PublicItemsGetter" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+                    <ui:Toggle label="公开属性方法" name="PublicItemsGetter" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
                     <ui:Toggle label="inspector不显示属性变量" name="HideaAssetProperties" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
-                    <ui:Toggle label="Compress Color into Integer" name="CompressColorintoInteger" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+                    <ui:Toggle label="将颜色值压缩到整数" name="CompressColorintoInteger" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
-                    <ui:Toggle label="Generate Get Method If Possoble" name="GenerateGetMethodIfPossoble" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+                    <ui:Toggle label="生成获取方法" name="GenerateGetMethodIfPossoble" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
                     <ui:Toggle label="字段设置为枚举" name="TreaUnknowTypesasEnum" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
-                    <ui:Toggle label="ID or Key to Muiti Values" name="IDorKeytoMuitiValues" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
-                    <ui:Toggle label="Gengrate ToString Method" name="GengrateToStringMethod" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+                    <ui:Toggle label="允许存在多个id或key" name="IDorKeytoMuitiValues" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+                    <ui:Toggle label="重写Object.ToString方法" name="GengrateToStringMethod" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
                 </ui:VisualElement>
                 <ui:VisualElement style="flex-direction: row; height: 38px; top: 26px; justify-content: space-between;">
                     <ui:Button text="插入" display-tooltip-when-elided="true" name="InsertBtn" style="flex-grow: 1; font-size: 13px; -unity-font-style: bold; width: auto;" />

@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Linq;
+using System.ComponentModel;
 
 namespace UGame_Local_Editor
 {
@@ -64,6 +65,9 @@ namespace UGame_Local_Editor
             AddNewExcel.clicked += AddNewExcel_clicked;
 
             OnLoad();
+
+
+
         }
 
 
@@ -73,6 +77,9 @@ namespace UGame_Local_Editor
         }
 
 
+        /// <summary>
+        /// 打开面板读取缓存设置
+        /// </summary>
         private void OnLoad()
         {
             string json = File.Exists(SETTINGS_PATH) ? File.ReadAllText(SETTINGS_PATH, Encoding.UTF8) : null;
@@ -96,11 +103,13 @@ namespace UGame_Local_Editor
         }
 
 
+        /// <summary>
+        /// 关闭面板记录设置到缓存
+        /// </summary>
         private void OnSave()
         {
-            if (keyValuePairs?.Count == 0) return;
-
             ExcelToScriptableObjectSettings data = new ExcelToScriptableObjectSettings();
+            data.baseRow = new BaseRow();
             data.baseRow.FieldRow = FieldRow.value;
             data.baseRow.TypeRow = TypeRow.value;
             data.baseRow.DataFromRow = DataFromRow.value;
@@ -110,6 +119,9 @@ namespace UGame_Local_Editor
 
 
 
+        /// <summary>
+        /// 添加Excel
+        /// </summary>
         private void AddNewExcel_clicked()
         {
             Debug.Log($"添加excel");
@@ -132,25 +144,46 @@ namespace UGame_Local_Editor
         }
 
 
-
+        /// <summary>
+        /// 解析全部Excel
+        /// </summary>
         private void ProcessAll_clicked()
         {
             Debug.Log($"解析所有excel");
         }
 
 
+        /// <summary>
+        /// 插入Excel
+        /// </summary>
         private void OnClickInsertBtnCallback()
         {
             Debug.Log($"插入excel");
         }
 
 
+        /// <summary>
+        /// 删除Excel
+        /// </summary>
         private void OnClickDeleteBtnCallback()
         {
             Debug.Log($"删除excel");
+
+            keyValuePairs[CurSelExcelBtn] = null;
+
+            keyValuePairs.Remove(CurSelExcelBtn);
+
+            excelVisualElement.SetActive(false);
+
+            ScrollView.Remove(CurSelExcelBtn);
+
+            CurSelExcelBtn = null;
         }
 
 
+        /// <summary>
+        /// 解析Excel
+        /// </summary>
         private void OnClickProcessBtnCallback()
         {
             Debug.Log($"解析excel");
@@ -162,10 +195,19 @@ namespace UGame_Local_Editor
         }
 
 
+        /// <summary>当前选择的Excel</summary>
+        private Button CurSelExcelBtn = null;
+
+
+        /// <summary>
+        /// 选择Excel
+        /// </summary>
+        /// <param name="button"></param>
         private void SelExcelBtn(Button button)
         {
             Debug.Log($"excel name:{button.text}");
 
+            this.CurSelExcelBtn = button;
             excelVisualElement.SetData(keyValuePairs[button]);
             excelVisualElement.SetActive(true);
         }
@@ -212,6 +254,7 @@ namespace UGame_Local_Editor
 
                 ScriptFolder.clicked += ScriptDirectory_clicked;
                 AssetFolder.clicked += AssetDirectory_clicked;
+
                 InsertBtn.clicked += onClickInsertBtnCallback;
                 DeleteBtn.clicked += onClickDeleteBtnCallback;
                 ProcessBtn.clicked += onClickProcessBtnCallback;
@@ -220,8 +263,11 @@ namespace UGame_Local_Editor
 
             private void ScriptDirectory_clicked()
             {
+                Debug.LogError($"{Application.dataPath}");
                 if (elementParams == null) return;
-                string path = EditorUtility.OpenFolderPanel("脚本生成路径", $"{Application.dataPath}", string.Empty);
+
+                string tmp = $"{Application.dataPath}/../HotFixAssembly/Scripts/Game/Data/Normal/ScriptableObject";
+                string path = EditorUtility.OpenFolderPanel("脚本生成路径", Application.dataPath, string.Empty);
                 if (!string.IsNullOrEmpty(path))
                 {
                     elementParams.ScriptFolder = ScriptFolder.text = path;
@@ -334,6 +380,7 @@ namespace UGame_Local_Editor
             public int DataFromRow = 5;
         }
 
+
         [System.Serializable]
         public class ExcelVisualElementParams
         {
@@ -343,24 +390,32 @@ namespace UGame_Local_Editor
             public bool UseHashString = false;
 
 
+            /// <summary>公开Item属性</summary>
             public bool PublicItemsGetter = false;
+
 
             /// <summary>inspector不显示属性变量</summary>
             public bool HideaAssetProperties = false;
 
 
+            /// <summary>将颜色压缩到整数</summary>
             public bool CompressColorintoInteger = false;
 
-            /// <summary>如果可能，生成获取方法 </summary>
-            public bool GenerateGetMethodIfPossoble = false;
+
+            /// <summary>生成属性获取方法</summary>
+            public bool GenerateGetMethodIfPossoble = true;
+
 
             /// <summary>字段设置为枚举</summary>
             public bool TreaUnknowTypesasEnum = false;
 
+
             /// <summary>id或者key多值</summary>
             public bool IDorKeytoMultiValues = false;
 
-            public bool GengrateToStringMethod = false;
+
+            /// <summary>重写ToString方法</summary>
+            public bool GengrateToStringMethod = true;
 
         }
 
