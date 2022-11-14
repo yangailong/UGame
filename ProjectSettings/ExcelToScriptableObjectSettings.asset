@@ -6,16 +6,16 @@
         {
             "ExcelPath": "F:/Project/Unity/Dev/UGame/Excels/CfgRemoteLang.xlsx",
             "NameSpace": "UGame.Remove",
-            "ScriptFolder": "F:/Project/Unity/Dev/UGame/Assets/Text/Data/Scripts",
-            "AssetFolder": "Select",
+            "ScriptFolder": "F:/Project/Unity/Dev/UGame/Assets/SO",
+            "AssetFolder": "F:/Project/Unity/Dev/UGame/Assets/SO",
             "UseHashString": false,
             "PublicItemsGetter": false,
-            "HideaAssetProperties": true,
-            "CompressColorintoInteger": false,
+            "HideaAssetProperties": false,
+            "CompressColorintoInteger": true,
             "GenerateGetMethodIfPossoble": true,
             "TreaUnknowTypesasEnum": false,
-            "IDorKeytoMuitiValues": false,
-            "GengrateToStringMethod": false
+            "IDorKeytoMultiValues": false,
+            "GengrateToStringMethod": true
         }
     ]
 }

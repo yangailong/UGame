@@ -19,7 +19,7 @@ namespace UGame_Local_Editor
         private static Regex reg_color24 = new Regex(@"^[A-Fa-f0-9]{6}$");
 
 
-        public bool Process(ExcelToScriptableObjectSettings rowData, ExcelVisualElementParams excel, bool generateCode)
+        public bool Process(BaseRow baseRow, ExcelVisualElementParams excel, bool generateCode)
         {
             string className = Path.GetFileNameWithoutExtension(excel.ExcelPath);
 
@@ -69,7 +69,7 @@ namespace UGame_Local_Editor
 
             //检查文件属性名称和数据类型
             DataTable table = data.Tables[0];
-            if (table.Rows.Count < Mathf.Max(rowData.FieldRow, rowData.TypeRow) + 1)
+            if (table.Rows.Count < Mathf.Max(baseRow.FieldRow, baseRow.TypeRow) + 1)
             {
                 string msg = $"解析失败 {className}，文件应该至少包含2行，用于指定名称和类型";
                 EditorUtility.DisplayDialog("Excel To ScriptableObject", msg, "OK");
@@ -80,7 +80,7 @@ namespace UGame_Local_Editor
             //获取文件FieldRow行的内容
             List<string> fieldNames = new List<string>();
             List<int> fieldIndices = new List<int>();
-            object[] items = table.Rows[rowData.FieldRow].ItemArray;
+            object[] items = table.Rows[baseRow.FieldRow].ItemArray;
             for (int i = 0; i < items.Length; i++)
             {
                 string fieldName = items[i].ToString().Trim();
@@ -108,7 +108,7 @@ namespace UGame_Local_Editor
             int firstIndex = fieldIndices[0];
             List<eFieldTypes> fieldTypes = new List<eFieldTypes>();
             List<string> fieldTypeNames = new List<string>();
-            items = table.Rows[rowData.TypeRow].ItemArray;
+            items = table.Rows[baseRow.TypeRow].ItemArray;
 
             for (int i = 0; i < fieldNames.Count; i++)
             {
@@ -136,7 +136,7 @@ namespace UGame_Local_Editor
                     }
 
 
-                    for (int j = rowData.DataFromRow; j < table.Rows.Count; j++)
+                    for (int j = baseRow.DataFromRow; j < table.Rows.Count; j++)
                     {
                         object[] enumObjs = table.Rows[j].ItemArray;
                         string enumValue = fieldIndex < enumObjs.Length ? enumObjs[fieldIndex].ToString() : null;
@@ -163,7 +163,7 @@ namespace UGame_Local_Editor
                 {
                     SortedList<int, List<int>> ids = new SortedList<int, List<int>>();
 
-                    for (int i = rowData.DataFromRow; i < table.Rows.Count; i++)
+                    for (int i = baseRow.DataFromRow; i < table.Rows.Count; i++)
                     {
                         string info = $"Checking IDs or Keys...{i - 1}/{table.Rows.Count - 2}";
                         float progress = (i - 1) / (table.Rows.Count - 2);
@@ -218,7 +218,7 @@ namespace UGame_Local_Editor
                 {
                     SortedList<string, List<int>> keys = new SortedList<string, List<int>>();
 
-                    for (int i = rowData.DataFromRow; i < table.Rows.Count; i++)
+                    for (int i = baseRow.DataFromRow; i < table.Rows.Count; i++)
                     {
                         string info = $"Checking IDs or Keys...{i - 1}/{table.Rows.Count - 2}";
                         float progress = (i - 1) / (table.Rows.Count - 2);
@@ -656,7 +656,7 @@ namespace UGame_Local_Editor
             {
                 if (indices.Count <= 0)
                 {
-                    for (int i = table.Rows.Count - 1; i >= rowData.DataFromRow; i--)
+                    for (int i = table.Rows.Count - 1; i >= baseRow.DataFromRow; i--)
                     {
                         indices.Add(i);
                     }
@@ -677,6 +677,8 @@ namespace UGame_Local_Editor
                 {
                     assetPath = string.Concat(excel.AssetFolder, "/", className, ".asset");
                 }
+
+                assetPath = $"Assets/SO/{className}.asset";
 
                 ScriptableObject obj = AssetDatabase.LoadAssetAtPath(assetPath, typeof(ScriptableObject)) as ScriptableObject;
                 bool isAlreadyExists = true;

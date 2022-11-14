@@ -81,9 +81,9 @@ namespace UGame_Local_Editor
             {
                 ExcelToScriptableObjectSettings settings = JsonUtility.FromJson<ExcelToScriptableObjectSettings>(json);
 
-                FieldRow.value = settings.FieldRow;
-                TypeRow.value = settings.TypeRow;
-                DataFromRow.value = settings.DataFromRow;
+                FieldRow.value = settings.baseRow.FieldRow;
+                TypeRow.value = settings.baseRow.TypeRow;
+                DataFromRow.value = settings.baseRow.DataFromRow;
 
                 foreach (var item in settings.excels)
                 {
@@ -101,9 +101,9 @@ namespace UGame_Local_Editor
             if (keyValuePairs?.Count == 0) return;
 
             ExcelToScriptableObjectSettings data = new ExcelToScriptableObjectSettings();
-            data.FieldRow = FieldRow.value;
-            data.TypeRow = TypeRow.value;
-            data.DataFromRow = DataFromRow.value;
+            data.baseRow.FieldRow = FieldRow.value;
+            data.baseRow.TypeRow = TypeRow.value;
+            data.baseRow.DataFromRow = DataFromRow.value;
             data.excels = keyValuePairs.Values.ToArray();
             File.WriteAllText(SETTINGS_PATH, JsonUtility.ToJson(data, true), Encoding.UTF8);
         }
@@ -157,7 +157,7 @@ namespace UGame_Local_Editor
 
             foreach (var item in keyValuePairs.Values)
             {
-                impl.Process(new ExcelToScriptableObjectSettings() { FieldRow = 0, TypeRow = 1, DataFromRow = 4 }, item, true);
+                impl.Process(new BaseRow() { FieldRow = 0, TypeRow = 1, DataFromRow = 5 }, item, false); ;
             }
         }
 
@@ -324,6 +324,16 @@ namespace UGame_Local_Editor
         }
 
 
+
+        [System.Serializable]
+
+        public class BaseRow
+        {
+            public int FieldRow = 0;
+            public int TypeRow = 1;
+            public int DataFromRow = 5;
+        }
+
         [System.Serializable]
         public class ExcelVisualElementParams
         {
@@ -358,11 +368,9 @@ namespace UGame_Local_Editor
         [System.Serializable]
         public class ExcelToScriptableObjectSettings
         {
-            public int FieldRow = 0;
-            public int TypeRow = 1;
-            public int DataFromRow = 4;
+            public BaseRow baseRow = null;
 
-            public ExcelVisualElementParams[] excels;
+            public ExcelVisualElementParams[] excels = null;
         }
 
 
