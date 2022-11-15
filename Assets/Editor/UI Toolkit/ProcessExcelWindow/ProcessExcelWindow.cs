@@ -46,25 +46,29 @@ namespace UGame_Local_Editor
             VisualElement labelFromUXML = visualTree.Instantiate();
             root.Add(labelFromUXML);
 
-            keyValuePairs = new Dictionary<Button, ExcelVisualElementParams>();
-            impl = new ProcessExcelImpl();
+            var excelItem = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/UI Toolkit/ProcessExcelWindow/ExcelItem.uxml");
+            VisualElement ve = excelItem.Instantiate();
+            root.Q<ScrollView>().Add(ve);
 
-            FieldRow = root.Q<IntegerField>(nameof(FieldRow));
-            TypeRow = root.Q<IntegerField>(nameof(TypeRow));
-            DataFromRow = root.Q<IntegerField>(nameof(DataFromRow));
-            AddNewExcel = root.Q<Button>(nameof(AddNewExcel));
-            ProcessAll = root.Q<Button>(nameof(ProcessAll));
+            //keyValuePairs = new Dictionary<Button, ExcelVisualElementParams>();
+            //impl = new ProcessExcelImpl();
 
-            ScrollView = root.Q<ScrollView>();
+            //FieldRow = root.Q<IntegerField>(nameof(FieldRow));
+            //TypeRow = root.Q<IntegerField>(nameof(TypeRow));
+            //DataFromRow = root.Q<IntegerField>(nameof(DataFromRow));
+            //AddNewExcel = root.Q<Button>(nameof(AddNewExcel));
+            //ProcessAll = root.Q<Button>(nameof(ProcessAll));
 
-            excelVisualElement = new ExcelVisualElement(root.Q<VisualElement>(nameof(excelVisualElement)), OnClickInsertBtnCallback, OnClickDeleteBtnCallback, OnClickProcessBtnCallback);
+            //ScrollView = root.Q<ScrollView>();
 
-            excelVisualElement.SetActive(false);
+            //excelVisualElement = new ExcelVisualElement(root.Q<VisualElement>(nameof(excelVisualElement)), OnClickInsertBtnCallback, OnClickDeleteBtnCallback, OnClickProcessBtnCallback);
 
-            ProcessAll.clicked += ProcessAll_clicked;
-            AddNewExcel.clicked += AddNewExcel_clicked;
+            //excelVisualElement.SetActive(false);
 
-            OnLoad();
+            //ProcessAll.clicked += ProcessAll_clicked;
+            //AddNewExcel.clicked += AddNewExcel_clicked;
+
+            //OnLoad();
 
 
 
@@ -73,7 +77,7 @@ namespace UGame_Local_Editor
 
         private void OnDisable()
         {
-            OnSave();
+            //OnSave();
         }
 
 

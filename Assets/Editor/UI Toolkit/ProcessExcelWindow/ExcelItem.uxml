@@ -1,0 +1,36 @@
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements">
+    <ui:VisualElement style="flex-direction: row; border-bottom-color: rgb(84, 84, 84); border-bottom-width: 1px; height: 330px;">
+        <ui:VisualElement style="flex-grow: 1;">
+            <ui:TextField picking-mode="Ignore" label="脚本命名空间" value="filler text" text="UGame.Remove" name="NameSpace" style="height: 33px; justify-content: center; align-items: center;" />
+            <ui:VisualElement style="height: 23px; flex-direction: row;">
+                <ui:Label text="脚本生成路径" display-tooltip-when-elided="true" style="width: 152px;" />
+                <ui:Button text="Select" display-tooltip-when-elided="true" name="ScriptFolder" style="flex-grow: 1; -unity-text-align: middle-center;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="height: 23px; flex-direction: row;">
+                <ui:Label text="数据生成路径" display-tooltip-when-elided="true" style="width: 152px;" />
+                <ui:Button text="Select" display-tooltip-when-elided="true" name="AssetFolder" style="flex-grow: 1; -unity-text-align: middle-center;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
+                <ui:Toggle label="Use hash string" name="UseHashString" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+                <ui:Toggle label="公开属性方法" name="PublicItemsGetter" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
+                <ui:Toggle label="inspector不显示属性变量" name="HideaAssetProperties" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+                <ui:Toggle label="将颜色值压缩到整数" name="CompressColorintoInteger" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
+                <ui:Toggle label="生成获取方法" name="GenerateGetMethodIfPossoble" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+                <ui:Toggle label="字段设置为枚举" name="TreaUnknowTypesasEnum" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
+                <ui:Toggle label="允许存在多个id或key" name="IDorKeytoMuitiValues" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+                <ui:Toggle label="重写Object.ToString方法" name="GengrateToStringMethod" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-direction: row; height: 38px; top: 26px; justify-content: space-between;">
+                <ui:Button text="插入" display-tooltip-when-elided="true" name="InsertBtn" style="flex-grow: 1; font-size: 13px; -unity-font-style: bold; width: auto; height: auto;" />
+                <ui:Button text="删除" display-tooltip-when-elided="true" name="DeleteBtn" style="width: auto; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1; height: auto;" />
+                <ui:Button text="解析" display-tooltip-when-elided="true" name="ProcessBtn" style="width: auto; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1; height: auto;" />
+            </ui:VisualElement>
+        </ui:VisualElement>
+    </ui:VisualElement>
+</ui:UXML>

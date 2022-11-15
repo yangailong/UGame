@@ -1,48 +1,16 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" xsi="http://www.w3.org/2001/XMLSchema-instance" engine="UnityEngine.UIElements" editor="UnityEditor.UIElements" noNamespaceSchemaLocation="../../../UIElementsSchema/UIElements.xsd" editor-extension-mode="True">
-    <ui:VisualElement style="flex-grow: 1; -unity-font-style: bold; font-size: 13px;">
-        <ui:VisualElement style="width: auto; height: 120px; border-bottom-color: rgb(87, 87, 87); border-bottom-width: 1px; justify-content: space-between; opacity: 1; flex-direction: column; background-color: rgb(56, 56, 56); margin-top: 9px; flex-grow: 0;">
-            <uie:IntegerField label="FieldRow" value="0" name="FieldRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1; flex-shrink: 1;" />
-            <uie:IntegerField label="TypeRow" value="1" name="TypeRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; flex-grow: 1; flex-shrink: 1;" />
-            <uie:IntegerField label="DataFromRow" value="4" name="DataFromRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; flex-grow: 1; flex-shrink: 1;" />
-        </ui:VisualElement>
-        <ui:VisualElement style="height: 300px; flex-direction: row;">
-            <ui:ScrollView style="width: 600px; border-right-color: rgb(87, 87, 87); border-right-width: 1px; -unity-background-scale-mode: stretch-to-fill; rotate: 0; cursor: initial; transition-duration: 3s; transition-delay: 1s; transition-timing-function: ease-in-out-back; transition-property: color; -unity-slice-left: 0; border-left-width: 3px; flex-grow: 1; font-size: 13px; color: rgb(255, 255, 255); -unity-text-align: upper-center; -unity-background-image-tint-color: rgb(88, 88, 88);" />
-            <ui:VisualElement name="excelVisualElement" style="flex-grow: 1; flex-direction: column; height: auto; width: 600px;">
-                <ui:TextField picking-mode="Ignore" label="脚本命名空间" value="filler text" text="UGame.Remove" name="NameSpace" style="height: 33px; justify-content: center; align-items: center;" />
-                <ui:VisualElement style="height: 23px; flex-direction: row;">
-                    <ui:Label text="脚本生成路径" display-tooltip-when-elided="true" style="width: 152px;" />
-                    <ui:Button text="Select" display-tooltip-when-elided="true" name="ScriptFolder" style="flex-grow: 1; -unity-text-align: middle-center;" />
-                </ui:VisualElement>
-                <ui:VisualElement style="height: 23px; flex-direction: row;">
-                    <ui:Label text="数据生成路径" display-tooltip-when-elided="true" style="width: 152px;" />
-                    <ui:Button text="Select" display-tooltip-when-elided="true" name="AssetFolder" style="flex-grow: 1; -unity-text-align: middle-center;" />
-                </ui:VisualElement>
-                <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
-                    <ui:Toggle label="Use hash string" name="UseHashString" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
-                    <ui:Toggle label="公开属性方法" name="PublicItemsGetter" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
-                </ui:VisualElement>
-                <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
-                    <ui:Toggle label="inspector不显示属性变量" name="HideaAssetProperties" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
-                    <ui:Toggle label="将颜色值压缩到整数" name="CompressColorintoInteger" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
-                </ui:VisualElement>
-                <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
-                    <ui:Toggle label="生成获取方法" name="GenerateGetMethodIfPossoble" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
-                    <ui:Toggle label="字段设置为枚举" name="TreaUnknowTypesasEnum" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
-                </ui:VisualElement>
-                <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
-                    <ui:Toggle label="允许存在多个id或key" name="IDorKeytoMuitiValues" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
-                    <ui:Toggle label="重写Object.ToString方法" name="GengrateToStringMethod" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px;" />
-                </ui:VisualElement>
-                <ui:VisualElement style="flex-direction: row; height: 38px; top: 26px; justify-content: space-between;">
-                    <ui:Button text="插入" display-tooltip-when-elided="true" name="InsertBtn" style="flex-grow: 1; font-size: 13px; -unity-font-style: bold; width: auto;" />
-                    <ui:Button text="删除" display-tooltip-when-elided="true" name="DeleteBtn" style="width: auto; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1;" />
-                    <ui:Button text="解析" display-tooltip-when-elided="true" name="ProcessBtn" style="width: auto; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1;" />
-                </ui:VisualElement>
+    <ui:VisualElement style="flex-grow: 1; font-size: 13px; -unity-font-style: bold;">
+        <ui:VisualElement style="height: 100px; flex-direction: row; border-bottom-width: 1px; border-bottom-color: rgb(84, 84, 84);">
+            <ui:VisualElement style="flex-grow: 1;">
+                <uie:IntegerField label="TypeRow" value="1" name="TypeRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; flex-grow: 1; flex-shrink: 1;" />
+                <uie:IntegerField label="DataFromRow" value="4" name="DataFromRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; flex-grow: 1; flex-shrink: 1;" />
+                <uie:IntegerField label="FieldRow" value="0" name="FieldRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1; flex-shrink: 1;" />
+            </ui:VisualElement>
+            <ui:VisualElement style="flex-grow: 0; width: 213px; justify-content: space-around;">
+                <ui:Button text="Button" display-tooltip-when-elided="true" style="height: 33px;" />
+                <ui:Button text="Button" display-tooltip-when-elided="true" style="height: 33px;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:VisualElement style="flex-grow: 1; flex-direction: row; justify-content: space-around; align-items: stretch; height: 45px; font-size: 13px; background-color: rgb(88, 88, 88); top: auto;">
-            <ui:Button text="添加Excel" display-tooltip-when-elided="true" name="AddNewExcel" style="flex-grow: 1; border-left-width: 0; border-right-width: 1px; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; width: auto; border-left-color: rgb(101, 101, 101); border-right-color: rgb(101, 101, 101); border-top-color: rgb(101, 101, 101); border-bottom-color: rgb(101, 101, 101); font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255);" />
-            <ui:Button text="解析所有Excel" display-tooltip-when-elided="true" name="ProcessAll" style="flex-grow: 1; border-left-width: 0; border-right-width: 0; border-top-width: 0; border-bottom-width: 0; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; width: auto; border-left-color: rgb(101, 101, 101); border-right-color: rgb(101, 101, 101); border-top-color: rgb(101, 101, 101); border-bottom-color: rgb(101, 101, 101); margin-left: 0; margin-right: 0; margin-top: 0; margin-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; padding-bottom: 0; font-size: 13px; -unity-font-style: bold;" />
-        </ui:VisualElement>
+        <ui:ScrollView name="ScrollView" style="height: auto; flex-grow: 1; flex-direction: row;" />
     </ui:VisualElement>
 </ui:UXML>
