@@ -1,7 +1,13 @@
 syntax = "proto3";
 package Test;
-
-message Test{
+option java_package="common.game.protocol";
+option java_outer_classname="Test";
+message TestReq{
+    string name = 1;
+    int32 id = 2;
+    string psd = 3;
+}
+message TestRes{
     string name = 1;
     int32 id = 2;
     string psd = 3;

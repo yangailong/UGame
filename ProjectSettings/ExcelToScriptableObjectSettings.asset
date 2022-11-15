@@ -1,37 +1,8 @@
 ﻿{
-    "configs": {
-        "field_row": 0,
-        "type_row": 1,
-        "data_from_row": 4
+    "baseRow": {
+        "FieldRow": 0,
+        "TypeRow": 1,
+        "DataFromRow": 4
     },
-    "excels": [
-        {
-            "excel_name": "Excels/CfgLocalLang.xlsx",
-            "script_directory": "Assets/Scripts/Game/Runtime/Data/Normal/ScriptableObject",
-            "asset_directory": "Assets/AddressableAssets/Local/Data/ScriptableObject/Normal",
-            "name_space": "UGame_Local_In_CfgData",
-            "use_hash_string": false,
-            "hide_asset_properties": true,
-            "generate_get_method_if_possible": true,
-            "key_to_multi_values": false,
-            "use_public_items_getter": false,
-            "compress_color_into_int": true,
-            "treat_unknown_types_as_enum": false,
-            "generate_tostring_method": true
-        },
-        {
-            "excel_name": "Excels/CfgRemoteLang.xlsx",
-            "script_directory": "Assets/Scripts/Game/Runtime/Data/Normal/ScriptableObject",
-            "asset_directory": "Assets/AddressableAssets/Remote/Data/ScriptableObject/Normal",
-            "name_space": "UGame_Local_Out_CfgData",
-            "use_hash_string": false,
-            "hide_asset_properties": true,
-            "generate_get_method_if_possible": true,
-            "key_to_multi_values": false,
-            "use_public_items_getter": false,
-            "compress_color_into_int": true,
-            "treat_unknown_types_as_enum": false,
-            "generate_tostring_method": false
-        }
-    ]
+    "excels": []
 }

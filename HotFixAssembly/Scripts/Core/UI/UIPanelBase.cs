@@ -9,7 +9,7 @@ namespace UGame_Remove
         protected UIPanelBase() { }
 
 
-        public object[] Params { set; private get; } = null;
+        public virtual object[] Params { set; private get; } = null;
 
 
         public virtual void OnUIAwake()

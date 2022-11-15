@@ -28,17 +28,26 @@ namespace UGame_Local_Editor
             AssetDatabase.Refresh();
         }
 
+
+
+        [MenuItem("Tools/ILRuntime/删除所有CLR绑定")]
+        static void DeleteCLRBindins()
+        {
+            Directory.Delete("Assets/Scripts/Helper/ILRuntime/Generated", true);
+            AssetDatabase.Refresh();
+        }
+
+
         static void InitILRuntime(AppDomain domain)
         {
             //这里需要注册所有热更DLL中用到的跨域继承Adapter，否则无法正确抓取引用
-
-            RegisterCrossBindingAdaptorImpl.Instance.Register(domain);
-            RegisterCLRMethodRedirectionImpl.Instance.Register(domain);
-            RegisterDelegateConvertorImpl.Instance.Register(domain);
-            RegisterFunctionDelegateImpl.Instance.Register(domain);
-            RegisterMethodDelegateImpl.Instance.Register(domain);
-            RegisterValueTypeBinderImpl.Instance.Register(domain);
-            RegisterLitJsonImpl.Instance.Register(domain);
+            new RegisterCrossBindingAdaptorImpl().Register(domain);
+            new RegisterCLRMethodRedirectionImpl().Register(domain);
+            new RegisterDelegateConvertorImpl().Register(domain);
+            new RegisterFunctionDelegateImpl().Register(domain);
+            new RegisterMethodDelegateImpl().Register(domain);
+            new RegisterValueTypeBinderImpl().Register(domain);
+            new RegisterLitJsonImpl().Register(domain);
         }
     }
 }

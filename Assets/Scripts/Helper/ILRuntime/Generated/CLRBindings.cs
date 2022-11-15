@@ -22,6 +22,7 @@ namespace ILRuntime.Runtime.Generated
 
         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2> s_UnityEngine_Vector2_Binding_Binder = null;
         internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3> s_UnityEngine_Vector3_Binding_Binder = null;
+        internal static ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Quaternion> s_UnityEngine_Quaternion_Binding_Binder = null;
 
         /// <summary>
         /// Initialize the CLR binding, please invoke this AFTER CLR Redirection registration
@@ -95,33 +96,36 @@ namespace ILRuntime.Runtime.Generated
             System_Action_1_Single_Binding.Register(app);
             System_Action_Binding.Register(app);
             UnityEngine_WaitForSeconds_Binding.Register(app);
-            System_Text_Encoding_Binding.Register(app);
-            System_Security_Cryptography_Aes_Binding.Register(app);
-            System_Security_Cryptography_SymmetricAlgorithm_Binding.Register(app);
-            System_Security_Cryptography_ICryptoTransform_Binding.Register(app);
-            System_Convert_Binding.Register(app);
             System_Collections_Generic_Dictionary_2_Enum_ILTypeInstance_Binding.Register(app);
             System_Object_Binding.Register(app);
-            UnityEngine_Networking_UnityWebRequest_Binding.Register(app);
-            System_Collections_Generic_Dictionary_2_String_String_Binding_Enumerator_Binding.Register(app);
-            System_Collections_Generic_KeyValuePair_2_String_String_Binding.Register(app);
-            UnityEngine_Networking_DownloadHandler_Binding.Register(app);
-            UnityEngine_Networking_UploadHandlerRaw_Binding.Register(app);
             System_Threading_Interlocked_Binding.Register(app);
             WebSocket4Net_WebSocket_Binding.Register(app);
+            System_Exception_Binding.Register(app);
             UnityEngine_JsonUtility_Binding.Register(app);
             System_EventHandler_Binding.Register(app);
             System_EventHandler_1_ErrorEventArgs_Binding.Register(app);
             System_EventHandler_1_MessageReceivedEventArgs_Binding.Register(app);
             System_EventHandler_1_DataReceivedEventArgs_Binding.Register(app);
             WebSocket4Net_DataReceivedEventArgs_Binding.Register(app);
-            System_MissingMemberException_Binding.Register(app);
             System_IO_MemoryStream_Binding.Register(app);
+            System_IO_BinaryReader_Binding.Register(app);
             System_IO_Stream_Binding.Register(app);
+            System_MissingMemberException_Binding.Register(app);
+            System_IO_BinaryWriter_Binding.Register(app);
             Google_Protobuf_MessageExtensions_Binding.Register(app);
+            UnityEngine_Networking_UnityWebRequest_Binding.Register(app);
+            System_Collections_Generic_Dictionary_2_String_String_Binding_Enumerator_Binding.Register(app);
+            System_Collections_Generic_KeyValuePair_2_String_String_Binding.Register(app);
+            UnityEngine_Networking_DownloadHandler_Binding.Register(app);
+            System_Text_Encoding_Binding.Register(app);
+            UnityEngine_Networking_UploadHandlerRaw_Binding.Register(app);
+            System_Action_2_Int32_IMessageAdapt_Binding_Adaptor_Binding.Register(app);
+            System_Activator_Binding.Register(app);
             UnityEngine_Pool_ObjectPool_1_Component_Binding.Register(app);
             UnityEngine_PlayerPrefs_Binding.Register(app);
-            System_Exception_Binding.Register(app);
+            UGame_Local_CryptoManager_Binding.Register(app);
+            UGame_Local_UGame_Binding.Register(app);
+            UGame_Local_CfgUGame_Binding.Register(app);
             UnityEngine_AddressableAssets_Addressables_Binding.Register(app);
             UnityEngine_ResourceManagement_AsyncOperations_AsyncOperationHandle_1_TextAsset_Binding.Register(app);
             System_Action_1_TextAsset_Binding.Register(app);
@@ -143,6 +147,7 @@ namespace ILRuntime.Runtime.Generated
             UnityEngine_Screen_Binding.Register(app);
             UnityEngine_Vector2_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
+            System_Reflection_MethodBase_Binding.Register(app);
             UnityEngine_Events_UnityEventBase_Binding.Register(app);
             UGame_Local_MountObject_Binding.Register(app);
 
@@ -151,6 +156,8 @@ namespace ILRuntime.Runtime.Generated
             s_UnityEngine_Vector2_Binding_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector2>;
             __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Vector3));
             s_UnityEngine_Vector3_Binding_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Vector3>;
+            __clrType = (ILRuntime.CLR.TypeSystem.CLRType)app.GetType (typeof(UnityEngine.Quaternion));
+            s_UnityEngine_Quaternion_Binding_Binder = __clrType.ValueTypeBinder as ILRuntime.Runtime.Enviorment.ValueTypeBinder<UnityEngine.Quaternion>;
         }
 
         /// <summary>
@@ -160,6 +167,7 @@ namespace ILRuntime.Runtime.Generated
         {
             s_UnityEngine_Vector2_Binding_Binder = null;
             s_UnityEngine_Vector3_Binding_Binder = null;
+            s_UnityEngine_Quaternion_Binding_Binder = null;
         }
     }
 }

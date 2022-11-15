@@ -1,14 +1,12 @@
 ﻿using Google.Protobuf;
 using System;
-using System.IO;
-using UnityEngine;
 
 namespace UGame_Remove
 {
 
     public interface IWebSocketEvent
     {
-        void Dispatch(byte[] receiveBuffer, int startPos);
+        void Dispatch(byte[] receiveBuffer);
     }
 
 
@@ -26,17 +24,11 @@ namespace UGame_Remove
         }
 
 
-        public void Dispatch(byte[] receiveBuffer, int startPos)
+        public void Dispatch(byte[] receiveBuffer)
         {
-            using (MemoryStream ms = new MemoryStream())
-            {
-                ms.Write(receiveBuffer, startPos, receiveBuffer.Length - startPos);
-                ms.Seek(0, SeekOrigin.Begin);
-                MessageParser<T> parser = new MessageParser<T>(() => new T());
-                var msg = parser.ParseFrom(ms);
-                callback?.Invoke(id, msg);
-            }
-
+            MessageParser<T> parser = new MessageParser<T>(() => new T());
+            var msg = parser.ParseFrom(receiveBuffer);
+            callback?.Invoke(id, msg);
         }
 
     }

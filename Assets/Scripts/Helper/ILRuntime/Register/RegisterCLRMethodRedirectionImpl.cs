@@ -1,43 +1,28 @@
 ﻿using ILRuntime.CLR.Method;
 using ILRuntime.CLR.TypeSystem;
-using ILRuntime.CLR.Utils;
 using ILRuntime.Runtime.Intepreter;
 using ILRuntime.Runtime.Stack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 using UnityEngine;
 using AppDomain = ILRuntime.Runtime.Enviorment.AppDomain;
 
 namespace UGame_Local
 {
-    public class RegisterCLRMethodRedirectionImpl : Singleton<RegisterCLRMethodRedirectionImpl>, ILRuntimeRegister
+    public class RegisterCLRMethodRedirectionImpl:ILRuntimeRegister
     {
         public unsafe void Register(AppDomain appdomain)
         {
-            Type[] args;
-            BindingFlags flag = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static |
-                                BindingFlags.DeclaredOnly;
-
             //注册Add Component
             Type gameObjectType = typeof(GameObject);
             Type componentType = typeof(Component);
             var addComponentMethod = gameObjectType.GetMethods().ToList().Find(m => m.Name == "AddComponent" && m.GetGenericArguments().Length == 1);
             appdomain.RegisterCLRMethodRedirection(addComponentMethod, AddComponent);
 
-            //var addComponentMethod2 = gameObjectType.GetMethods().ToList().Find(i => i.Name == "AddComponent" && i.GetGenericArguments().Length != 1);
-            //appDomain.RegisterCLRMethodRedirection(addComponentMethod2, AddComponent2);
-
-
             //注册get，有2种get component，一个是GameObject调用，一个是脚本调用
             var getComponentMethod = gameObjectType.GetMethods().ToList().Find(i => i.Name == "GetComponent" && i.GetGenericArguments().Length == 1);
             appdomain.RegisterCLRMethodRedirection(getComponentMethod, GetComponent);
-
-            //var getComponentMethod2 = componentType.GetMethods().ToList().Find(i => i.Name == "GetComponent" && i.GetGenericArguments().Length == 1);
-            //appDomain.RegisterCLRMethodRedirection(getComponentMethod2, GetComponent);
-
-
         }
 
 

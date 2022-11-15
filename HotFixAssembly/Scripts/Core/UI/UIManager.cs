@@ -7,6 +7,7 @@ namespace UGame_Remove
 {
     public class UIManager : MonoBehaviour
     {
+
         private static Dictionary<string, UIPanelBase> UIPanelDic = null;
 
         private static Dictionary<UIPanelLayer, RectTransform> layers = null;
@@ -22,14 +23,10 @@ namespace UGame_Remove
         private static Camera m_Camera = null;
 
 
-
         /// <summary>
-        /// 异步初始化是否完成
-        /// true：完成
-        /// false：未完成
+        /// 异步初始化是否完成  true：完成  false：未完成
         /// </summary>
         public static bool AsyncInitComplete { get; set; } = false;
-
 
         public static void AsyncInit()
         {
@@ -68,7 +65,6 @@ namespace UGame_Remove
             });
         }
 
-
         public static UIManager UIRoot => m_UIRoot;
 
         public static Canvas Canvas => m_Canvas;
@@ -79,20 +75,34 @@ namespace UGame_Remove
         public static EventSystem EventSystem => m_EventSystem;
 
 
+        /// <summary>
+        /// 获取指定得UI层级
+        /// </summary>
+        /// <param name="layer">要获取得层</param>
+        /// <returns></returns>
         public static RectTransform Getlayer(UIPanelLayer layer) => layers[layer];
 
 
+        /// <summary>
+        /// 打开窗口
+        /// </summary>
+        /// <typeparam name="T">要打开的窗口</typeparam>
+        /// <param name="callback">打开窗口后回调</param>
+        /// <param name="param">打开窗口所需要参数</param>
         public static void Open<T>(UICallback callback = null, params object[] param) where T : UIPanelBase
         {
             var panelName = typeof(T).Name;
 
             Action<UIPanelBase> openPanel = panel =>
             {
+
                 panel.Params = param;
 
                 panel.OnUIEnable();
 
                 UIManager.m_AnimManager.StartEnterAnim(panel, callback);
+
+                panel.transform.SetAsLastSibling();
             };
 
             if (UIPanelDic.ContainsKey(panelName))
@@ -101,7 +111,7 @@ namespace UGame_Remove
             }
             else
             {
-                UIManager.Creat<T>(panel =>
+                UIManager.Clone<T>(panel =>
                 {
 
                     UIPanelDic.Add(typeof(T).Name, panel);
@@ -117,6 +127,13 @@ namespace UGame_Remove
         }
 
 
+        /// <summary>
+        /// 关闭窗口
+        /// </summary>
+        /// <typeparam name="T">要关闭的窗口</typeparam>
+        /// <param name="isPlayAnim">是否播放关闭动画</param>
+        /// <param name="callback">关闭窗口后的回调</param>
+        /// <param name="param">关闭窗口需要的参数</param>
         public static void Close<T>(bool isPlayAnim = true, UICallback callback = null, params object[] param) where T : UIPanelBase
         {
             if (!UIPanelDic.ContainsKey(typeof(T).Name))
@@ -130,6 +147,13 @@ namespace UGame_Remove
         }
 
 
+        /// <summary>
+        /// 关闭窗口
+        /// </summary>
+        /// <param name="panel">要关闭的窗口</param>
+        /// <param name="isPlayAnim">是否播放关闭动画</param>
+        /// <param name="callback">关闭窗口后的回调</param>
+        /// <param name="param">关闭窗口需要的参数</param>
         public static void Close(UIPanelBase panel, bool isPlayAnim = true, UICallback callback = null, params object[] param)
         {
             if (isPlayAnim)
@@ -153,6 +177,10 @@ namespace UGame_Remove
         }
 
 
+        /// <summary>
+        /// 关闭所有窗口
+        /// </summary>
+        /// <param name="isPlayerAnim">是否播放关闭动画</param>
         public static void CloseAll(bool isPlayerAnim = false)
         {
             foreach (var item in UIPanelDic.Values)
@@ -162,7 +190,64 @@ namespace UGame_Remove
         }
 
 
-        private static void Creat<T>(Action<UIPanelBase> callback) where T : UIPanelBase
+        /// <summary>
+        /// 删除窗口
+        /// </summary>
+        /// <typeparam name="T">要删除的窗口</typeparam>
+        public static void Destroy<T>() where T : UIPanelBase
+        {
+            if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
+            {
+                panel.OnUIDestroy();
+                UIPanelDic.Remove(typeof(T).Name);
+            }
+        }
+
+
+        /// <summary>
+        /// 删除窗口
+        /// </summary>
+        /// <param name="panel">要删除的窗口</param>
+        public static void Destroy(UIPanelBase panel)
+        {
+            if (UIPanelDic.ContainsKey(panel.name))
+            {
+                panel.OnUIDestroy();
+                UIPanelDic.Remove(panel.name);
+            }
+        }
+
+
+        /// <summary>
+        /// 删除所有窗口
+        /// </summary>
+        public static void DestroyAll()
+        {
+            var arr = UIPanelDic.Values.ToArray();
+
+            for (int i = 0; i < arr.Length; i++)
+            {
+                Destroy(arr[i]);
+            }
+        }
+
+
+        /// <summary>
+        /// 获取已被创建的窗口
+        /// </summary>
+        /// <typeparam name="T">要获取的窗口</typeparam>
+        /// <returns></returns>
+        public static T Get<T>() where T : UIPanelBase
+        {
+            if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
+            {
+                return panel as T;
+            }
+            return null;
+        }
+
+
+        private static void Clone<T>(Action<UIPanelBase> callback) where T : UIPanelBase
         {
             ResourceManager.LoadAssetAsync<GameObject>(typeof(T).Name, o =>
             {
@@ -190,38 +275,6 @@ namespace UGame_Remove
                 callback.Invoke(newPanel);
             });
         }
-
-
-        public static void Destroy<T>() where T : UIPanelBase
-        {
-            if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
-            {
-                panel.OnUIDestroy();
-                UIPanelDic.Remove(typeof(T).Name);
-            }
-        }
-
-
-        public static T Get<T>() where T : UIPanelBase
-        {
-            if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
-            {
-                return panel as T;
-            }
-            return null;
-        }
-
-
-        public static void DestroyAll()
-        {
-            var arr = UIPanelDic.Values.ToArray();
-
-            for (int i = 0; i < arr.Length; i++)
-            {
-                Destroy(arr[i]);
-            }
-        }
-
 
     }
 }

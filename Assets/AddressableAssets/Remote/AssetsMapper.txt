@@ -1,8 +1,9 @@
 Cyberworld	AudioClip/Cyberworld.mp3
 CfgRemoteLang	Data/ScriptableObject/Normal/CfgRemoteLang.asset
-UIRoot	Prefabs/UIRoot.prefab
+DemoPanel	Prefabs/DemoPanel/DemoPanel.prefab
+UIRoot	Prefabs/UIRoot/UIRoot.prefab
 Login	Scenes/Login.unity
 Main	Scenes/Main.unity
-DemoPanel	UI/DemoPanel/DemoPanel.prefab
+bg	UI/bg.png
 UI_demo	UI/UI_demo.jpg
 AssetsMapper	AssetsMapper.txt

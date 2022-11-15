@@ -6,18 +6,16 @@ using UnityEngine;
 /// </summary>
 public class CopySelObjPath
 {
-
-    [MenuItem("Tools/CopyFllPath")]
-    [MenuItem("GameObject/CopyFllPath")]
+    [MenuItem("GameObject/Copy FllPath", false, 0)]
     public static void CopyGoFllPath()
     {
         TextEditor textEditor = new TextEditor();
-        textEditor.text = $"transform.Find(\"{GetPath(Selection.activeTransform)}\").GetComponent<>();";
+        textEditor.text = $"transform.Find(\"{GetPath(Selection.activeTransform)}\").GetComponent<Component>();";
         textEditor.SelectAll();
         textEditor.Copy();
     }
 
-  
+
 
     public static string GetPath(Transform select)
     {

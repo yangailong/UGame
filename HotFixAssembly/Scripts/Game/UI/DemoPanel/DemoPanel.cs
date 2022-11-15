@@ -9,10 +9,12 @@ namespace UGame_Remove
     public class DemoPanel : UIPanelBase, IUIAnimation
     {
 
+        public override object[] Params { set => base.Params = value; }
+
+
         public override void OnUIAwake()
         {
             Debug.LogError($"OnUIAwake");
-
         }
 
 
@@ -28,6 +30,7 @@ namespace UGame_Remove
             transform.GetMountChind<Button>("m_Mask").onClick.AddListener(OnClickMaskBtn);
             transform.GetMountChind<Button>("m_CloseBtn").onClick.AddListener(OnClickMaskBtn);
         }
+
 
 
         public override void OnUIDisable()
@@ -56,10 +59,19 @@ namespace UGame_Remove
         }
 
 
+
+
         void OnClickMaskBtn()
         {
             Debug.LogError($"点击.....");
+
+            NetProxy.Instance.C2SMessage();
+
+
         }
+
+
+
 
 
     }
