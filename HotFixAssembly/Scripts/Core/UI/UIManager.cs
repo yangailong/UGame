@@ -7,7 +7,7 @@ namespace UGame_Remove
 {
     public class UIManager : MonoBehaviour
     {
-        
+
         private static Dictionary<string, UIPanelBase> UIPanelDic = null;
 
         private static Dictionary<UIPanelLayer, RectTransform> layers = null;
@@ -27,7 +27,7 @@ namespace UGame_Remove
         /// 异步初始化是否完成  true：完成  false：未完成
         /// </summary>
         public static bool AsyncInitComplete { get; set; } = false;
-     
+
         public static void AsyncInit()
         {
             UIPanelDic = new Dictionary<string, UIPanelBase>();
@@ -82,7 +82,7 @@ namespace UGame_Remove
         /// <returns></returns>
         public static RectTransform Getlayer(UIPanelLayer layer) => layers[layer];
 
-        
+
         /// <summary>
         /// 打开窗口
         /// </summary>
@@ -95,11 +95,14 @@ namespace UGame_Remove
 
             Action<UIPanelBase> openPanel = panel =>
             {
+
                 panel.Params = param;
 
                 panel.OnUIEnable();
 
                 UIManager.m_AnimManager.StartEnterAnim(panel, callback);
+
+                panel.transform.SetAsLastSibling();
             };
 
             if (UIPanelDic.ContainsKey(panelName))
@@ -197,6 +200,20 @@ namespace UGame_Remove
             {
                 panel.OnUIDestroy();
                 UIPanelDic.Remove(typeof(T).Name);
+            }
+        }
+
+
+        /// <summary>
+        /// 删除窗口
+        /// </summary>
+        /// <param name="panel">要删除的窗口</param>
+        public static void Destroy(UIPanelBase panel)
+        {
+            if (UIPanelDic.ContainsKey(panel.name))
+            {
+                panel.OnUIDestroy();
+                UIPanelDic.Remove(panel.name);
             }
         }
 
