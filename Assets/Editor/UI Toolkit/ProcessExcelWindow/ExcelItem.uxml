@@ -1,14 +1,14 @@
-<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="False">
-    <ui:VisualElement style="flex-direction: row; border-bottom-color: rgb(84, 84, 84); border-bottom-width: 1px; height: 330px;">
-        <ui:VisualElement style="flex-grow: 1;">
+<ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
+    <ui:VisualElement style="flex-direction: row; border-bottom-color: rgb(84, 84, 84); border-bottom-width: 1px; height: 300px; font-size: 13px; background-color: rgb(17, 34, 17); background-image: none; -unity-background-image-tint-color: rgb(255, 255, 255); top: auto;">
+        <ui:VisualElement style="flex-grow: 1; -unity-background-image-tint-color: rgb(0, 0, 0);">
             <ui:TextField picking-mode="Ignore" label="脚本命名空间" value="filler text" text="UGame.Remove" name="NameSpace" style="height: 33px; justify-content: center; align-items: center;" />
             <ui:VisualElement style="height: 23px; flex-direction: row;">
                 <ui:Label text="脚本生成路径" display-tooltip-when-elided="true" style="width: 152px;" />
-                <ui:Button text="Select" display-tooltip-when-elided="true" name="ScriptFolder" style="flex-grow: 1; -unity-text-align: middle-center; transition-duration: 0.3s;" />
+                <ui:Button text="Select" display-tooltip-when-elided="true" name="ScriptFolder" style="flex-grow: 1; -unity-text-align: middle-center; transition-duration: 0.3s; background-color: rgb(55, 55, 55);" />
             </ui:VisualElement>
             <ui:VisualElement style="height: 23px; flex-direction: row;">
                 <ui:Label text="数据生成路径" display-tooltip-when-elided="true" style="width: 152px;" />
-                <ui:Button text="Select" display-tooltip-when-elided="true" name="AssetFolder" style="flex-grow: 1; -unity-text-align: middle-center; transition-duration: 0.3s;" />
+                <ui:Button text="Select" display-tooltip-when-elided="true" name="AssetFolder" style="flex-grow: 1; -unity-text-align: middle-center; transition-duration: 0.3s; background-color: rgb(55, 55, 55);" />
             </ui:VisualElement>
             <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
                 <ui:Toggle label="Use hash string" name="UseHashString" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px; transition-duration: 0.3s;" />
@@ -16,6 +16,7 @@
             </ui:VisualElement>
             <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
                 <ui:Toggle label="inspector不显示属性变量" name="HideaAssetProperties" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px; transition-duration: 0.3s;" />
+                <ui:Label text="CfgRemoveLanag" display-tooltip-when-elided="true" style="max-width: none; width: 300px; -unity-text-align: upper-center; -unity-font-style: bold-and-italic; font-size: 22px; color: rgb(210, 210, 210); height: auto; justify-content: flex-start; align-items: center;" />
                 <ui:Toggle label="将颜色值压缩到整数" name="CompressColorintoInteger" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px; transition-duration: 0.3s;" />
             </ui:VisualElement>
             <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
@@ -27,9 +28,9 @@
                 <ui:Toggle label="重写Object.ToString方法" name="GengrateToStringMethod" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px; transition-duration: 0.3s;" />
             </ui:VisualElement>
             <ui:VisualElement style="flex-direction: row; height: 38px; top: 26px; justify-content: space-between;">
-                <ui:Button text="插入" display-tooltip-when-elided="true" name="InsertBtn" style="flex-grow: 1; font-size: 13px; -unity-font-style: bold; width: auto; height: auto; transition-duration: 0.3s;" />
-                <ui:Button text="删除" display-tooltip-when-elided="true" name="DeleteBtn" style="width: auto; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1; height: auto; transition-duration: 0.3s;" />
-                <ui:Button text="解析" display-tooltip-when-elided="true" name="ProcessBtn" style="width: auto; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1; height: auto; transition-duration: 0.3s;" />
+                <ui:Button text="插入" display-tooltip-when-elided="true" name="InsertBtn" style="flex-grow: 1; font-size: 13px; -unity-font-style: bold; width: auto; height: auto; transition-duration: 0.3s; background-color: rgb(55, 55, 55); -unity-text-outline-width: 0; letter-spacing: 99px;" />
+                <ui:Button text="删除" display-tooltip-when-elided="true" name="DeleteBtn" style="width: auto; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1; height: auto; transition-duration: 0.3s; background-color: rgb(55, 55, 55); letter-spacing: 99px;" />
+                <ui:Button text="解析" display-tooltip-when-elided="true" name="ProcessBtn" style="width: auto; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1; height: auto; transition-duration: 0.3s; background-color: rgb(55, 55, 55); letter-spacing: 99px;" />
             </ui:VisualElement>
         </ui:VisualElement>
     </ui:VisualElement>
