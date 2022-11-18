@@ -2,7 +2,23 @@
     "baseRow": {
         "FieldRow": 0,
         "TypeRow": 1,
-        "DataFromRow": 3
+        "DataFromRow": 2
     },
-    "excels": []
+    "excels": [
+        {
+            "ExcelName": "CfgRemoteLang",
+            "ExcelPath": "Excels/CfgRemoteLang.xlsx",
+            "NameSpace": "UGame.Remove",
+            "ScriptFolder": "Select",
+            "AssetFolder": "Select",
+            "UseHashString": false,
+            "PublicItemsGetter": false,
+            "HideaAssetProperties": false,
+            "CompressColorintoInteger": false,
+            "GenerateGetMethodIfPossoble": true,
+            "TreaUnknowTypesasEnum": false,
+            "IDorKeytoMultiValues": false,
+            "GengrateToStringMethod": true
+        }
+    ]
 }

@@ -1,5 +1,5 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
-    <ui:VisualElement style="flex-direction: row; border-bottom-color: rgb(84, 84, 84); border-bottom-width: 1px; height: 300px; font-size: 13px; background-color: rgb(17, 34, 17); background-image: none; -unity-background-image-tint-color: rgb(255, 255, 255); top: auto;">
+    <ui:VisualElement style="flex-direction: row; border-bottom-color: rgb(159, 159, 159); border-bottom-width: 1px; height: 300px; font-size: 13px; background-color: rgb(36, 36, 36); background-image: none; -unity-background-image-tint-color: rgb(255, 255, 255); top: auto; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-left-color: rgb(159, 159, 159); border-right-color: rgb(159, 159, 159); border-top-color: rgb(159, 159, 159);">
         <ui:VisualElement style="flex-grow: 1; -unity-background-image-tint-color: rgb(0, 0, 0);">
             <ui:TextField picking-mode="Ignore" label="脚本命名空间" value="filler text" text="UGame.Remove" name="NameSpace" style="height: 33px; justify-content: center; align-items: center;" />
             <ui:VisualElement style="height: 23px; flex-direction: row;">
@@ -16,7 +16,7 @@
             </ui:VisualElement>
             <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
                 <ui:Toggle label="inspector不显示属性变量" name="HideaAssetProperties" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px; transition-duration: 0.3s;" />
-                <ui:Label text="CfgRemoveLanag" display-tooltip-when-elided="true" style="max-width: none; width: 300px; -unity-text-align: upper-center; -unity-font-style: bold-and-italic; font-size: 22px; color: rgb(210, 210, 210); height: auto; justify-content: flex-start; align-items: center;" />
+                <ui:Label display-tooltip-when-elided="true" name="ExcelName" style="max-width: none; width: 300px; -unity-text-align: upper-center; -unity-font-style: bold-and-italic; font-size: 22px; color: rgb(210, 210, 210); height: auto; justify-content: flex-start; align-items: center;" />
                 <ui:Toggle label="将颜色值压缩到整数" name="CompressColorintoInteger" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px; transition-duration: 0.3s;" />
             </ui:VisualElement>
             <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">

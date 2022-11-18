@@ -35,6 +35,7 @@ namespace UGame_Local_Editor
 
 
 
+
         public void CreateGUI()
         {
             // Each editor window contains a root VisualElement object
@@ -85,13 +86,7 @@ namespace UGame_Local_Editor
 
                 foreach (var item in cache.excels)
                 {
-                    var excelItem = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/UI Toolkit/ProcessExcelWindow/ExcelItem.uxml");
-                    VisualElement excelVE = excelItem.Instantiate();
-
-                    ScrollView.Add(excelVE);
-
-                   
-                    ExcelVisualElement element = new ExcelVisualElement(excelVE);
+                    ExcelVisualElement element = new ExcelVisualElement(ScrollView);
                     element.SetData(item);
                     excel.Add(element, element.Params);
                 }
@@ -111,9 +106,9 @@ namespace UGame_Local_Editor
             cache.baseRow.FieldRow = FieldRow.value;
             cache.baseRow.TypeRow = TypeRow.value;
             cache.baseRow.DataFromRow = DataFromRow.value;
-            
+
             cache.excels = excel.Values.ToArray();
-           
+
             File.WriteAllText(SETTINGS_PATH, JsonUtility.ToJson(cache, true), Encoding.UTF8);
         }
 
@@ -126,16 +121,24 @@ namespace UGame_Local_Editor
         {
             Debug.Log($"Ìí¼Óexcel");
 
-            var excelItem = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/UI Toolkit/ProcessExcelWindow/ExcelItem.uxml");
-            VisualElement excelVE = excelItem.Instantiate();
+            string path = EditorUtility.OpenFilePanel("Ñ¡ÔñExce", ".", "xlsx");
+            if (!string.IsNullOrEmpty(path))
+            {
 
-            rootVisualElement.Q<ScrollView>().Add(excelVE);
+                string projPath = Application.dataPath;
+                projPath = projPath.Substring(0, projPath.Length - 6);
+                if (path.StartsWith(path))
+                {
+                    string name = Path.GetFileNameWithoutExtension(path);
+                    string excelPath = path.Substring(projPath.Length, path.Length - projPath.Length);
+                 
+                    ExcelVisualElement element = new ExcelVisualElement(ScrollView);
+                    element.SetData(new ExcelVisualElementParams() { ExcelName = name, ExcelPath = excelPath });
+                    excel.Add(element, element.Params);
+                }
 
-            ExcelVisualElement element = new ExcelVisualElement(excelVE);
-            element.SetData(new ExcelVisualElementParams());
-            excel.Add(element, element.Params);
 
-
+            }
         }
 
 
@@ -150,31 +153,41 @@ namespace UGame_Local_Editor
 
         public class ExcelVisualElement
         {
-            public VisualElement root;
+            public VisualElement parent = null;
+            public VisualElement self = null;
 
             public TextField NameSpace = null;
+            private Label ExcelName = null;
 
             public Toggle UseHashString = null, PublicItemsGetter = null, HideaAssetProperties = null, CompressColorintoInteger = null, GenerateGetMethodIfPossoble = null, TreaUnknowTypesasEnum = null, IDorKeytoMuitiValues = null, GengrateToStringMethod = null;
 
             public Button ScriptFolder = null, AssetFolder = null, InsertBtn = null, DeleteBtn = null, ProcessBtn = null;
 
-            public ExcelVisualElement(VisualElement root)
+            public ExcelVisualElement(VisualElement parent)
             {
-                this.root = root;
-                this.NameSpace = root.Q<TextField>(nameof(NameSpace));
-                this.ScriptFolder = root.Q<Button>(nameof(ScriptFolder));
-                this.AssetFolder = root.Q<Button>(nameof(AssetFolder));
-                this.UseHashString = root.Q<Toggle>(nameof(UseHashString));
-                this.PublicItemsGetter = root.Q<Toggle>(nameof(PublicItemsGetter));
-                this.HideaAssetProperties = root.Q<Toggle>(nameof(HideaAssetProperties));
-                this.CompressColorintoInteger = root.Q<Toggle>(nameof(CompressColorintoInteger));
-                this.GenerateGetMethodIfPossoble = root.Q<Toggle>(nameof(GenerateGetMethodIfPossoble));
-                this.TreaUnknowTypesasEnum = root.Q<Toggle>(nameof(TreaUnknowTypesasEnum));
-                this.IDorKeytoMuitiValues = root.Q<Toggle>(nameof(IDorKeytoMuitiValues));
-                this.GengrateToStringMethod = root.Q<Toggle>(nameof(GengrateToStringMethod));
-                this.InsertBtn = root.Q<Button>(nameof(InsertBtn));
-                this.DeleteBtn = root.Q<Button>(nameof(DeleteBtn));
-                this.ProcessBtn = root.Q<Button>(nameof(ProcessBtn));
+                this.parent = parent;
+
+                var item = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/UI Toolkit/ProcessExcelWindow/ExcelItem.uxml");
+                VisualElement cell = item.Instantiate();
+                
+                parent.Add(cell);
+
+                this.self = cell;
+                this.NameSpace = self.Q<TextField>(nameof(NameSpace));
+                this.ScriptFolder = self.Q<Button>(nameof(ScriptFolder));
+                this.AssetFolder = self.Q<Button>(nameof(AssetFolder));
+                this.UseHashString = self.Q<Toggle>(nameof(UseHashString));
+                this.PublicItemsGetter = self.Q<Toggle>(nameof(PublicItemsGetter));
+                this.HideaAssetProperties = self.Q<Toggle>(nameof(HideaAssetProperties));
+                this.CompressColorintoInteger = self.Q<Toggle>(nameof(CompressColorintoInteger));
+                this.GenerateGetMethodIfPossoble = self.Q<Toggle>(nameof(GenerateGetMethodIfPossoble));
+                this.TreaUnknowTypesasEnum = self.Q<Toggle>(nameof(TreaUnknowTypesasEnum));
+                this.IDorKeytoMuitiValues = self.Q<Toggle>(nameof(IDorKeytoMuitiValues));
+                this.GengrateToStringMethod = self.Q<Toggle>(nameof(GengrateToStringMethod));
+                this.InsertBtn = self.Q<Button>(nameof(InsertBtn));
+                this.DeleteBtn = self.Q<Button>(nameof(DeleteBtn));
+                this.ProcessBtn = self.Q<Button>(nameof(ProcessBtn));
+                this.ExcelName = self.Q<Label>(nameof(ExcelName));
 
 
                 UseHashString.RegisterCallback<ChangeEvent<bool>>(UseHashStringRegisterCallback);
@@ -204,8 +217,8 @@ namespace UGame_Local_Editor
             /// <summary>É¾³ýExcel</summary>
             private void DeleteBtn_clicked()
             {
-                root.parent.Remove(root); 
-                root = null;
+                parent.Remove(self);
+                self = null;
                 Params = null;
 
                 excel.Remove(this);
@@ -321,6 +334,7 @@ namespace UGame_Local_Editor
                 this.TreaUnknowTypesasEnum.value = elementParams.TreaUnknowTypesasEnum;
                 this.IDorKeytoMuitiValues.value = elementParams.IDorKeytoMultiValues;
                 this.GengrateToStringMethod.value = elementParams.GengrateToStringMethod;
+                this.ExcelName.text = elementParams.ExcelName;
             }
 
         }
@@ -350,7 +364,7 @@ namespace UGame_Local_Editor
         [System.Serializable]
         public class ExcelVisualElementParams
         {
-            public string ExcelPath = "", NameSpace = "UGame.Remove", ScriptFolder = "Select", AssetFolder = "Select";
+            public string ExcelName = string.Empty, ExcelPath = string.Empty, NameSpace = "UGame.Remove", ScriptFolder = "Select", AssetFolder = "Select";
 
 
             public bool UseHashString = false;
