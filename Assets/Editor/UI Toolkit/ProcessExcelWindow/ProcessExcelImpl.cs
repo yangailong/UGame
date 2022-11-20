@@ -678,7 +678,7 @@ namespace UGame_Local_Editor
                     assetPath = string.Concat(excel.AssetFolder, "/", className, ".asset");
                 }
 
-                assetPath = $"Assets/SO/{className}.asset";
+                assetPath = $"Assets/Data/{className}.asset";
 
                 ScriptableObject obj = AssetDatabase.LoadAssetAtPath(assetPath, typeof(ScriptableObject)) as ScriptableObject;
                 bool isAlreadyExists = true;

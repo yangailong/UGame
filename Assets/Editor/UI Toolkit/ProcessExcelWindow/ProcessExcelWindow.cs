@@ -23,7 +23,7 @@ namespace UGame_Local_Editor
         public const string SETTINGS_PATH = "ProjectSettings/ExcelToScriptableObjectSettings.asset";
 
 
-        private static Dictionary<ExcelVisualElement, ExcelVisualElementParams> excel = null;
+        private Dictionary<ExcelVisualElement, ExcelVisualElementParams> excel = null;
 
         private ProcessExcelImpl impl = null;
 
@@ -32,8 +32,6 @@ namespace UGame_Local_Editor
         private ScrollView ScrollView = null;
 
         private Button AddNewExcel = null, ProcessAll = null;
-
-
 
 
         public void CreateGUI()
@@ -46,7 +44,7 @@ namespace UGame_Local_Editor
             VisualElement labelFromUXML = visualTree.Instantiate();
             root.Add(labelFromUXML);
 
-
+            impl = new ProcessExcelImpl();
             excel = new Dictionary<ExcelVisualElement, ExcelVisualElementParams>();
 
             FieldRow = root.Q<IntegerField>(nameof(FieldRow));
@@ -69,6 +67,9 @@ namespace UGame_Local_Editor
         }
 
 
+
+
+
         /// <summary>
         /// 打开面板读取缓存设置
         /// </summary>
@@ -86,7 +87,7 @@ namespace UGame_Local_Editor
 
                 foreach (var item in cache.excels)
                 {
-                    ExcelVisualElement element = new ExcelVisualElement(ScrollView);
+                    ExcelVisualElement element = new ExcelVisualElement(ScrollView, InsertBtn_clicked, DeleteBtn_clicked, ProcessBtn_clicked);
                     element.SetData(item);
                     excel.Add(element, element.Params);
                 }
@@ -113,7 +114,6 @@ namespace UGame_Local_Editor
         }
 
 
-
         /// <summary>
         /// 添加Excel
         /// </summary>
@@ -131,9 +131,9 @@ namespace UGame_Local_Editor
                 {
                     string name = Path.GetFileNameWithoutExtension(path);
                     string excelPath = path.Substring(projPath.Length, path.Length - projPath.Length);
-                 
-                    ExcelVisualElement element = new ExcelVisualElement(ScrollView);
-                    element.SetData(new ExcelVisualElementParams() { ExcelName = name, ExcelPath = excelPath });
+
+                    ExcelVisualElement element = new ExcelVisualElement(ScrollView, InsertBtn_clicked, DeleteBtn_clicked, ProcessBtn_clicked);
+                    element.SetData(new ExcelVisualElementParams() { ExcelName = name, ExcelPath = path });
                     excel.Add(element, element.Params);
                 }
 
@@ -151,6 +151,91 @@ namespace UGame_Local_Editor
         }
 
 
+        /// <summary>
+        /// 插入
+        /// </summary>
+        /// <param name="excelVisual"></param>
+        private void InsertBtn_clicked(ExcelVisualElement excelVisual)
+        {
+
+        }
+
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="excelVisual"></param>
+        private void DeleteBtn_clicked(ExcelVisualElement excelVisual)
+        {
+            ScrollView.Remove(excelVisual.self);
+            excel.Remove(excelVisual);
+            excelVisual = null;
+        }
+
+
+        /// <summary>
+        /// 解析
+        /// </summary>
+        /// <param name="excelVisual"></param>
+        private void ProcessBtn_clicked(ExcelVisualElement excelVisual)
+        {
+
+            if (!Directory.Exists(excelVisual.Params.ScriptFolder))
+            {
+                EditorUtility.DisplayDialog("解析失败", $"脚本生成路径不存在:{excelVisual.Params.ScriptFolder}", "OK");
+                return;
+            }
+
+            if (!Directory.Exists(excelVisual.Params.AssetFolder))
+            {
+                EditorUtility.DisplayDialog("解析失败", $"数据生成路径不存在:{excelVisual.Params.AssetFolder}", "OK");
+                return;
+            }
+
+            List<string> processExcels = new List<string>() { excelVisual.Params.ExcelPath };
+
+            EditorPrefs.SetString("processExcels", string.Join("#", processExcels.ToArray()));
+
+            var baseRow = new BaseRow() { TypeRow = TypeRow.value, DataFromRow = DataFromRow.value, FieldRow = FieldRow.value };
+
+            if (impl.Process(baseRow, excelVisual.Params, true))
+            {
+                mToWriteAssets = true;
+                AssetDatabase.Refresh();
+            }
+        }
+
+
+
+        bool mToWriteAssets = false;
+        void Update()
+        {
+
+            if (mToWriteAssets && !EditorApplication.isCompiling)
+            {
+                mToWriteAssets = false;
+                string[] names = EditorPrefs.GetString("processExcels", "").Split('#');
+                EditorPrefs.DeleteKey("processExcels");
+                foreach (string name in names)
+                {
+                    if (string.IsNullOrEmpty(name)) continue;
+                    var baseRow = new BaseRow() { TypeRow = TypeRow.value, DataFromRow = DataFromRow.value, FieldRow = FieldRow.value };
+                    foreach (var item in excel)
+                    {
+                        if (item.Key.Params.ExcelPath.Equals(name))
+                        {
+                            impl.Process(baseRow, item.Value, false); break;
+                        }
+                    }
+                }
+
+
+            }
+        }
+
+
+
+
         public class ExcelVisualElement
         {
             public VisualElement parent = null;
@@ -163,13 +248,13 @@ namespace UGame_Local_Editor
 
             public Button ScriptFolder = null, AssetFolder = null, InsertBtn = null, DeleteBtn = null, ProcessBtn = null;
 
-            public ExcelVisualElement(VisualElement parent)
+            public ExcelVisualElement(VisualElement parent, Action<ExcelVisualElement> insertCallback, Action<ExcelVisualElement> deleteCallback, Action<ExcelVisualElement> processCallback)
             {
                 this.parent = parent;
 
                 var item = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/UI Toolkit/ProcessExcelWindow/ExcelItem.uxml");
                 VisualElement cell = item.Instantiate();
-                
+
                 parent.Add(cell);
 
                 this.self = cell;
@@ -203,39 +288,17 @@ namespace UGame_Local_Editor
                 ScriptFolder.clicked += ScriptDirectory_clicked;
                 AssetFolder.clicked += AssetDirectory_clicked;
 
-                InsertBtn.clicked += InsertBtn_clicked;
-                DeleteBtn.clicked += DeleteBtn_clicked;
-                ProcessBtn.clicked += ProcessBtn_clicked;
-            }
-
-            /// <summary>插入Excel</summary>
-            private void InsertBtn_clicked()
-            {
-                Debug.Log($"插入Excel");
-            }
-
-            /// <summary>删除Excel</summary>
-            private void DeleteBtn_clicked()
-            {
-                parent.Remove(self);
-                self = null;
-                Params = null;
-
-                excel.Remove(this);
+                InsertBtn.clicked += () => { insertCallback?.Invoke(this); };
+                DeleteBtn.clicked += () => { deleteCallback?.Invoke(this); };
+                ProcessBtn.clicked += () => { processCallback?.Invoke(this); };
             }
 
 
-            /// <summary>解析Excel</summary>
-            private void ProcessBtn_clicked()
-            {
-                Debug.Log($"解析Excel");
-            }
 
 
             /// <summary>选择脚本生成路径</summary>
             private void ScriptDirectory_clicked()
             {
-                Debug.LogError($"{Application.dataPath}");
                 if (Params == null) return;
 
                 string tmp = $"{Application.dataPath}/../HotFixAssembly/Scripts/Game/Data/Normal/ScriptableObject";
@@ -340,7 +403,7 @@ namespace UGame_Local_Editor
         }
 
 
-        [System.Serializable]
+        [Serializable]
         public class ExcelToScriptableObjectCache
         {
             public BaseRow baseRow = null;
@@ -351,7 +414,7 @@ namespace UGame_Local_Editor
 
 
 
-        [System.Serializable]
+        [Serializable]
 
         public class BaseRow
         {
@@ -361,7 +424,7 @@ namespace UGame_Local_Editor
         }
 
 
-        [System.Serializable]
+        [Serializable]
         public class ExcelVisualElementParams
         {
             public string ExcelName = string.Empty, ExcelPath = string.Empty, NameSpace = "UGame.Remove", ScriptFolder = "Select", AssetFolder = "Select";

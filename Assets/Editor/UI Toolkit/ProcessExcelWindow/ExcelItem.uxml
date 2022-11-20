@@ -1,7 +1,6 @@
 <ui:UXML xmlns:ui="UnityEngine.UIElements" xmlns:uie="UnityEditor.UIElements" editor-extension-mode="True">
     <ui:VisualElement style="flex-direction: row; border-bottom-color: rgb(159, 159, 159); border-bottom-width: 1px; height: 300px; font-size: 13px; background-color: rgb(36, 36, 36); background-image: none; -unity-background-image-tint-color: rgb(255, 255, 255); top: auto; border-top-left-radius: 0; border-bottom-left-radius: 0; border-top-right-radius: 0; border-bottom-right-radius: 0; border-left-color: rgb(159, 159, 159); border-right-color: rgb(159, 159, 159); border-top-color: rgb(159, 159, 159);">
         <ui:VisualElement style="flex-grow: 1; -unity-background-image-tint-color: rgb(0, 0, 0);">
-            <ui:TextField picking-mode="Ignore" label="脚本命名空间" value="filler text" text="UGame.Remove" name="NameSpace" style="height: 33px; justify-content: center; align-items: center;" />
             <ui:VisualElement style="height: 23px; flex-direction: row;">
                 <ui:Label text="脚本生成路径" display-tooltip-when-elided="true" style="width: 152px;" />
                 <ui:Button text="Select" display-tooltip-when-elided="true" name="ScriptFolder" style="flex-grow: 1; -unity-text-align: middle-center; transition-duration: 0.3s; background-color: rgb(55, 55, 55);" />
@@ -10,6 +9,7 @@
                 <ui:Label text="数据生成路径" display-tooltip-when-elided="true" style="width: 152px;" />
                 <ui:Button text="Select" display-tooltip-when-elided="true" name="AssetFolder" style="flex-grow: 1; -unity-text-align: middle-center; transition-duration: 0.3s; background-color: rgb(55, 55, 55);" />
             </ui:VisualElement>
+            <ui:TextField picking-mode="Ignore" label="脚本命名空间" value="filler text" text="UGame.Remove" name="NameSpace" style="height: 33px; justify-content: center; align-items: center;" />
             <ui:VisualElement style="flex-direction: row; height: 38px; align-items: center; justify-content: space-between; -unity-font-style: bold;">
                 <ui:Toggle label="Use hash string" name="UseHashString" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px; transition-duration: 0.3s;" />
                 <ui:Toggle label="公开属性方法" name="PublicItemsGetter" style="align-items: center; justify-content: flex-start; flex-shrink: 1; flex-grow: 0; height: 30px; transition-duration: 0.3s;" />
