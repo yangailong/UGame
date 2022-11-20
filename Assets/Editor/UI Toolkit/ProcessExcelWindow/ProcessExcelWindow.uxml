@@ -11,6 +11,6 @@
                 <ui:Button text="解析所有Excel" display-tooltip-when-elided="true" name="ProcessAll" usage-hints="None" style="height: 33px; transition-duration: 0.3s; visibility: visible; overflow: hidden; rotate: 0; transition-property: all;" />
             </ui:VisualElement>
         </ui:VisualElement>
-        <ui:ScrollView name="ScrollView" style="height: auto; flex-grow: 1; flex-direction: row;" />
+        <ui:ScrollView name="ScrollView" style="height: auto; flex-grow: 1; flex-direction: row; background-color: rgba(36, 36, 36, 255);" />
     </ui:VisualElement>
 </ui:UXML>

@@ -19,7 +19,7 @@ namespace UGame_Local_Editor
         private static Regex reg_color24 = new Regex(@"^[A-Fa-f0-9]{6}$");
 
 
-        public bool Process(BaseRow baseRow, ExcelVisualElementParams excel, bool generateCode)
+        public bool Process(Head baseRow, Body excel, bool generateCode)
         {
             string className = Path.GetFileNameWithoutExtension(excel.ExcelPath);
 
@@ -678,6 +678,7 @@ namespace UGame_Local_Editor
                     assetPath = string.Concat(excel.AssetFolder, "/", className, ".asset");
                 }
 
+                Debug.Log($"asspath:{assetPath}");
                 assetPath = $"Assets/Data/{className}.asset";
 
                 ScriptableObject obj = AssetDatabase.LoadAssetAtPath(assetPath, typeof(ScriptableObject)) as ScriptableObject;
