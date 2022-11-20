@@ -19,9 +19,9 @@ namespace UGame_Local_Editor
         private static Regex reg_color24 = new Regex(@"^[A-Fa-f0-9]{6}$");
 
 
-        public bool Process(Head baseRow, Body excel, bool generateCode)
+        public bool Process(Head head, Body body, bool generateCode)
         {
-            string className = Path.GetFileNameWithoutExtension(excel.ExcelPath);
+            string className = Path.GetFileNameWithoutExtension(body.ExcelPath);
 
 
             //检查文件名是否合法
@@ -33,13 +33,13 @@ namespace UGame_Local_Editor
 
 
             Stream stream = null;
-            int lastDot = excel.ExcelPath.LastIndexOf('.');
-            string tempExcelName = $"{excel.ExcelPath.Substring(0, lastDot)}_temp{excel.ExcelPath.Substring(lastDot, excel.ExcelPath.Length - lastDot)}";
+            int lastDot = body.ExcelPath.LastIndexOf('.');
+            string tempExcelName = $"{body.ExcelPath.Substring(0, lastDot)}_temp{body.ExcelPath.Substring(lastDot, body.ExcelPath.Length - lastDot)}";
 
 
             try//检查文件是否被Excel应用占用
             {
-                File.Copy(excel.ExcelPath, tempExcelName);
+                File.Copy(body.ExcelPath, tempExcelName);
                 stream = File.OpenRead(tempExcelName);
             }
             catch
@@ -52,7 +52,7 @@ namespace UGame_Local_Editor
 
 
             //读取Excel表数据
-            IExcelDataReader reader = excel.ExcelPath.ToLower().EndsWith(".xls") ? ExcelReaderFactory.CreateBinaryReader(stream) : ExcelReaderFactory.CreateOpenXmlReader(stream);
+            IExcelDataReader reader = body.ExcelPath.ToLower().EndsWith(".xls") ? ExcelReaderFactory.CreateBinaryReader(stream) : ExcelReaderFactory.CreateOpenXmlReader(stream);
             DataSet data = reader.AsDataSet();
             reader.Dispose();
             stream.Close();
@@ -69,7 +69,7 @@ namespace UGame_Local_Editor
 
             //检查文件属性名称和数据类型
             DataTable table = data.Tables[0];
-            if (table.Rows.Count < Mathf.Max(baseRow.FieldRow, baseRow.TypeRow) + 1)
+            if (table.Rows.Count < Mathf.Max(head.FieldRow, head.TypeRow) + 1)
             {
                 string msg = $"解析失败 {className}，文件应该至少包含2行，用于指定名称和类型";
                 EditorUtility.DisplayDialog("Excel To ScriptableObject", msg, "OK");
@@ -80,7 +80,7 @@ namespace UGame_Local_Editor
             //获取文件FieldRow行的内容
             List<string> fieldNames = new List<string>();
             List<int> fieldIndices = new List<int>();
-            object[] items = table.Rows[baseRow.FieldRow].ItemArray;
+            object[] items = table.Rows[head.FieldRow].ItemArray;
             for (int i = 0; i < items.Length; i++)
             {
                 string fieldName = items[i].ToString().Trim();
@@ -104,11 +104,11 @@ namespace UGame_Local_Editor
 
 
             //枚举
-            Dictionary<string, List<string>> enumDict = excel.TreaUnknowTypesasEnum ? new Dictionary<string, List<string>>() : null;
+            Dictionary<string, List<string>> enumDict = body.TreaUnknowTypesasEnum ? new Dictionary<string, List<string>>() : null;
             int firstIndex = fieldIndices[0];
             List<eFieldTypes> fieldTypes = new List<eFieldTypes>();
             List<string> fieldTypeNames = new List<string>();
-            items = table.Rows[baseRow.TypeRow].ItemArray;
+            items = table.Rows[head.TypeRow].ItemArray;
 
             for (int i = 0; i < fieldNames.Count; i++)
             {
@@ -136,7 +136,7 @@ namespace UGame_Local_Editor
                     }
 
 
-                    for (int j = baseRow.DataFromRow; j < table.Rows.Count; j++)
+                    for (int j = head.DataFromRow; j < table.Rows.Count; j++)
                     {
                         object[] enumObjs = table.Rows[j].ItemArray;
                         string enumValue = fieldIndex < enumObjs.Length ? enumObjs[fieldIndex].ToString() : null;
@@ -154,7 +154,7 @@ namespace UGame_Local_Editor
 
             //获取表所有的id，id只能为int类型或者string
             List<int> indices = new List<int>();
-            if (excel.GenerateGetMethodIfPossoble)//生成获取方法
+            if (body.GenerateGetMethodIfPossoble)//生成获取方法
             {
                 string err = string.Empty;
 
@@ -163,7 +163,7 @@ namespace UGame_Local_Editor
                 {
                     SortedList<int, List<int>> ids = new SortedList<int, List<int>>();
 
-                    for (int i = baseRow.DataFromRow; i < table.Rows.Count; i++)
+                    for (int i = head.DataFromRow; i < table.Rows.Count; i++)
                     {
                         string info = $"Checking IDs or Keys...{i - 1}/{table.Rows.Count - 2}";
                         float progress = (i - 1) / (table.Rows.Count - 2);
@@ -189,7 +189,7 @@ namespace UGame_Local_Editor
 
                         if (ids.TryGetValue(id, out List<int> idList))
                         {
-                            if (excel.IDorKeytoMultiValues)
+                            if (body.IDorKeytoMultiValues)
                             {
                                 idList.Add(i);
                             }
@@ -218,7 +218,7 @@ namespace UGame_Local_Editor
                 {
                     SortedList<string, List<int>> keys = new SortedList<string, List<int>>();
 
-                    for (int i = baseRow.DataFromRow; i < table.Rows.Count; i++)
+                    for (int i = head.DataFromRow; i < table.Rows.Count; i++)
                     {
                         string info = $"Checking IDs or Keys...{i - 1}/{table.Rows.Count - 2}";
                         float progress = (i - 1) / (table.Rows.Count - 2);
@@ -235,7 +235,7 @@ namespace UGame_Local_Editor
 
                         if (keys.TryGetValue(key, out List<int> idList))
                         {
-                            if (excel.IDorKeytoMultiValues)
+                            if (body.IDorKeytoMultiValues)
                             {
                                 idList.Add(i);
                             }
@@ -280,7 +280,7 @@ namespace UGame_Local_Editor
             //生成代码
             if (generateCode)
             {
-                string serializeAttribute = excel.HideaAssetProperties ? "[SerializeField, HideInInspector]" : "[SerializeField]";
+                string serializeAttribute = body.HideaAssetProperties ? "[SerializeField, HideInInspector]" : "[SerializeField]";
 
                 StringBuilder content = new StringBuilder();
 
@@ -293,7 +293,7 @@ namespace UGame_Local_Editor
                 //添加引用
                 content.AppendLine("using UnityEngine;");
 
-                if (excel.GenerateGetMethodIfPossoble && excel.IDorKeytoMultiValues && indices.Count > 0)
+                if (body.GenerateGetMethodIfPossoble && body.IDorKeytoMultiValues && indices.Count > 0)
                 {
                     content.AppendLine("using System.Collections.Generic;");
                 }
@@ -304,9 +304,9 @@ namespace UGame_Local_Editor
                 string indent = "";//缩进
 
                 //添加命名空间
-                if (!string.IsNullOrEmpty(excel.NameSpace))
+                if (!string.IsNullOrEmpty(body.NameSpace))
                 {
-                    content.AppendLine(string.Format("namespace {0} {{", excel.NameSpace));
+                    content.AppendLine(string.Format("namespace {0} {{", body.NameSpace));
                     content.AppendLine();
                     indent = "\t";
                 }
@@ -316,7 +316,7 @@ namespace UGame_Local_Editor
                 content.AppendLine();
 
 
-                if (excel.UseHashString)
+                if (body.UseHashString)
                 {
                     content.AppendLine(string.Format("{0}\t{1}", indent, serializeAttribute));
                     content.AppendLine(string.Format("{0}\tprivate string[] _HashStrings;", indent));
@@ -330,9 +330,9 @@ namespace UGame_Local_Editor
                 content.AppendLine(string.Format("{0}\tprivate {1}Item[] _Items;", indent, className));
 
 
-                if (excel.UseHashString)
+                if (body.UseHashString)
                 {
-                    content.AppendLine(string.Format("{0}\t{1} {2}Item[] items {{", indent, excel.PublicItemsGetter ? "public" : "private", className));
+                    content.AppendLine(string.Format("{0}\t{1} {2}Item[] items {{", indent, body.PublicItemsGetter ? "public" : "private", className));
                     content.AppendLine($"{indent}\t\tget {{");
                     content.AppendLine(string.Format("{0}\t\t\tif (!mHashStringSet) {{", indent));
                     content.AppendLine(string.Format("{0}\t\t\t\tfor (int i = 0, imax = _Items.Length; i < imax; i++) {{", indent));
@@ -364,7 +364,7 @@ namespace UGame_Local_Editor
                 }
                 else
                 {
-                    content.AppendLine(string.Format("{0}\t{1} {2}Item[] items {{ get {{ return _Items; }} }}", indent, excel.PublicItemsGetter ? "public" : "private", className));
+                    content.AppendLine(string.Format("{0}\t{1} {2}Item[] items {{ get {{ return _Items; }} }}", indent, body.PublicItemsGetter ? "public" : "private", className));
                 }
 
 
@@ -376,7 +376,7 @@ namespace UGame_Local_Editor
 
                     idVarName = idVarName.Substring(0, 1).ToLower() + idVarName.Substring(1, idVarName.Length - 1);
 
-                    if (excel.IDorKeytoMultiValues)
+                    if (body.IDorKeytoMultiValues)
                     {
                         content.AppendLine(string.Format("{0}\tpublic List<{1}Item> Get({2} {3}) {{", indent, className, GetFieldTypeName(fieldTypes[0]), idVarName));
                         content.AppendLine(string.Format("{0}\t\tList<{1}Item> list = new List<{1}Item>(); ", indent, className));
@@ -483,7 +483,7 @@ namespace UGame_Local_Editor
                 }
 
 
-                if (excel.UseHashString)
+                if (body.UseHashString)
                 {
                     content.AppendLine(string.Format("{0}\tprivate string[] mHashStrings;", indent));
                     content.AppendLine(string.Format("{0}\tpublic void SetStrings(string[] strings) {{ mHashStrings = strings; }}", indent));
@@ -501,12 +501,12 @@ namespace UGame_Local_Editor
                     string capitalFieldName = CapitalFirstChar(fieldName);
                     content.AppendLine(string.Format("{0}\t{1}", indent, serializeAttribute));
 
-                    if (excel.UseHashString && fieldType == eFieldTypes.String)
+                    if (body.UseHashString && fieldType == eFieldTypes.String)
                     {
                         content.AppendLine(string.Format("{0}\tprivate int _{1};", indent, capitalFieldName));
                         content.AppendLine(string.Format("{0}\tpublic {1} {2} {{ get {{ return mHashStrings[_{3}]; }} }}", indent, fieldTypeName, fieldName, capitalFieldName));
                     }
-                    else if (excel.UseHashString && fieldType == eFieldTypes.Strings)
+                    else if (body.UseHashString && fieldType == eFieldTypes.Strings)
                     {
                         content.AppendLine(string.Format("{0}\tprivate int[] _{1};", indent, capitalFieldName));
                         content.AppendLine(string.Format("{0}\tprivate {1} _{2}_;", indent, fieldTypeName, capitalFieldName));
@@ -521,7 +521,7 @@ namespace UGame_Local_Editor
                         content.AppendLine(string.Format("{0}\t\t}}", indent));
                         content.AppendLine(string.Format("{0}\t}}", indent));
                     }
-                    else if (excel.CompressColorintoInteger && fieldType == eFieldTypes.Color)
+                    else if (body.CompressColorintoInteger && fieldType == eFieldTypes.Color)
                     {
                         content.AppendLine(string.Format("{0}\tprivate int _{1};", indent, capitalFieldName));
                         content.AppendLine(string.Format("{0}\tpublic {1} {2} {{", indent, fieldTypeName, fieldName));
@@ -545,7 +545,7 @@ namespace UGame_Local_Editor
 
                 }
 
-                if (excel.GengrateToStringMethod)
+                if (body.GengrateToStringMethod)
                 {
                     content.AppendLine(string.Format("{0}\tpublic override string ToString() {{", indent));
                     List<string> toStringFormats = new List<string>();
@@ -596,7 +596,7 @@ namespace UGame_Local_Editor
                     }
                 }
 
-                if (!string.IsNullOrEmpty(excel.NameSpace))
+                if (!string.IsNullOrEmpty(body.NameSpace))
                 {
                     content.AppendLine("\t}");
                     content.AppendLine();
@@ -605,19 +605,19 @@ namespace UGame_Local_Editor
                 content.AppendLine("}");
 
 
-                if (!Directory.Exists(excel.ScriptFolder))
+                if (!Directory.Exists(body.ScriptFolder))
                 {
-                    Directory.CreateDirectory(excel.ScriptFolder);
+                    Directory.CreateDirectory(body.ScriptFolder);
                 }
 
                 string scriptPath = null;
-                if (excel.ScriptFolder.EndsWith("/"))
+                if (body.ScriptFolder.EndsWith("/"))
                 {
-                    scriptPath = string.Concat(excel.ScriptFolder, className, ".cs");
+                    scriptPath = string.Concat(body.ScriptFolder, className, ".cs");
                 }
                 else
                 {
-                    scriptPath = string.Concat(excel.ScriptFolder, "/", className, ".cs");
+                    scriptPath = string.Concat(body.ScriptFolder, "/", className, ".cs");
                 }
 
                 string fileMD5 = null;
@@ -656,26 +656,26 @@ namespace UGame_Local_Editor
             {
                 if (indices.Count <= 0)
                 {
-                    for (int i = table.Rows.Count - 1; i >= baseRow.DataFromRow; i--)
+                    for (int i = table.Rows.Count - 1; i >= head.DataFromRow; i--)
                     {
                         indices.Add(i);
                     }
                 }
 
-                if (!Directory.Exists(excel.AssetFolder))
+                if (!Directory.Exists(body.AssetFolder))
                 {
-                    Directory.CreateDirectory(excel.AssetFolder);
+                    Directory.CreateDirectory(body.AssetFolder);
                 }
                 AssetDatabase.Refresh();
 
                 string assetPath = null;
-                if (excel.ScriptFolder.EndsWith("/"))
+                if (body.ScriptFolder.EndsWith("/"))
                 {
-                    assetPath = string.Concat(excel.AssetFolder, className, ".asset");
+                    assetPath = string.Concat(body.AssetFolder, className, ".asset");
                 }
                 else
                 {
-                    assetPath = string.Concat(excel.AssetFolder, "/", className, ".asset");
+                    assetPath = string.Concat(body.AssetFolder, "/", className, ".asset");
                 }
 
                 Debug.Log($"asspath:{assetPath}");
@@ -685,7 +685,7 @@ namespace UGame_Local_Editor
                 bool isAlreadyExists = true;
                 if (obj == null)
                 {
-                    string fullName = !string.IsNullOrEmpty(excel.NameSpace) ? excel.NameSpace + "." + className : className;
+                    string fullName = !string.IsNullOrEmpty(body.NameSpace) ? body.NameSpace + "." + className : className;
                     obj = ScriptableObject.CreateInstance(fullName);
                     AssetDatabase.CreateAsset(obj, assetPath);
                     isAlreadyExists = false;
@@ -708,7 +708,7 @@ namespace UGame_Local_Editor
 
                 for (int i = 0; i < indices.Count; i++)
                 {
-                    if (EditorUtility.DisplayCancelableProgressBar($"Process {excel.ExcelPath}", string.Format("Serializing datas... {0} / {1}", i, indices.Count), i / (float)indices.Count))
+                    if (EditorUtility.DisplayCancelableProgressBar($"Process {body.ExcelPath}", string.Format("Serializing datas... {0} / {1}", i, indices.Count), i / (float)indices.Count))
                     {
                         EditorUtility.ClearProgressBar();
                         return false;
@@ -796,7 +796,7 @@ namespace UGame_Local_Editor
                                 break;
                             case eFieldTypes.Color:
                                 Color c = GetColorFromString(value);
-                                if (excel.CompressColorintoInteger)
+                                if (body.CompressColorintoInteger)
                                 {
                                     int colorInt = 0;
                                     colorInt |= Mathf.RoundToInt(c.r * 255f) << 24;
@@ -811,7 +811,7 @@ namespace UGame_Local_Editor
                                 }
                                 break;
                             case eFieldTypes.String:
-                                if (excel.UseHashString)
+                                if (body.UseHashString)
                                 {
                                     int stringIndex;
                                     if (!hashStrings.TryGetValue(value, out stringIndex))
@@ -829,7 +829,7 @@ namespace UGame_Local_Editor
                             case eFieldTypes.Strings:
                                 string[] strs = GetStringsFromString(value);
                                 pField.ClearArray();
-                                if (excel.UseHashString)
+                                if (body.UseHashString)
                                 {
                                     for (int k = strs.Length - 1; k >= 0; k--)
                                     {
@@ -864,7 +864,7 @@ namespace UGame_Local_Editor
                     }
                 }
 
-                if (excel.UseHashString && hashStrings.Count > 0)
+                if (body.UseHashString && hashStrings.Count > 0)
                 {
                     string[] strings = new string[hashStrings.Count];
                     foreach (KeyValuePair<string, int> kv in hashStrings)
@@ -876,7 +876,7 @@ namespace UGame_Local_Editor
                     int total = strings.Length;
                     for (int i = strings.Length - 1; i >= 0; i--)
                     {
-                        if (EditorUtility.DisplayCancelableProgressBar($"Process {excel.ExcelPath}", string.Format("Writing hash strings ... {0} / {1}",
+                        if (EditorUtility.DisplayCancelableProgressBar($"Process {body.ExcelPath}", string.Format("Writing hash strings ... {0} / {1}",
                             total - i, total), (float)(total - i) / total))
                         {
                             EditorUtility.ClearProgressBar();
