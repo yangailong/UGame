@@ -8,6 +8,8 @@ using System.Text;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
+using Debug = UnityEngine.Debug;
+using Unity.VisualScripting;
 
 namespace UGame_Local_Editor
 {
@@ -24,7 +26,7 @@ namespace UGame_Local_Editor
         public const string SETTINGS_PATH = "ProjectSettings/ExcelToScriptableObjectSettings.asset";
 
 
-        private Dictionary<ExcelVisualElement, Body> excel = null;
+        private List<ExcelVisualElement> excelVisuals = null;
 
         private ProcessExcelImpl impl = null;
 
@@ -46,7 +48,7 @@ namespace UGame_Local_Editor
             root.Add(labelFromUXML);
 
             impl = new ProcessExcelImpl();
-            excel = new Dictionary<ExcelVisualElement, Body>();
+            excelVisuals = new List<ExcelVisualElement>();
 
             FieldRow = root.Q<IntegerField>(nameof(FieldRow));
             TypeRow = root.Q<IntegerField>(nameof(TypeRow));
@@ -84,11 +86,11 @@ namespace UGame_Local_Editor
                 TypeRow.value = cache.head.TypeRow;
                 DataFromRow.value = cache.head.DataFromRow;
 
-                foreach (var item in cache.bodies)
+                foreach (var item in cache.body)
                 {
                     ExcelVisualElement element = new ExcelVisualElement(ScrollView, InsertBtn_clicked, DeleteBtn_clicked, ProcessBtn_clicked);
                     element.SetData(item);
-                    excel.Add(element, element.data);
+                    excelVisuals.Add(element);
                 }
 
             }
@@ -106,7 +108,7 @@ namespace UGame_Local_Editor
             cache.head.TypeRow = TypeRow.value;
             cache.head.DataFromRow = DataFromRow.value;
 
-            cache.bodies = excel.Values.ToArray();
+            cache.body = (from p in excelVisuals select p.data).ToArray();
 
             File.WriteAllText(SETTINGS_PATH, JsonUtility.ToJson(cache, true), Encoding.UTF8);
         }
@@ -132,7 +134,8 @@ namespace UGame_Local_Editor
 
                     ExcelVisualElement element = new ExcelVisualElement(ScrollView, InsertBtn_clicked, DeleteBtn_clicked, ProcessBtn_clicked);
                     element.SetData(new Body() { ExcelName = name, ExcelPath = path });
-                    excel.Add(element, element.data);
+
+                    excelVisuals.Add(element);
                 }
 
 
@@ -145,7 +148,19 @@ namespace UGame_Local_Editor
         /// </summary>
         private void ProcessAll_clicked()
         {
-            Debug.Log($"解析所有excel");
+            ProcessExcel(excelVisuals);
+        }
+
+
+        /// <summary>
+        /// 删除
+        /// </summary>
+        /// <param name="eve"></param>
+        private void DeleteBtn_clicked(ExcelVisualElement eve)
+        {
+            ScrollView.Remove(eve.root);
+            excelVisuals.Remove(eve);
+            eve = null;
         }
 
 
@@ -160,51 +175,64 @@ namespace UGame_Local_Editor
 
 
         /// <summary>
-        /// 删除
-        /// </summary>
-        /// <param name="eve"></param>
-        private void DeleteBtn_clicked(ExcelVisualElement eve)
-        {
-            ScrollView.Remove(eve.root);
-            excel.Remove(eve);
-            eve = null;
-        }
-
-
-        /// <summary>
         /// 解析
         /// </summary>
         /// <param name="eve"></param>
         private void ProcessBtn_clicked(ExcelVisualElement eve)
         {
-            if (!Directory.Exists(eve.data.ScriptFolder))
+            ProcessExcel(new List<ExcelVisualElement>() { eve });
+        }
+
+
+        private void ProcessExcel(List<ExcelVisualElement> eves)
+        {
+            if (eves?.Count == 0) return;
+
+            List<string> excelPaths = new List<string>();
+
+            var head = new Head() { TypeRow = TypeRow.value, DataFromRow = DataFromRow.value, FieldRow = FieldRow.value };
+
+            for (int i = 0; i < eves.Count; i++)
             {
-                EditorUtility.DisplayDialog("解析失败", $"脚本生成路径不存在:{eve.data.ScriptFolder}", "OK");
-                return;
+                var item = eves[i];
+
+                if (!Directory.Exists(item.data.ScriptFolder))
+                {
+                    EditorUtility.DisplayDialog("解析失败", $"脚本生成路径不存在:{item.data.ScriptFolder}", "OK");
+                    return;
+                }
+
+                if (!Directory.Exists(item.data.AssetFolder))
+                {
+                    EditorUtility.DisplayDialog("解析失败", $"数据生成路径不存在:{item.data.AssetFolder}", "OK");
+                    return;
+                }
+
+                if (!string.IsNullOrEmpty(item.data.NameSpace) && !Regex.IsMatch(item.data.NameSpace, @"(\S+\s*\.\s*)*\S+"))
+                {
+                    EditorUtility.DisplayDialog("解析失败", $"{item.data.NameSpace}.{item.ExcelName.text}命名空间不合法", "OK");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(item.data.ExcelPath))
+                {
+                    EditorUtility.DisplayDialog("解析失败", $"未找到excel{item.data.ExcelPath}", "OK");
+                    return;
+                }
+
+                if (impl.Process(head, item.data, true))
+                {
+                    excelPaths.Add(item.data.ExcelPath);
+                }
             }
 
-            if (!Directory.Exists(eve.data.AssetFolder))
+            if (excelPaths.Count > 0)
             {
-                EditorUtility.DisplayDialog("解析失败", $"数据生成路径不存在:{eve.data.AssetFolder}", "OK");
-                return;
-            }
-
-            if (!string.IsNullOrEmpty(eve.data.NameSpace) && !Regex.IsMatch(eve.data.NameSpace, @"(\S+\s*\.\s*)*\S+"))
-            {
-                EditorUtility.DisplayDialog("解析失败", $"{eve.data.NameSpace}.{eve.ExcelName.text}命名空间不合法", "OK");
-                return;
-            }
-            
-           
-            EditorPrefs.SetString("process_excels", string.Join("#", new string[] { eve.data.ExcelPath }));
-
-            var baseRow = new Head() { TypeRow = TypeRow.value, DataFromRow = DataFromRow.value, FieldRow = FieldRow.value };
-
-            if (impl.Process(baseRow, eve.data, true))
-            {
+                EditorPrefs.SetString("process_excels", string.Join("#", excelPaths.ToArray()));
                 mToWriteAssets = true;
                 AssetDatabase.Refresh();
             }
+
         }
 
 
@@ -224,11 +252,11 @@ namespace UGame_Local_Editor
                 {
                     if (string.IsNullOrEmpty(name)) continue;
 
-                    foreach (var item in excel)
+                    foreach (var item in excelVisuals)
                     {
-                        if (item.Key.data.ExcelPath.Equals(name))
+                        if (item.data.ExcelPath.Equals(name))
                         {
-                            impl.Process(baseRow, item.Value, false); break;
+                            impl.Process(baseRow, item.data, false); break;
                         }
                     }
                 }
@@ -283,7 +311,7 @@ namespace UGame_Local_Editor
                 TreaUnknowTypesasEnum.RegisterCallback<ChangeEvent<bool>>(TreaUnknowTypesasEnumRegisterCallback);
                 IDorKeytoMuitiValues.RegisterCallback<ChangeEvent<bool>>(IDorKeytoMuitiValuesRegisterCallback);
                 GengrateToStringMethod.RegisterCallback<ChangeEvent<bool>>(GengrateToStringMethodRegisterCallback);
-
+                this.NameSpace.RegisterCallback<ChangeEvent<string>>(demo);
 
                 ScriptFolder.clicked += ScriptDirectory_clicked;
                 AssetFolder.clicked += AssetDirectory_clicked;
@@ -376,6 +404,11 @@ namespace UGame_Local_Editor
             }
 
 
+            public void demo(ChangeEvent<string> value)
+            {
+                Debug.Log($"{value.newValue}");
+            }
+
 
             public Body data = null;
 
@@ -406,7 +439,7 @@ namespace UGame_Local_Editor
             public Head head = null;
 
             //表身
-            public Body[] bodies = null;
+            public Body[] body = null;
         }
 
 
@@ -422,7 +455,7 @@ namespace UGame_Local_Editor
         [Serializable]
         public class Body
         {
-            public string ExcelName = string.Empty, ExcelPath = string.Empty, NameSpace = string.Empty, ScriptFolder = "Select", AssetFolder = "Select";
+            public string ExcelName = string.Empty, ExcelPath = string.Empty, NameSpace = "UGame.Remove", ScriptFolder = "Select", AssetFolder = "Select";
 
 
             public bool UseHashString = false;

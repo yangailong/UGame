@@ -2,45 +2,15 @@
     "head": {
         "FieldRow": 0,
         "TypeRow": 1,
-        "DataFromRow": 2
+        "DataFromRow": 4
     },
-    "bodies": [
+    "body": [
         {
             "ExcelName": "CfgRemoteLang",
             "ExcelPath": "E:/Project/Unity/Dev/UGame/Excels/CfgRemoteLang.xlsx",
             "NameSpace": "",
-            "ScriptFolder": "Select",
-            "AssetFolder": "Select",
-            "UseHashString": false,
-            "PublicItemsGetter": false,
-            "HideaAssetProperties": false,
-            "CompressColorintoInteger": false,
-            "GenerateGetMethodIfPossoble": true,
-            "TreaUnknowTypesasEnum": false,
-            "IDorKeytoMultiValues": false,
-            "GengrateToStringMethod": true
-        },
-        {
-            "ExcelName": "CfgLocalLang",
-            "ExcelPath": "E:/Project/Unity/Dev/UGame/Excels/CfgLocalLang.xlsx",
-            "NameSpace": "",
-            "ScriptFolder": "Select",
-            "AssetFolder": "Select",
-            "UseHashString": false,
-            "PublicItemsGetter": false,
-            "HideaAssetProperties": false,
-            "CompressColorintoInteger": false,
-            "GenerateGetMethodIfPossoble": true,
-            "TreaUnknowTypesasEnum": false,
-            "IDorKeytoMultiValues": false,
-            "GengrateToStringMethod": true
-        },
-        {
-            "ExcelName": "CfgRemoteLang",
-            "ExcelPath": "E:/Project/Unity/Dev/UGame/Excels/CfgRemoteLang.xlsx",
-            "NameSpace": "",
-            "ScriptFolder": "Select",
-            "AssetFolder": "Select",
+            "ScriptFolder": "E:/Project/Unity/Dev/UGame/Assets/Data",
+            "AssetFolder": "E:/Project/Unity/Dev/UGame/Assets/Data",
             "UseHashString": false,
             "PublicItemsGetter": false,
             "HideaAssetProperties": false,
