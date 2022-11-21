@@ -7,7 +7,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.IO;
 using System.Linq;
-using System.ComponentModel;
+using System.Text.RegularExpressions;
+using Debug = UnityEngine.Debug;
+using Unity.VisualScripting;
 
 namespace UGame_Local_Editor
 {
@@ -23,7 +25,8 @@ namespace UGame_Local_Editor
 
         public const string SETTINGS_PATH = "ProjectSettings/ExcelToScriptableObjectSettings.asset";
 
-        private Dictionary<Button, ExcelVisualElementParams> keyValuePairs = null;
+
+        private List<ExcelVisualElement> excelVisuals = null;
 
         private ProcessExcelImpl impl = null;
 
@@ -32,8 +35,6 @@ namespace UGame_Local_Editor
         private ScrollView ScrollView = null;
 
         private Button AddNewExcel = null, ProcessAll = null;
-
-        private ExcelVisualElement excelVisualElement = null;
 
 
         public void CreateGUI()
@@ -46,63 +47,52 @@ namespace UGame_Local_Editor
             VisualElement labelFromUXML = visualTree.Instantiate();
             root.Add(labelFromUXML);
 
-            var excelItem = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/UI Toolkit/ProcessExcelWindow/ExcelItem.uxml");
-            VisualElement ve = excelItem.Instantiate();
-            root.Q<ScrollView>().Add(ve);
+            impl = new ProcessExcelImpl();
+            excelVisuals = new List<ExcelVisualElement>();
 
-            //keyValuePairs = new Dictionary<Button, ExcelVisualElementParams>();
-            //impl = new ProcessExcelImpl();
+            FieldRow = root.Q<IntegerField>(nameof(FieldRow));
+            TypeRow = root.Q<IntegerField>(nameof(TypeRow));
+            DataFromRow = root.Q<IntegerField>(nameof(DataFromRow));
+            AddNewExcel = root.Q<Button>(nameof(AddNewExcel));
+            ProcessAll = root.Q<Button>(nameof(ProcessAll));
+            ScrollView = root.Q<ScrollView>();
 
-            //FieldRow = root.Q<IntegerField>(nameof(FieldRow));
-            //TypeRow = root.Q<IntegerField>(nameof(TypeRow));
-            //DataFromRow = root.Q<IntegerField>(nameof(DataFromRow));
-            //AddNewExcel = root.Q<Button>(nameof(AddNewExcel));
-            //ProcessAll = root.Q<Button>(nameof(ProcessAll));
+            AddNewExcel.clicked += AddNewExcel_clicked;
+            ProcessAll.clicked += ProcessAll_clicked;
 
-            //ScrollView = root.Q<ScrollView>();
-
-            //excelVisualElement = new ExcelVisualElement(root.Q<VisualElement>(nameof(excelVisualElement)), OnClickInsertBtnCallback, OnClickDeleteBtnCallback, OnClickProcessBtnCallback);
-
-            //excelVisualElement.SetActive(false);
-
-            //ProcessAll.clicked += ProcessAll_clicked;
-            //AddNewExcel.clicked += AddNewExcel_clicked;
-
-            //OnLoad();
-
-
-
+            OnLoadCache();
         }
 
 
         private void OnDisable()
         {
-            //OnSave();
+            OnSaveCache();
         }
+
 
 
         /// <summary>
         /// 打开面板读取缓存设置
         /// </summary>
-        private void OnLoad()
+        private void OnLoadCache()
         {
             string json = File.Exists(SETTINGS_PATH) ? File.ReadAllText(SETTINGS_PATH, Encoding.UTF8) : null;
 
             if (!string.IsNullOrEmpty(json))
             {
-                ExcelToScriptableObjectSettings settings = JsonUtility.FromJson<ExcelToScriptableObjectSettings>(json);
+                CacheData cache = JsonUtility.FromJson<CacheData>(json);
 
-                FieldRow.value = settings.baseRow.FieldRow;
-                TypeRow.value = settings.baseRow.TypeRow;
-                DataFromRow.value = settings.baseRow.DataFromRow;
+                FieldRow.value = cache.head.FieldRow;
+                TypeRow.value = cache.head.TypeRow;
+                DataFromRow.value = cache.head.DataFromRow;
 
-                foreach (var item in settings.excels)
+                foreach (var item in cache.body)
                 {
-                    var excelBtn = new Button() { text = $"{item.ExcelPath}" };
-                    excelBtn.clicked += () => { SelExcelBtn(excelBtn); };
-                    ScrollView.Add(excelBtn);
-                    keyValuePairs.Add(excelBtn, item);
+                    ExcelVisualElement element = new ExcelVisualElement(ScrollView, InsertBtn_clicked, DeleteBtn_clicked, ProcessBtn_clicked);
+                    element.SetData(item);
+                    excelVisuals.Add(element);
                 }
+
             }
         }
 
@@ -110,17 +100,18 @@ namespace UGame_Local_Editor
         /// <summary>
         /// 关闭面板记录设置到缓存
         /// </summary>
-        private void OnSave()
+        private void OnSaveCache()
         {
-            ExcelToScriptableObjectSettings data = new ExcelToScriptableObjectSettings();
-            data.baseRow = new BaseRow();
-            data.baseRow.FieldRow = FieldRow.value;
-            data.baseRow.TypeRow = TypeRow.value;
-            data.baseRow.DataFromRow = DataFromRow.value;
-            data.excels = keyValuePairs.Values.ToArray();
-            File.WriteAllText(SETTINGS_PATH, JsonUtility.ToJson(data, true), Encoding.UTF8);
-        }
+            CacheData cache = new CacheData();
+            cache.head = new Head();
+            cache.head.FieldRow = FieldRow.value;
+            cache.head.TypeRow = TypeRow.value;
+            cache.head.DataFromRow = DataFromRow.value;
 
+            cache.body = (from p in excelVisuals select p.data).ToArray();
+
+            File.WriteAllText(SETTINGS_PATH, JsonUtility.ToJson(cache, true), Encoding.UTF8);
+        }
 
 
         /// <summary>
@@ -130,20 +121,24 @@ namespace UGame_Local_Editor
         {
             Debug.Log($"添加excel");
 
-            string path = EditorUtility.OpenFilePanel("Select Excel File", $"/..{Application.dataPath}", "xlsx");
+            string path = EditorUtility.OpenFilePanel("选择Exce", ".", "xlsx");
             if (!string.IsNullOrEmpty(path))
             {
+
                 string projPath = Application.dataPath;
                 projPath = projPath.Substring(0, projPath.Length - 6);
-                if (path.StartsWith(projPath))
+                if (path.StartsWith(path))
                 {
-                    string tmpPath = path.Substring(projPath.Length, path.Length - projPath.Length);
+                    string name = Path.GetFileNameWithoutExtension(path);
+                    string excelPath = path.Substring(projPath.Length, path.Length - projPath.Length);
 
-                    var excelBtn = new Button() { text = $"{tmpPath}" };
-                    excelBtn.clicked += () => { SelExcelBtn(excelBtn); };
-                    ScrollView.Add(excelBtn);
-                    keyValuePairs.Add(excelBtn, new ExcelVisualElementParams() { ExcelPath = path });
+                    ExcelVisualElement element = new ExcelVisualElement(ScrollView, InsertBtn_clicked, DeleteBtn_clicked, ProcessBtn_clicked);
+                    element.SetData(new Body() { ExcelName = name, ExcelPath = path });
+
+                    excelVisuals.Add(element);
                 }
+
+
             }
         }
 
@@ -153,82 +148,143 @@ namespace UGame_Local_Editor
         /// </summary>
         private void ProcessAll_clicked()
         {
-            Debug.Log($"解析所有excel");
+            ProcessExcel(excelVisuals);
         }
 
 
         /// <summary>
-        /// 插入Excel
+        /// 删除
         /// </summary>
-        private void OnClickInsertBtnCallback()
+        /// <param name="eve"></param>
+        private void DeleteBtn_clicked(ExcelVisualElement eve)
         {
-            Debug.Log($"插入excel");
+            ScrollView.Remove(eve.root);
+            excelVisuals.Remove(eve);
+            eve = null;
         }
 
 
         /// <summary>
-        /// 删除Excel
+        /// 插入
         /// </summary>
-        private void OnClickDeleteBtnCallback()
+        /// <param name="eve"></param>
+        private void InsertBtn_clicked(ExcelVisualElement eve)
         {
-            Debug.Log($"删除excel");
 
-            keyValuePairs[CurSelExcelBtn] = null;
-
-            keyValuePairs.Remove(CurSelExcelBtn);
-
-            excelVisualElement.SetActive(false);
-
-            ScrollView.Remove(CurSelExcelBtn);
-
-            CurSelExcelBtn = null;
         }
 
 
         /// <summary>
-        /// 解析Excel
+        /// 解析
         /// </summary>
-        private void OnClickProcessBtnCallback()
+        /// <param name="eve"></param>
+        private void ProcessBtn_clicked(ExcelVisualElement eve)
         {
-            Debug.Log($"解析excel");
+            ProcessExcel(new List<ExcelVisualElement>() { eve });
+        }
 
-            foreach (var item in keyValuePairs.Values)
+
+        private void ProcessExcel(List<ExcelVisualElement> eves)
+        {
+            if (eves?.Count == 0) return;
+
+            List<string> excelPaths = new List<string>();
+
+            var head = new Head() { TypeRow = TypeRow.value, DataFromRow = DataFromRow.value, FieldRow = FieldRow.value };
+
+            for (int i = 0; i < eves.Count; i++)
             {
-                impl.Process(new BaseRow() { FieldRow = 0, TypeRow = 1, DataFromRow = 5 }, item, false); ;
+                var item = eves[i];
+
+                if (!Directory.Exists(item.data.ScriptFolder))
+                {
+                    EditorUtility.DisplayDialog("解析失败", $"脚本生成路径不存在:{item.data.ScriptFolder}", "OK");
+                    return;
+                }
+
+                if (!Directory.Exists(item.data.AssetFolder))
+                {
+                    EditorUtility.DisplayDialog("解析失败", $"数据生成路径不存在:{item.data.AssetFolder}", "OK");
+                    return;
+                }
+
+                if (!string.IsNullOrEmpty(item.data.NameSpace) && !Regex.IsMatch(item.data.NameSpace, @"(\S+\s*\.\s*)*\S+"))
+                {
+                    EditorUtility.DisplayDialog("解析失败", $"{item.data.NameSpace}.{item.ExcelName.text}命名空间不合法", "OK");
+                    return;
+                }
+
+                if (string.IsNullOrEmpty(item.data.ExcelPath))
+                {
+                    EditorUtility.DisplayDialog("解析失败", $"未找到excel{item.data.ExcelPath}", "OK");
+                    return;
+                }
+
+                if (impl.Process(head, item.data, true))
+                {
+                    excelPaths.Add(item.data.ExcelPath);
+                }
+            }
+
+            if (excelPaths.Count > 0)
+            {
+                EditorPrefs.SetString("process_excels", string.Join("#", excelPaths.ToArray()));
+                mToWriteAssets = true;
+                AssetDatabase.Refresh();
+            }
+
+        }
+
+
+
+        bool mToWriteAssets = false;
+        void Update()
+        {
+            if (mToWriteAssets && !EditorApplication.isCompiling)
+            {
+                mToWriteAssets = false;
+                string[] names = EditorPrefs.GetString("process_excels", "").Split('#');
+                EditorPrefs.DeleteKey("process_excels");
+
+                var baseRow = new Head() { TypeRow = TypeRow.value, DataFromRow = DataFromRow.value, FieldRow = FieldRow.value };
+
+                foreach (string name in names)
+                {
+                    if (string.IsNullOrEmpty(name)) continue;
+
+                    foreach (var item in excelVisuals)
+                    {
+                        if (item.data.ExcelPath.Equals(name))
+                        {
+                            impl.Process(baseRow, item.data, false); break;
+                        }
+                    }
+                }
+
+
             }
         }
 
 
-        /// <summary>当前选择的Excel</summary>
-        private Button CurSelExcelBtn = null;
-
-
-        /// <summary>
-        /// 选择Excel
-        /// </summary>
-        /// <param name="button"></param>
-        private void SelExcelBtn(Button button)
-        {
-            Debug.Log($"excel name:{button.text}");
-
-            this.CurSelExcelBtn = button;
-            excelVisualElement.SetData(keyValuePairs[button]);
-            excelVisualElement.SetActive(true);
-        }
 
 
         public class ExcelVisualElement
         {
-            public VisualElement root;
+            public VisualElement root = null;
 
             public TextField NameSpace = null;
+            public Label ExcelName = null;
 
             public Toggle UseHashString = null, PublicItemsGetter = null, HideaAssetProperties = null, CompressColorintoInteger = null, GenerateGetMethodIfPossoble = null, TreaUnknowTypesasEnum = null, IDorKeytoMuitiValues = null, GengrateToStringMethod = null;
 
             public Button ScriptFolder = null, AssetFolder = null, InsertBtn = null, DeleteBtn = null, ProcessBtn = null;
 
-            public ExcelVisualElement(VisualElement root, Action onClickInsertBtnCallback, Action onClickDeleteBtnCallback, Action onClickProcessBtnCallback)
+            public ExcelVisualElement(VisualElement parent, Action<ExcelVisualElement> insertCallback, Action<ExcelVisualElement> deleteCallback, Action<ExcelVisualElement> processCallback)
             {
+                var item = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>("Assets/Editor/UI Toolkit/ProcessExcelWindow/ExcelItem.uxml");
+                VisualElement root = item.Instantiate();
+                parent.Add(root);
+
                 this.root = root;
                 this.NameSpace = root.Q<TextField>(nameof(NameSpace));
                 this.ScriptFolder = root.Q<Button>(nameof(ScriptFolder));
@@ -244,6 +300,7 @@ namespace UGame_Local_Editor
                 this.InsertBtn = root.Q<Button>(nameof(InsertBtn));
                 this.DeleteBtn = root.Q<Button>(nameof(DeleteBtn));
                 this.ProcessBtn = root.Q<Button>(nameof(ProcessBtn));
+                this.ExcelName = root.Q<Label>(nameof(ExcelName));
 
 
                 UseHashString.RegisterCallback<ChangeEvent<bool>>(UseHashStringRegisterCallback);
@@ -254,141 +311,151 @@ namespace UGame_Local_Editor
                 TreaUnknowTypesasEnum.RegisterCallback<ChangeEvent<bool>>(TreaUnknowTypesasEnumRegisterCallback);
                 IDorKeytoMuitiValues.RegisterCallback<ChangeEvent<bool>>(IDorKeytoMuitiValuesRegisterCallback);
                 GengrateToStringMethod.RegisterCallback<ChangeEvent<bool>>(GengrateToStringMethodRegisterCallback);
-
+                this.NameSpace.RegisterCallback<ChangeEvent<string>>(demo);
 
                 ScriptFolder.clicked += ScriptDirectory_clicked;
                 AssetFolder.clicked += AssetDirectory_clicked;
 
-                InsertBtn.clicked += onClickInsertBtnCallback;
-                DeleteBtn.clicked += onClickDeleteBtnCallback;
-                ProcessBtn.clicked += onClickProcessBtnCallback;
+                InsertBtn.clicked += () => { insertCallback?.Invoke(this); };
+                DeleteBtn.clicked += () => { deleteCallback?.Invoke(this); };
+                ProcessBtn.clicked += () => { processCallback?.Invoke(this); };
             }
 
 
+            /// <summary>选择脚本生成路径</summary>
             private void ScriptDirectory_clicked()
             {
-                Debug.LogError($"{Application.dataPath}");
-                if (elementParams == null) return;
+                if (data == null) return;
 
                 string tmp = $"{Application.dataPath}/../HotFixAssembly/Scripts/Game/Data/Normal/ScriptableObject";
                 string path = EditorUtility.OpenFolderPanel("脚本生成路径", Application.dataPath, string.Empty);
                 if (!string.IsNullOrEmpty(path))
                 {
-                    elementParams.ScriptFolder = ScriptFolder.text = path;
+                    data.ScriptFolder = ScriptFolder.text = path;
                 }
             }
 
 
+            /// <summary>选择数据生成路径</summary>
             private void AssetDirectory_clicked()
             {
-                if (elementParams == null) return;
+                if (data == null) return;
                 string path = EditorUtility.OpenFolderPanel("解析数据生成路径", $"{Application.dataPath}", string.Empty);
                 if (!string.IsNullOrEmpty(path))
                 {
-                    elementParams.AssetFolder = AssetFolder.text = path;
+                    data.AssetFolder = AssetFolder.text = path;
                 }
             }
 
 
             private void UseHashStringRegisterCallback(ChangeEvent<bool> value)
             {
-                if (elementParams == null) return;
-                elementParams.UseHashString = value.newValue;
+                if (data == null) return;
+                data.UseHashString = value.newValue;
             }
 
 
             private void PublicItemsGetterRegisterCallback(ChangeEvent<bool> value)
             {
-                if (elementParams == null) return;
-                elementParams.PublicItemsGetter = value.newValue;
+                if (data == null) return;
+                data.PublicItemsGetter = value.newValue;
             }
 
 
             private void HideaAssetPropertiesRegisterCallback(ChangeEvent<bool> value)
             {
-                if (elementParams == null) return;
-                elementParams.HideaAssetProperties = value.newValue;
+                if (data == null) return;
+                data.HideaAssetProperties = value.newValue;
             }
 
 
             private void CompressColorintoIntegerRegisterCallback(ChangeEvent<bool> value)
             {
-                if (elementParams == null) return;
-                elementParams.CompressColorintoInteger = value.newValue;
+                if (data == null) return;
+                data.CompressColorintoInteger = value.newValue;
             }
 
 
             private void GenerateGetMethodIfPossobleRegisterCallback(ChangeEvent<bool> value)
             {
-                if (elementParams == null) return;
-                elementParams.GenerateGetMethodIfPossoble = value.newValue;
+                if (data == null) return;
+                data.GenerateGetMethodIfPossoble = value.newValue;
             }
 
 
             private void TreaUnknowTypesasEnumRegisterCallback(ChangeEvent<bool> value)
             {
-                if (elementParams == null) return;
-                elementParams.TreaUnknowTypesasEnum = value.newValue;
+                if (data == null) return;
+                data.TreaUnknowTypesasEnum = value.newValue;
             }
 
 
             private void IDorKeytoMuitiValuesRegisterCallback(ChangeEvent<bool> value)
             {
-                if (elementParams == null) return;
-                elementParams.IDorKeytoMultiValues = value.newValue;
+                if (data == null) return;
+                data.IDorKeytoMultiValues = value.newValue;
             }
 
 
             private void GengrateToStringMethodRegisterCallback(ChangeEvent<bool> value)
             {
-                if (elementParams == null) return;
-                elementParams.GengrateToStringMethod = value.newValue;
+                if (data == null) return;
+                data.GengrateToStringMethod = value.newValue;
             }
 
 
-
-            public void SetActive(bool active)
+            public void demo(ChangeEvent<string> value)
             {
-                root.visible = active;
+                Debug.Log($"{value.newValue}");
             }
 
 
-            private ExcelVisualElementParams elementParams = null;
+            public Body data = null;
 
-            public void SetData(ExcelVisualElementParams elementParams)
+            public void SetData(Body data)
             {
-                this.elementParams = elementParams;
-                this.NameSpace.value = elementParams.NameSpace;
-                this.ScriptFolder.text = elementParams.ScriptFolder;
-                this.AssetFolder.text = elementParams.AssetFolder;
-                this.UseHashString.value = elementParams.UseHashString;
-                this.PublicItemsGetter.value = elementParams.PublicItemsGetter;
-                this.HideaAssetProperties.value = elementParams.HideaAssetProperties;
-                this.CompressColorintoInteger.value = elementParams.CompressColorintoInteger;
-                this.GenerateGetMethodIfPossoble.value = elementParams.GenerateGetMethodIfPossoble;
-                this.TreaUnknowTypesasEnum.value = elementParams.TreaUnknowTypesasEnum;
-                this.IDorKeytoMuitiValues.value = elementParams.IDorKeytoMultiValues;
-                this.GengrateToStringMethod.value = elementParams.GengrateToStringMethod;
+                this.data = data;
+                this.NameSpace.value = data.NameSpace;
+                this.ScriptFolder.text = data.ScriptFolder;
+                this.AssetFolder.text = data.AssetFolder;
+                this.UseHashString.value = data.UseHashString;
+                this.PublicItemsGetter.value = data.PublicItemsGetter;
+                this.HideaAssetProperties.value = data.HideaAssetProperties;
+                this.CompressColorintoInteger.value = data.CompressColorintoInteger;
+                this.GenerateGetMethodIfPossoble.value = data.GenerateGetMethodIfPossoble;
+                this.TreaUnknowTypesasEnum.value = data.TreaUnknowTypesasEnum;
+                this.IDorKeytoMuitiValues.value = data.IDorKeytoMultiValues;
+                this.GengrateToStringMethod.value = data.GengrateToStringMethod;
+                this.ExcelName.text = data.ExcelName;
             }
 
         }
 
 
+        [Serializable]
+        public class CacheData
+        {
+            //表头
+            public Head head = null;
 
-        [System.Serializable]
+            //表身
+            public Body[] body = null;
+        }
 
-        public class BaseRow
+
+        [Serializable]
+        public class Head
         {
             public int FieldRow = 0;
             public int TypeRow = 1;
-            public int DataFromRow = 5;
+            public int DataFromRow = 2;
         }
 
 
-        [System.Serializable]
-        public class ExcelVisualElementParams
+        [Serializable]
+        public class Body
         {
-            public string ExcelPath = "", NameSpace = "UGame.Remove", ScriptFolder = "Select", AssetFolder = "Select";
+            public string ExcelName = string.Empty, ExcelPath = string.Empty, NameSpace = "UGame.Remove", ScriptFolder = "Select", AssetFolder = "Select";
 
 
             public bool UseHashString = false;
@@ -422,16 +489,6 @@ namespace UGame_Local_Editor
             public bool GengrateToStringMethod = true;
 
         }
-
-
-        [System.Serializable]
-        public class ExcelToScriptableObjectSettings
-        {
-            public BaseRow baseRow = null;
-
-            public ExcelVisualElementParams[] excels = null;
-        }
-
 
     }
 }

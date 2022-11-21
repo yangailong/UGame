@@ -1,8 +1,24 @@
 ﻿{
-    "baseRow": {
+    "head": {
         "FieldRow": 0,
         "TypeRow": 1,
         "DataFromRow": 4
     },
-    "excels": []
+    "body": [
+        {
+            "ExcelName": "CfgRemoteLang",
+            "ExcelPath": "E:/Project/Unity/Dev/UGame/Excels/CfgRemoteLang.xlsx",
+            "NameSpace": "",
+            "ScriptFolder": "E:/Project/Unity/Dev/UGame/Assets/Data",
+            "AssetFolder": "E:/Project/Unity/Dev/UGame/Assets/Data",
+            "UseHashString": false,
+            "PublicItemsGetter": false,
+            "HideaAssetProperties": false,
+            "CompressColorintoInteger": false,
+            "GenerateGetMethodIfPossoble": true,
+            "TreaUnknowTypesasEnum": false,
+            "IDorKeytoMultiValues": false,
+            "GengrateToStringMethod": true
+        }
+    ]
 }
