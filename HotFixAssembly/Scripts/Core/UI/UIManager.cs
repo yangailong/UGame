@@ -88,15 +88,15 @@ namespace UGame_Remove
         /// </summary>
         /// <typeparam name="T">要打开的窗口</typeparam>
         /// <param name="callback">打开窗口后回调</param>
-        /// <param name="param">打开窗口所需要参数</param>
-        public static void Open<T>(UICallback callback = null, params object[] param) where T : UIPanelBase
+        /// <param name="message">打开窗口所需要参数</param>
+        public static void Open<T>(UICallback callback = null, params object[] message) where T : UIPanelBase
         {
             var panelName = typeof(T).Name;
 
             Action<UIPanelBase> openPanel = panel =>
             {
 
-                panel.Params = param;
+                panel.SetData(message);
 
                 panel.OnUIEnable();
 
@@ -133,8 +133,8 @@ namespace UGame_Remove
         /// <typeparam name="T">要关闭的窗口</typeparam>
         /// <param name="isPlayAnim">是否播放关闭动画</param>
         /// <param name="callback">关闭窗口后的回调</param>
-        /// <param name="param">关闭窗口需要的参数</param>
-        public static void Close<T>(bool isPlayAnim = true, UICallback callback = null, params object[] param) where T : UIPanelBase
+        /// <param name="message">关闭窗口需要的参数</param>
+        public static void Close<T>(bool isPlayAnim = true, UICallback callback = null, params object[] message) where T : UIPanelBase
         {
             if (!UIPanelDic.ContainsKey(typeof(T).Name))
             {
@@ -142,7 +142,7 @@ namespace UGame_Remove
             }
             else
             {
-                Close(UIPanelDic[typeof(T).Name], isPlayAnim, callback, param);
+                Close(UIPanelDic[typeof(T).Name], isPlayAnim, callback, message);
             }
         }
 
@@ -153,8 +153,8 @@ namespace UGame_Remove
         /// <param name="panel">要关闭的窗口</param>
         /// <param name="isPlayAnim">是否播放关闭动画</param>
         /// <param name="callback">关闭窗口后的回调</param>
-        /// <param name="param">关闭窗口需要的参数</param>
-        public static void Close(UIPanelBase panel, bool isPlayAnim = true, UICallback callback = null, params object[] param)
+        /// <param name="message">关闭窗口需要的参数</param>
+        public static void Close(UIPanelBase panel, bool isPlayAnim = true, UICallback callback = null, params object[] message)
         {
             if (isPlayAnim)
             {
@@ -167,7 +167,7 @@ namespace UGame_Remove
                     callback = (u, p) => { panel.OnUIDisable(); };
                 }
 
-                UIManager.m_AnimManager.StartExitAnim(panel, callback, param);
+                UIManager.m_AnimManager.StartExitAnim(panel, callback, message);
 
             }
             else

@@ -9,9 +9,6 @@ namespace UGame_Remove
     public class DemoPanel : UIPanelBase, IUIAnimation
     {
 
-        public override object[] Params { set => base.Params = value; }
-
-
         public override void OnUIAwake()
         {
             Debug.LogError($"OnUIAwake");
@@ -49,7 +46,7 @@ namespace UGame_Remove
         }
 
 
-        public IEnumerator ExitAnim(UICallback callBack = null, params object[] param)
+        public IEnumerator ExitAnim(UICallback callBack = null, params object[] message)
         {
             yield return new WaitForSeconds(2f);
 
