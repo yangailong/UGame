@@ -8,24 +8,38 @@ namespace UGame_Remove
 {
     public class WebRequest
     {
-        public string url;
+        public string url = string.Empty;
 
-        public string param;
+        public string message = string.Empty;
 
-        public string result;
+        public string result = string.Empty;
+
+
+        public WebRequest() { }
+
+
+        public WebRequest(string url, string message)
+        {
+            this.url = url;
+            this.message = message;
+        }
+
 
         public IEnumerator PosSend(Dictionary<string, string> headers)
         {
-            url = $"{url}?{param}";
+            url = $"{url}?{message}";
 
             using (UnityWebRequest www = UnityWebRequest.Post(url, "Pos"))
             {
-                foreach (KeyValuePair<string, string> kvp in headers)
+                if (headers != null)
                 {
-                    www.SetRequestHeader(kvp.Key, kvp.Value);
+                    foreach (KeyValuePair<string, string> kvp in headers)
+                    {
+                        www.SetRequestHeader(kvp.Key, kvp.Value);
+                    }
                 }
 
-                www.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(param));
+                www.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(message));
 
                 yield return www.SendWebRequest();
 
@@ -45,9 +59,12 @@ namespace UGame_Remove
         {
             using (UnityWebRequest www = UnityWebRequest.Get(url))
             {
-                foreach (KeyValuePair<string, string> kvp in headers)
+                if (headers != null)
                 {
-                    www.SetRequestHeader(kvp.Key, kvp.Value);
+                    foreach (KeyValuePair<string, string> kvp in headers)
+                    {
+                        www.SetRequestHeader(kvp.Key, kvp.Value);
+                    }
                 }
 
                 //if (!string.IsNullOrEmpty(param))
@@ -55,11 +72,15 @@ namespace UGame_Remove
                 //    webRequest.uploadHandler = new UploadHandlerRaw(Encoding.UTF8.GetBytes(param));
                 //}
 
-                www.timeout = 50;
+                www.timeout = 30;
+
+                Debug.Log($"C2S:url:{url}  message:{message}");
 
                 yield return www.SendWebRequest();
 
                 result = www.downloadHandler.text;
+
+                Debug.Log($"S2C:result:{result}");
 
                 if (string.IsNullOrEmpty(result))
                 {
