@@ -1,14 +1,14 @@
 ﻿{
     "head": {
-        "FieldRow": 0,
-        "TypeRow": 1,
-        "DataFromRow": 4
+        "FieldRow": 1,
+        "TypeRow": 2,
+        "DataFromRow": 5
     },
     "body": [
         {
-            "ExcelName": "CfgRemoteLang",
-            "ExcelPath": "E:/Project/Unity/Dev/UGame/Excels/CfgRemoteLang.xlsx",
-            "NameSpace": "",
+            "ExcelName": "CfgLocalLang",
+            "ExcelPath": "E:/Project/Unity/Dev/UGame/Excels/CfgLocalLang.xlsx",
+            "NameSpace": "UGame.Remove",
             "ScriptFolder": "E:/Project/Unity/Dev/UGame/Assets/Data",
             "AssetFolder": "E:/Project/Unity/Dev/UGame/Assets/Data",
             "UseHashString": false,

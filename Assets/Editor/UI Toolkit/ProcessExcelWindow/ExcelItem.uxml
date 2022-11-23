@@ -4,10 +4,14 @@
             <ui:VisualElement style="height: 25px; flex-direction: row; align-items: center; flex-grow: 1;">
                 <ui:Label text="脚本生成路径" display-tooltip-when-elided="true" style="width: 152px; justify-content: space-around; height: 100%; -unity-text-align: middle-left;" />
                 <ui:Button text="Select" display-tooltip-when-elided="true" name="ScriptFolder" style="flex-grow: 1; -unity-text-align: middle-center; transition-duration: 0.3s; background-color: rgb(55, 55, 55); height: 100%; font-size: 13px; color: rgb(219, 216, 216);" />
+                <ui:Button text="复制" display-tooltip-when-elided="true" name="ScriptPathCopyBtn" style="font-size: 13px;" />
+                <ui:Button text="粘贴" display-tooltip-when-elided="true" name="ScriptPathPasteBtn" style="font-size: 13px;" />
             </ui:VisualElement>
             <ui:VisualElement style="height: 25px; flex-direction: row; align-items: center; flex-grow: 1;">
                 <ui:Label text="数据生成路径" display-tooltip-when-elided="true" style="width: 152px; height: 100%; -unity-text-align: middle-left;" />
-                <ui:Button text="Select" display-tooltip-when-elided="true" name="AssetFolder" style="flex-grow: 1; -unity-text-align: middle-center; transition-duration: 0.3s; background-color: rgb(55, 55, 55); height: 100%; font-size: 13px; color: rgba(219, 216, 216, 255);" />
+                <ui:Button text="Select" display-tooltip-when-elided="true" name="AssetFolder" style="flex-grow: 1; -unity-text-align: middle-center; transition-duration: 0.3s; background-color: rgb(55, 55, 55); height: 100%; font-size: 13px; color: rgb(219, 216, 216);" />
+                <ui:Button text="复制" display-tooltip-when-elided="true" name="AssetPathCopyBtn" style="font-size: 13px;" />
+                <ui:Button text="粘贴" display-tooltip-when-elided="true" name="AssetPathPasteBtn" style="font-size: 13px;" />
             </ui:VisualElement>
             <ui:TextField picking-mode="Ignore" label="脚本命名空间" value="filler text" text="UGame.Remove" name="NameSpace" style="height: 25px; justify-content: center; align-items: center; margin-top: 1px; -unity-text-outline-color: rgb(0, 0, 0); border-top-color: rgb(0, 0, 0); border-left-color: rgb(0, 0, 0); border-right-color: rgb(0, 0, 0); border-bottom-color: rgb(0, 0, 0); flex-grow: 1;" />
             <ui:VisualElement style="flex-direction: row; height: 25px; align-items: center; justify-content: space-between; -unity-font-style: bold; flex-grow: 1;">

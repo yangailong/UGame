@@ -2,13 +2,13 @@
     <ui:VisualElement style="flex-grow: 1; font-size: 13px; -unity-font-style: bold;">
         <ui:VisualElement style="height: 100px; flex-direction: row; border-bottom-width: 1px; border-bottom-color: rgb(84, 84, 84);">
             <ui:VisualElement style="flex-grow: 1;">
-                <uie:IntegerField label="FieldRow" value="0" name="FieldRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1; flex-shrink: 1;" />
-                <uie:IntegerField label="TypeRow" value="1" name="TypeRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; flex-grow: 1; flex-shrink: 1;" />
-                <uie:IntegerField label="DataFromRow" value="4" name="DataFromRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; flex-grow: 1; flex-shrink: 1;" />
+                <uie:IntegerField label="数据类别行" value="1" name="FieldRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; color: rgb(255, 255, 255); flex-grow: 1; flex-shrink: 1;" />
+                <uie:IntegerField label="数据类型行" value="2" name="TypeRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; flex-grow: 1; flex-shrink: 1;" />
+                <uie:IntegerField label="数据起始行" value="5" name="DataFromRow" style="height: 33px; font-size: 13px; -unity-font-style: bold; flex-grow: 1; flex-shrink: 1;" />
             </ui:VisualElement>
             <ui:VisualElement style="flex-grow: 0; width: 213px; justify-content: space-around;">
                 <ui:Button text="添加Excel" display-tooltip-when-elided="true" name="AddNewExcel" style="height: 33px; transition-duration: 0.3s; rotate: 0; transition-property: all; -unity-background-scale-mode: stretch-to-fill; border-top-color: rgb(48, 48, 48); -unity-background-image-tint-color: rgb(255, 255, 255); font-size: 18px; color: rgb(219, 216, 216); -unity-font-style: bold;" />
-                <ui:Button text="解析所有Excel" display-tooltip-when-elided="true" name="ProcessAll" usage-hints="None" style="height: 33px; transition-duration: 0.3s; visibility: visible; overflow: hidden; rotate: 0; transition-property: all; font-size: 18px; color: rgba(219, 216, 216, 255);" />
+                <ui:Button text="解析所有Excel" display-tooltip-when-elided="true" name="ProcessAll" usage-hints="None" style="height: 33px; transition-duration: 0.3s; visibility: visible; overflow: hidden; rotate: 0; transition-property: all; font-size: 18px; color: rgb(219, 216, 216);" />
             </ui:VisualElement>
         </ui:VisualElement>
         <ui:ScrollView name="ScrollView" style="height: auto; flex-grow: 1; flex-direction: row; background-color: rgb(36, 36, 36);" />

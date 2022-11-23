@@ -1,5 +1,4 @@
 ﻿using Excel;
-using NUnit.Framework;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
@@ -21,6 +20,7 @@ namespace UGame_Local_Editor
 
         public bool Process(Head head, Body body, bool generateCode)
         {
+           
             string className = Path.GetFileNameWithoutExtension(body.ExcelPath);
 
 
