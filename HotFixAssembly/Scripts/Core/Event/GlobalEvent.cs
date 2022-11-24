@@ -64,9 +64,9 @@ namespace UGame_Remove
                 throw new ArgumentNullException($"{nameof(handler)} is invalid");
             }
 
-            if (!m_EnumEventDic.TryGetValue(key, out EventHandler eventHandler))
+            if (m_EnumEventDic.ContainsKey(key))
             {
-                eventHandler -= handler;
+                m_EnumEventDic[key] -= handler;
             }
         }
 
