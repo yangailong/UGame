@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 221227e2fee48df4081a52460484c0bd, type: 3}
   m_Name: UGame
   m_EditorClassIdentifier: 
-  key: FF86FED791884CE9
-  jITFlags: 0
+  key: 1054BB5815325E78
+  jITFlags: 2
   usePdb: 1

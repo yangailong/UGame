@@ -121,12 +121,12 @@ namespace UGame_Local_Editor
         {
             Debug.Log($"添加excel");
 
-            string path = EditorUtility.OpenFilePanel("选择Exce", ".", "xlsx");
+            string projPath = Application.dataPath;
+            projPath = projPath.Substring(0, projPath.Length - 6);
+
+            string path = EditorUtility.OpenFilePanel("选择Exce", projPath, "xlsx");
             if (!string.IsNullOrEmpty(path))
             {
-
-                string projPath = Application.dataPath;
-                projPath = projPath.Substring(0, projPath.Length - 6);
                 if (path.StartsWith(path))
                 {
                     string name = Path.GetFileNameWithoutExtension(path);
@@ -137,8 +137,6 @@ namespace UGame_Local_Editor
 
                     excelVisuals.Add(element);
                 }
-
-
             }
         }
 
@@ -190,7 +188,8 @@ namespace UGame_Local_Editor
 
             List<string> excelPaths = new List<string>();
 
-            var head = new Head() { TypeRow = TypeRow.value, DataFromRow = DataFromRow.value, FieldRow = FieldRow.value };
+            //Excel是第一行计数,数组是从0开始获取，所以在原来的基础上都-1，就能和Excel对应上行数，方便理解
+            var head = new Head() { TypeRow = TypeRow.value - 1, DataFromRow = DataFromRow.value - 1, FieldRow = FieldRow.value - 1 };
 
             for (int i = 0; i < eves.Count; i++)
             {
@@ -246,7 +245,8 @@ namespace UGame_Local_Editor
                 string[] names = EditorPrefs.GetString("process_excels", "").Split('#');
                 EditorPrefs.DeleteKey("process_excels");
 
-                var baseRow = new Head() { TypeRow = TypeRow.value, DataFromRow = DataFromRow.value, FieldRow = FieldRow.value };
+                //Excel是第一行计数,数组是从0开始获取，所以在原来的基础上都-1，就能和Excel对应上行数，方便理解
+                var baseRow = new Head() { TypeRow = TypeRow.value - 1, DataFromRow = DataFromRow.value - 1, FieldRow = FieldRow.value - 1 };
 
                 foreach (string name in names)
                 {
@@ -277,7 +277,7 @@ namespace UGame_Local_Editor
 
             public Toggle UseHashString = null, PublicItemsGetter = null, HideaAssetProperties = null, CompressColorintoInteger = null, GenerateGetMethodIfPossoble = null, TreaUnknowTypesasEnum = null, IDorKeytoMuitiValues = null, GengrateToStringMethod = null;
 
-            public Button ScriptFolder = null, AssetFolder = null, InsertBtn = null, DeleteBtn = null, ProcessBtn = null;
+            public Button ScriptFolder = null, AssetFolder = null, InsertBtn = null, DeleteBtn = null, ProcessBtn = null, ScriptPathCopyBtn = null, ScriptPathPasteBtn = null, AssetPathCopyBtn = null, AssetPathPasteBtn;
 
             public ExcelVisualElement(VisualElement parent, Action<ExcelVisualElement> insertCallback, Action<ExcelVisualElement> deleteCallback, Action<ExcelVisualElement> processCallback)
             {
@@ -287,8 +287,15 @@ namespace UGame_Local_Editor
 
                 this.root = root;
                 this.NameSpace = root.Q<TextField>(nameof(NameSpace));
+                this.ExcelName = root.Q<Label>(nameof(ExcelName));
                 this.ScriptFolder = root.Q<Button>(nameof(ScriptFolder));
                 this.AssetFolder = root.Q<Button>(nameof(AssetFolder));
+                this.ScriptPathCopyBtn = root.Q<Button>(nameof(ScriptPathCopyBtn));
+                this.ScriptPathPasteBtn = root.Q<Button>(nameof(ScriptPathPasteBtn));
+                this.AssetPathCopyBtn = root.Q<Button>(nameof(AssetPathCopyBtn));
+                this.AssetPathPasteBtn = root.Q<Button>(nameof(AssetPathPasteBtn));
+
+
                 this.UseHashString = root.Q<Toggle>(nameof(UseHashString));
                 this.PublicItemsGetter = root.Q<Toggle>(nameof(PublicItemsGetter));
                 this.HideaAssetProperties = root.Q<Toggle>(nameof(HideaAssetProperties));
@@ -297,10 +304,10 @@ namespace UGame_Local_Editor
                 this.TreaUnknowTypesasEnum = root.Q<Toggle>(nameof(TreaUnknowTypesasEnum));
                 this.IDorKeytoMuitiValues = root.Q<Toggle>(nameof(IDorKeytoMuitiValues));
                 this.GengrateToStringMethod = root.Q<Toggle>(nameof(GengrateToStringMethod));
+
                 this.InsertBtn = root.Q<Button>(nameof(InsertBtn));
                 this.DeleteBtn = root.Q<Button>(nameof(DeleteBtn));
                 this.ProcessBtn = root.Q<Button>(nameof(ProcessBtn));
-                this.ExcelName = root.Q<Label>(nameof(ExcelName));
 
 
                 UseHashString.RegisterCallback<ChangeEvent<bool>>(UseHashStringRegisterCallback);
@@ -311,14 +318,47 @@ namespace UGame_Local_Editor
                 TreaUnknowTypesasEnum.RegisterCallback<ChangeEvent<bool>>(TreaUnknowTypesasEnumRegisterCallback);
                 IDorKeytoMuitiValues.RegisterCallback<ChangeEvent<bool>>(IDorKeytoMuitiValuesRegisterCallback);
                 GengrateToStringMethod.RegisterCallback<ChangeEvent<bool>>(GengrateToStringMethodRegisterCallback);
-                this.NameSpace.RegisterCallback<ChangeEvent<string>>(demo);
 
                 ScriptFolder.clicked += ScriptDirectory_clicked;
                 AssetFolder.clicked += AssetDirectory_clicked;
 
+                ScriptPathCopyBtn.clicked += ScriptPathCopyBtn_clicked;
+                ScriptPathPasteBtn.clicked += ScriptPathPasteBtn_clicked;
+                AssetPathCopyBtn.clicked += AssetPathCopyBtn_clicked;
+                AssetPathPasteBtn.clicked += AssetPathPasteBtn_clicked;
+
+
                 InsertBtn.clicked += () => { insertCallback?.Invoke(this); };
                 DeleteBtn.clicked += () => { deleteCallback?.Invoke(this); };
                 ProcessBtn.clicked += () => { processCallback?.Invoke(this); };
+
+            }
+
+
+            private void ScriptPathCopyBtn_clicked()
+            {
+                TextEditor textEditor = new TextEditor();
+                textEditor.text = data.ScriptFolder;
+                textEditor.SelectAll();
+                textEditor.Copy();
+            }
+
+            private void ScriptPathPasteBtn_clicked()
+            {
+                data.ScriptFolder = ScriptFolder.text = GUIUtility.systemCopyBuffer;
+            }
+
+            private void AssetPathCopyBtn_clicked()
+            {
+                TextEditor textEditor = new TextEditor();
+                textEditor.text = data.AssetFolder;
+                textEditor.SelectAll();
+                textEditor.Copy();
+            }
+
+            private void AssetPathPasteBtn_clicked()
+            {
+                data.AssetFolder = AssetFolder.text = GUIUtility.systemCopyBuffer;
             }
 
 
@@ -327,7 +367,6 @@ namespace UGame_Local_Editor
             {
                 if (data == null) return;
 
-                string tmp = $"{Application.dataPath}/../HotFixAssembly/Scripts/Game/Data/Normal/ScriptableObject";
                 string path = EditorUtility.OpenFolderPanel("脚本生成路径", Application.dataPath, string.Empty);
                 if (!string.IsNullOrEmpty(path))
                 {
@@ -404,11 +443,6 @@ namespace UGame_Local_Editor
             }
 
 
-            public void demo(ChangeEvent<string> value)
-            {
-                Debug.Log($"{value.newValue}");
-            }
-
 
             public Body data = null;
 
@@ -446,9 +480,12 @@ namespace UGame_Local_Editor
         [Serializable]
         public class Head
         {
-            public int FieldRow = 0;
-            public int TypeRow = 1;
-            public int DataFromRow = 2;
+
+            public int FieldRow = 1;
+
+            public int TypeRow = 2;
+
+            public int DataFromRow = 5;
         }
 
 

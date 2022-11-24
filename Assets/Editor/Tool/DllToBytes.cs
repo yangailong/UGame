@@ -18,7 +18,7 @@ namespace UGame_Local_Editor
         private static readonly string pdbFullName = "HotFixAssembly.pdb";
 
 
-        [MenuItem("Tools/UGame/通过密钥生成加密Dll文件【此方法是自动调用，防止出错，预留手动入口】")]
+        [MenuItem("Tools/UGame/通过密钥生成加密Dll文件【此方法是引擎自动调用，防止出错，预留手动入口】")]
         public static void DLLToBytes()
         {
             if (!Directory.Exists(originPath))

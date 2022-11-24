@@ -17,7 +17,7 @@ namespace Excel2Charp
         private static Regex reg_color32 = new Regex(@"^[A-Fa-f0-9]{8}$");
         private static Regex reg_color24 = new Regex(@"^[A-Fa-f0-9]{6}$");
 
-        [MenuItem("Tools/UGame/Excel2ScriptableObject")]
+        //[MenuItem("Tools/UGame/Excel2ScriptableObject")]
         static void Excel2ScriptableObject()
         {
             ExcelToScriptableObject window = GetWindow<ExcelToScriptableObject>("Process Excel");

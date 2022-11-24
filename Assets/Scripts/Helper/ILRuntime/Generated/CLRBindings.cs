@@ -100,7 +100,7 @@ namespace ILRuntime.Runtime.Generated
             System_Object_Binding.Register(app);
             System_Threading_Interlocked_Binding.Register(app);
             WebSocket4Net_WebSocket_Binding.Register(app);
-            System_Exception_Binding.Register(app);
+            System_MethodAccessException_Binding.Register(app);
             UnityEngine_JsonUtility_Binding.Register(app);
             System_EventHandler_Binding.Register(app);
             System_EventHandler_1_ErrorEventArgs_Binding.Register(app);
@@ -122,10 +122,11 @@ namespace ILRuntime.Runtime.Generated
             System_Action_2_Int32_IMessageAdapt_Binding_Adaptor_Binding.Register(app);
             System_Activator_Binding.Register(app);
             UnityEngine_Pool_ObjectPool_1_Component_Binding.Register(app);
-            UnityEngine_PlayerPrefs_Binding.Register(app);
-            UGame_Local_CryptoManager_Binding.Register(app);
             UGame_Local_UGame_Binding.Register(app);
             UGame_Local_CfgUGame_Binding.Register(app);
+            UnityEngine_PlayerPrefs_Binding.Register(app);
+            UGame_Local_CryptoManager_Binding.Register(app);
+            System_Exception_Binding.Register(app);
             UnityEngine_AddressableAssets_Addressables_Binding.Register(app);
             UnityEngine_ResourceManagement_AsyncOperations_AsyncOperationHandle_1_TextAsset_Binding.Register(app);
             System_Action_1_TextAsset_Binding.Register(app);
@@ -143,9 +144,6 @@ namespace ILRuntime.Runtime.Generated
             System_Collections_Generic_Dictionary_2_String_MonoBehaviourAdapter_Binding_Adaptor_Binding_ValueCollection_Binding_Enumerator_Binding.Register(app);
             System_Enum_Binding.Register(app);
             System_ApplicationException_Binding.Register(app);
-            UnityEngine_UI_CanvasScaler_Binding.Register(app);
-            UnityEngine_Screen_Binding.Register(app);
-            UnityEngine_Vector2_Binding.Register(app);
             UnityEngine_Application_Binding.Register(app);
             System_Reflection_MethodBase_Binding.Register(app);
             UnityEngine_Events_UnityEventBase_Binding.Register(app);
