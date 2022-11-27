@@ -23,7 +23,6 @@ namespace UGame_Local_Editor
            
             string className = Path.GetFileNameWithoutExtension(body.ExcelPath);
 
-
             //检查文件名是否合法
             if (!Regex.IsMatch(className, @"^[A-Z][A-Za-z0-9_]*$"))
             {
