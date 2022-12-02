@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scripts/Game/AssetsDownLoad/AssetsDownLoad.cs.meta
+guid: 0c8dff8883c14d345b9a6284be503c62
+=======
 guid: 231604a492e4a4c4b8950e92d8b0a199
+>>>>>>> dev:Assets/Editor/UI Toolkit/ProcessExcelWindow/ProcessExcelWindow.cs.meta
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
