@@ -7,10 +7,10 @@
     "body": [
         {
             "ExcelName": "CfgLocalLang",
-            "ExcelPath": "E:/Project/Unity/Dev/UGame/Excels/CfgLocalLang.xlsx",
+            "ExcelPath": "Excels/CfgLocalLang.xlsx",
             "NameSpace": "UGame.Remove",
-            "ScriptFolder": "E:/Project/Unity/Dev/UGame/Assets/Data",
-            "AssetFolder": "E:/Project/Unity/Dev/UGame/Assets/Data",
+            "ScriptFolder": "Assets/Data",
+            "AssetFolder": "Assets/Data",
             "UseHashString": false,
             "PublicItemsGetter": false,
             "HideaAssetProperties": false,

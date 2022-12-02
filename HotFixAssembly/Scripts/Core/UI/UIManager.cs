@@ -198,8 +198,7 @@ namespace UGame_Remove
         {
             if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
             {
-                panel.OnUIDestroy();
-                UIPanelDic.Remove(typeof(T).Name);
+                UIManager.Destroy(panel);
             }
         }
 
@@ -213,6 +212,7 @@ namespace UGame_Remove
             if (UIPanelDic.ContainsKey(panel.name))
             {
                 panel.OnUIDestroy();
+                panel.OnUIEnable();
                 UIPanelDic.Remove(panel.name);
             }
         }
@@ -227,7 +227,7 @@ namespace UGame_Remove
 
             for (int i = 0; i < arr.Length; i++)
             {
-                Destroy(arr[i]);
+                UIManager.Destroy(arr[i]);
             }
         }
 

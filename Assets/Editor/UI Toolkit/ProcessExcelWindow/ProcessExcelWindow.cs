@@ -121,19 +121,20 @@ namespace UGame_Local_Editor
         {
             Debug.Log($"添加excel");
 
-            string projPath = Application.dataPath;
-            projPath = projPath.Substring(0, projPath.Length - 6);
+            string projectPath = Application.dataPath;
+            projectPath = projectPath.Substring(0, projectPath.Length - 6);
 
-            string path = EditorUtility.OpenFilePanel("选择Exce", projPath, "xlsx");
+            string path = EditorUtility.OpenFilePanel("选择Exce", projectPath, "xlsx");
+
             if (!string.IsNullOrEmpty(path))
             {
                 if (path.StartsWith(path))
                 {
                     string name = Path.GetFileNameWithoutExtension(path);
-                    string excelPath = path.Substring(projPath.Length, path.Length - projPath.Length);
+                    string excelPath = path.Substring(projectPath.Length, path.Length - projectPath.Length);
 
                     ExcelVisualElement element = new ExcelVisualElement(ScrollView, InsertBtn_clicked, DeleteBtn_clicked, ProcessBtn_clicked);
-                    element.SetData(new Body() { ExcelName = name, ExcelPath = path });
+                    element.SetData(new Body() { ExcelName = name, ExcelPath = excelPath });
 
                     excelVisuals.Add(element);
                 }
@@ -197,7 +198,7 @@ namespace UGame_Local_Editor
 
                 if (!Directory.Exists(item.data.ScriptFolder))
                 {
-                    EditorUtility.DisplayDialog("解析失败", $"脚本生成路径不存在:{item.data.ScriptFolder}", "OK");
+                    EditorUtility.DisplayDialog("解析失败", item.data.ScriptFolder, "OK");
                     return;
                 }
 
@@ -207,17 +208,19 @@ namespace UGame_Local_Editor
                     return;
                 }
 
+                if (!Directory.Exists(item.data.ExcelPath))
+                {
+                    EditorUtility.DisplayDialog("解析失败", $"未找到excel{item.data.ExcelPath}", "OK");
+                    return;
+                }
+
                 if (!string.IsNullOrEmpty(item.data.NameSpace) && !Regex.IsMatch(item.data.NameSpace, @"(\S+\s*\.\s*)*\S+"))
                 {
                     EditorUtility.DisplayDialog("解析失败", $"{item.data.NameSpace}.{item.ExcelName.text}命名空间不合法", "OK");
                     return;
                 }
 
-                if (string.IsNullOrEmpty(item.data.ExcelPath))
-                {
-                    EditorUtility.DisplayDialog("解析失败", $"未找到excel{item.data.ExcelPath}", "OK");
-                    return;
-                }
+
 
                 if (impl.Process(head, item.data, true))
                 {
@@ -367,11 +370,17 @@ namespace UGame_Local_Editor
             {
                 if (data == null) return;
 
-                string path = EditorUtility.OpenFolderPanel("脚本生成路径", Application.dataPath, string.Empty);
+                string projectPath = Application.dataPath;
+                string path = EditorUtility.OpenFolderPanel("脚本生成路径", projectPath, string.Empty);
+
                 if (!string.IsNullOrEmpty(path))
                 {
-                    data.ScriptFolder = ScriptFolder.text = path;
+                    projectPath = projectPath.Substring(0, projectPath.Length - 6);
+                    string scriptPath = path.Substring(projectPath.Length, path.Length - projectPath.Length);
+
+                    data.ScriptFolder = ScriptFolder.text = scriptPath;
                 }
+
             }
 
 
@@ -379,10 +388,17 @@ namespace UGame_Local_Editor
             private void AssetDirectory_clicked()
             {
                 if (data == null) return;
-                string path = EditorUtility.OpenFolderPanel("解析数据生成路径", $"{Application.dataPath}", string.Empty);
+
+                string projectPath = Application.dataPath;
+
+                string path = EditorUtility.OpenFolderPanel("解析数据生成路径", projectPath, string.Empty);
+
                 if (!string.IsNullOrEmpty(path))
                 {
-                    data.AssetFolder = AssetFolder.text = path;
+                    projectPath = projectPath.Substring(0, projectPath.Length - 6);
+                    string assetPath = path.Substring(projectPath.Length, path.Length - projectPath.Length);
+
+                    data.AssetFolder = AssetFolder.text = assetPath;
                 }
             }
 
