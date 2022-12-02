@@ -62,7 +62,7 @@ namespace UGame_Remove
         {
             Debug.LogError($"点击.....");
 
-            NetProxy.Instance.C2SMessage();
+            //NetProxy.Instance.C2SMessage();
 
 
         }
