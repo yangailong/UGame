@@ -1,0 +1,10 @@
+Cyberworld	AudioClip/Cyberworld.mp3
+CfgRemoteLang	Data/ScriptableObject/Normal/CfgRemoteLang.asset
+HotFixAssembly	Dll/HotFixAssembly.pdb
+DemoPanel	Prefabs/DemoPanel/DemoPanel.prefab
+UIRoot	Prefabs/UIRoot/UIRoot.prefab
+Login	Scenes/Login.unity
+Main	Scenes/Main.unity
+bg	UI/bg.png
+UI_demo	UI/UI_demo.jpg
+AssetsMapper	AssetsMapper.txt
