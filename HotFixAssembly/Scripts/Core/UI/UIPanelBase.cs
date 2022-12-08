@@ -8,7 +8,7 @@ namespace UGame_Remove
 
         protected UIPanelBase() { }
 
-        protected object[] message { set;  get; }
+        protected object[] message { set; get; }
 
 
         public void SetData(params object[] message)
@@ -31,19 +31,19 @@ namespace UGame_Remove
 
         public virtual void OnUIEnable()
         {
-
+            gameObject.SetActive(true);
         }
 
 
         public virtual void OnUIDisable()
         {
-
+            gameObject.SetActive(false);
         }
 
 
         public virtual void OnUIDestroy()
         {
-
+            Destroy(gameObject);
         }
 
     }

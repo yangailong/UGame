@@ -71,7 +71,6 @@ namespace UGame_Remove
 
         public static Camera Camera => m_Camera;
 
-
         public static EventSystem EventSystem => m_EventSystem;
 
 
@@ -194,11 +193,11 @@ namespace UGame_Remove
         /// 删除窗口
         /// </summary>
         /// <typeparam name="T">要删除的窗口</typeparam>
-        public static void Destroy<T>() where T : UIPanelBase
+        public static void Destroy<T>(bool isPlayerAnim = false, UICallback callback = null, params object[] message) where T : UIPanelBase
         {
             if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
             {
-                UIManager.Destroy(panel);
+                UIManager.Destroy(panel, isPlayerAnim, callback, message);
             }
         }
 
@@ -207,12 +206,37 @@ namespace UGame_Remove
         /// 删除窗口
         /// </summary>
         /// <param name="panel">要删除的窗口</param>
-        public static void Destroy(UIPanelBase panel)
+        public static void Destroy(UIPanelBase panel, bool isPlayerAnim = false, UICallback callback = null, params object[] message)
         {
+            if (isPlayerAnim)
+            {
+                if (callback != null)
+                {
+                    callback += (u, p) =>
+                    {
+                        panel.OnUIDisable();
+                        panel.OnUIDestroy();
+                    };
+                }
+                else
+                {
+                    callback = (u, p) =>
+                    {
+                        panel.OnUIDisable();
+                        panel.OnUIDestroy();
+                    };
+                }
+
+                UIManager.m_AnimManager.StartExitAnim(panel, callback, message);
+            }
+            else
+            {
+                panel.OnUIDisable();
+                panel.OnUIDestroy();
+            }
+
             if (UIPanelDic.ContainsKey(panel.name))
             {
-                panel.OnUIDestroy();
-                panel.OnUIEnable();
                 UIPanelDic.Remove(panel.name);
             }
         }
@@ -275,6 +299,7 @@ namespace UGame_Remove
                 callback.Invoke(newPanel);
             });
         }
+
 
     }
 }
