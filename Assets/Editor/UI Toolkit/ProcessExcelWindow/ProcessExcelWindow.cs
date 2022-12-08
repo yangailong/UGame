@@ -196,23 +196,24 @@ namespace UGame_Local_Editor
             {
                 var item = eves[i];
 
+                if (!File.Exists(item.data.ExcelPath))
+                {
+                    EditorUtility.DisplayDialog("解析失败", $"未找到excel:{item.data.ExcelPath}", "OK");
+                    return;
+                }
+
                 if (!Directory.Exists(item.data.ScriptFolder))
                 {
-                    EditorUtility.DisplayDialog("解析失败", item.data.ScriptFolder, "OK");
+                    EditorUtility.DisplayDialog("解析失败", $"创建脚本路径不存在:{item.data.ScriptFolder}", "OK");
                     return;
                 }
 
                 if (!Directory.Exists(item.data.AssetFolder))
                 {
-                    EditorUtility.DisplayDialog("解析失败", $"数据生成路径不存在:{item.data.AssetFolder}", "OK");
+                    EditorUtility.DisplayDialog("解析失败", $"创建数据路径不存在:{item.data.AssetFolder}", "OK");
                     return;
                 }
 
-                if (!Directory.Exists(item.data.ExcelPath))
-                {
-                    EditorUtility.DisplayDialog("解析失败", $"未找到excel{item.data.ExcelPath}", "OK");
-                    return;
-                }
 
                 if (!string.IsNullOrEmpty(item.data.NameSpace) && !Regex.IsMatch(item.data.NameSpace, @"(\S+\s*\.\s*)*\S+"))
                 {
