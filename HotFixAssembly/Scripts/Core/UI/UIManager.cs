@@ -75,7 +75,7 @@ namespace UGame_Remove
 
 
         /// <summary>
-        /// 获取指定得UI层级
+        /// 获取指定层级
         /// </summary>
         /// <param name="layer">要获取得层</param>
         /// <returns></returns>
@@ -94,14 +94,14 @@ namespace UGame_Remove
 
             Action<UIPanelBase> openPanel = panel =>
             {
+                //为了防止其他panel在OnUIEnable打开其他窗口,故此代码SetAsLastSibling执行优先级最高
+                panel.transform.SetAsLastSibling();
 
                 panel.SetData(message);
 
                 panel.OnUIEnable();
 
                 UIManager.m_AnimManager.StartEnterAnim(panel, callback);
-
-                panel.transform.SetAsLastSibling();
             };
 
             if (UIPanelDic.ContainsKey(panelName))
@@ -253,6 +253,8 @@ namespace UGame_Remove
             {
                 UIManager.Destroy(arr[i]);
             }
+
+            UIPanelDic.Clear();
         }
 
 
