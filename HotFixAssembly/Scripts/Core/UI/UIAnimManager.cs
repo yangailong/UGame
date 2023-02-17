@@ -16,9 +16,9 @@ namespace UGame_Remove
         /// <param name="callBack">播放动画回调</param>
         public void StartEnterAnim(UIPanelBase panel, UICallback callBack)
         {
-            if (panel is IUIAnimation)
+            if (panel is IUIEnterAnimation)
             {
-                StartCoroutine((panel as IUIAnimation).EnterAnim(callBack));
+                StartCoroutine((panel as IUIEnterAnimation).EnterAnim(callBack));
             }
         }
 
@@ -31,9 +31,9 @@ namespace UGame_Remove
         /// <param name="param">结束动画参数</param>
         public void StartExitAnim(UIPanelBase panel, UICallback callBack, params object[] param)
         {
-            if (panel is IUIAnimation)
+            if (panel is IUIExitAnimation)
             {
-                StartCoroutine((panel as IUIAnimation).ExitAnim(callBack, param));
+                StartCoroutine((panel as IUIExitAnimation).ExitAnim(callBack, param));
             }
         }
 

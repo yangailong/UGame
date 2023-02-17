@@ -6,24 +6,24 @@ namespace UGame_Remove
 {
 
     [UILayer(layer: UIPanelLayer.GameUI)]
-    public class DemoPanel : UIPanelBase, IUIAnimation
+    public class DemoPanel : UIPanelBase, IUIEnterAnimation, IUIExitAnimation
     {
 
         public override void OnUIAwake()
         {
-            Debug.LogError($"OnUIAwake");
+            //Debug.LogError($"OnUIAwake");
         }
 
 
         public override void OnUIStart()
         {
-            Debug.LogError($"OnUIStart");
+            //Debug.LogError($"OnUIStart");
         }
 
 
         public override void OnUIEnable()
         {
-            Debug.LogError($"OnUIEnable");
+            //Debug.LogError($"OnUIEnable");
             transform.GetMountChind<Button>("m_Mask").onClick.AddListener(OnClickMaskBtn);
             transform.GetMountChind<Button>("m_CloseBtn").onClick.AddListener(OnClickMaskBtn);
         }
@@ -63,7 +63,6 @@ namespace UGame_Remove
             Debug.LogError($"点击.....");
 
             //NetProxy.Instance.C2SMessage();
-
 
         }
 
