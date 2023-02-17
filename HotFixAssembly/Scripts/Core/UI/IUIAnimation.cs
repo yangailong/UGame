@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 
 namespace UGame_Remove
 {
@@ -9,7 +10,7 @@ namespace UGame_Remove
         /// </summary>
         /// <param name="callBack">播放动画回调</param>
         /// <returns></returns>
-        IEnumerator EnterAnim(UICallback callBack = null);
+        IEnumerator EnterAnim();
     }
 
 
@@ -20,7 +21,7 @@ namespace UGame_Remove
         /// </summary>
         /// <param name="callBack">播放动画回调</param>
         /// <returns></returns>
-        IEnumerator ExitAnim(UICallback callBack = null, params object[] param);
+        IEnumerator ExitAnim();
     }
 
 }

@@ -87,7 +87,7 @@ namespace UGame_Remove
         /// <typeparam name="T">要打开的窗口</typeparam>
         /// <param name="callback">打开窗口后回调</param>
         /// <param name="message">打开窗口所需要参数</param>
-        public static void Open<T>(UICallback callback = null, params object[] message) where T : UIPanelBase
+        public static void Open<T>(params object[] message) where T : UIPanelBase
         {
             var panelName = typeof(T).Name;
 
@@ -99,8 +99,8 @@ namespace UGame_Remove
                 panel.SetData(message);
 
                 panel.OnUIEnable();
-
-                UIManager.m_AnimManager.StartEnterAnim(panel, callback);
+              
+                UIManager.m_AnimManager.StartEnterAnim(panel);
             };
 
             if (UIPanelDic.ContainsKey(panelName))
@@ -111,7 +111,6 @@ namespace UGame_Remove
             {
                 UIManager.Clone<T>(panel =>
                 {
-
                     UIPanelDic.Add(typeof(T).Name, panel);
 
                     panel.OnUIAwake();
@@ -132,7 +131,7 @@ namespace UGame_Remove
         /// <param name="isPlayAnim">是否播放关闭动画</param>
         /// <param name="callback">关闭窗口后的回调</param>
         /// <param name="message">关闭窗口需要的参数</param>
-        public static void Close<T>(bool isPlayAnim = true, UICallback callback = null, params object[] message) where T : UIPanelBase
+        public static void Close<T>(bool isPlayAnim = true) where T : UIPanelBase
         {
             if (!UIPanelDic.ContainsKey(typeof(T).Name))
             {
@@ -140,7 +139,7 @@ namespace UGame_Remove
             }
             else
             {
-                Close(UIPanelDic[typeof(T).Name], isPlayAnim, callback, message);
+                Close(UIPanelDic[typeof(T).Name], isPlayAnim);
             }
         }
 
@@ -152,21 +151,16 @@ namespace UGame_Remove
         /// <param name="isPlayAnim">是否播放关闭动画</param>
         /// <param name="callback">关闭窗口后的回调</param>
         /// <param name="message">关闭窗口需要的参数</param>
-        public static void Close(UIPanelBase panel, bool isPlayAnim = true, UICallback callback = null, params object[] message)
+        public static void Close(UIPanelBase panel, bool isPlayAnim = true)
         {
             if (isPlayAnim)
             {
-                if (callback != null)
+                Action action = () =>
                 {
-                    callback += (u, p) => { panel.OnUIDisable(); };
-                }
-                else
-                {
-                    callback = (u, p) => { panel.OnUIDisable(); };
-                }
+                    panel.OnUIDisable();
+                };
 
-                UIManager.m_AnimManager.StartExitAnim(panel, callback, message);
-
+                UIManager.m_AnimManager.StartExitAnim(panel, action);
             }
             else
             {
@@ -192,11 +186,11 @@ namespace UGame_Remove
         /// 删除窗口
         /// </summary>
         /// <typeparam name="T">要删除的窗口</typeparam>
-        public static void Destroy<T>(bool isPlayerAnim = false, UICallback callback = null, params object[] message) where T : UIPanelBase
+        public static void Destroy<T>(bool isPlayerAnim = false) where T : UIPanelBase
         {
             if (UIPanelDic.TryGetValue(typeof(T).Name, out var panel))
             {
-                UIManager.Destroy(panel, isPlayerAnim, callback, message);
+                UIManager.Destroy(panel, isPlayerAnim);
             }
         }
 
@@ -205,28 +199,17 @@ namespace UGame_Remove
         /// 删除窗口
         /// </summary>
         /// <param name="panel">要删除的窗口</param>
-        public static void Destroy(UIPanelBase panel, bool isPlayerAnim = false, UICallback callback = null, params object[] message)
+        public static void Destroy(UIPanelBase panel, bool isPlayerAnim = false)
         {
             if (isPlayerAnim)
             {
-                if (callback != null)
+                Action action = () =>
                 {
-                    callback += (u, p) =>
-                    {
-                        panel.OnUIDisable();
-                        panel.OnUIDestroy();
-                    };
-                }
-                else
-                {
-                    callback = (u, p) =>
-                    {
-                        panel.OnUIDisable();
-                        panel.OnUIDestroy();
-                    };
-                }
+                    panel.OnUIDisable();
+                    panel.OnUIDestroy();
+                };
 
-                UIManager.m_AnimManager.StartExitAnim(panel, callback, message);
+                UIManager.m_AnimManager.StartExitAnim(panel, action);
             }
             else
             {

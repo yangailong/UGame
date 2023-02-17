@@ -36,23 +36,20 @@ namespace UGame_Remove
         }
 
 
-        public IEnumerator EnterAnim(UICallback callBack = null)
+        public IEnumerator EnterAnim()
         {
             yield return new WaitForSeconds(2f);
 
             Debug.LogError($"打开页面开始动画完成....");
-
-            callBack?.Invoke(this);
+           
         }
 
 
-        public IEnumerator ExitAnim(UICallback callBack = null, params object[] message)
+        public IEnumerator ExitAnim()
         {
             yield return new WaitForSeconds(2f);
 
             Debug.LogError($"关闭页面结束动画完成....");
-
-            callBack?.Invoke(this);
         }
 
 

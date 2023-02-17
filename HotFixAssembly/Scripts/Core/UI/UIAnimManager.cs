@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 namespace UGame_Remove
 {
@@ -13,12 +15,12 @@ namespace UGame_Remove
         /// 播放页面打开动画
         /// </summary>
         /// <param name="panel">需要播放打开动画的页面</param>
-        /// <param name="callBack">播放动画回调</param>
-        public void StartEnterAnim(UIPanelBase panel, UICallback callBack)
+        /// <returns></returns>
+        public void StartEnterAnim(UIPanelBase panel)
         {
             if (panel is IUIEnterAnimation)
             {
-                StartCoroutine((panel as IUIEnterAnimation).EnterAnim(callBack));
+                StartCoroutine(EnterAnim(panel));
             }
         }
 
@@ -26,17 +28,30 @@ namespace UGame_Remove
         /// <summary>
         /// 播放页面结束动画
         /// </summary>
-        /// <param name="panel">需要播放结束动画的页面</param>
-        /// <param name="callBack">播放动画回调</param>
-        /// <param name="param">结束动画参数</param>
-        public void StartExitAnim(UIPanelBase panel, UICallback callBack, params object[] param)
+        /// <param name="panel">需要播放打开动画的页面</param>
+        /// <param name="callback">播放动画回调</param>
+        /// <returns></returns>
+        public void StartExitAnim(UIPanelBase panel, Action callback)
         {
             if (panel is IUIExitAnimation)
             {
-                StartCoroutine((panel as IUIExitAnimation).ExitAnim(callBack, param));
+                StartCoroutine(ExitAnim(panel, callback));
             }
         }
 
+
+        private IEnumerator EnterAnim(UIPanelBase panel)
+        {
+            yield return StartCoroutine((panel as IUIEnterAnimation).EnterAnim());
+        }
+
+
+        private IEnumerator ExitAnim(UIPanelBase panel, Action callback)
+        {
+            yield return (panel as IUIExitAnimation).ExitAnim();
+
+            callback?.Invoke();
+        }
 
 
     }
