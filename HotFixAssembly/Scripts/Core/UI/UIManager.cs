@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 namespace UGame_Remove
@@ -247,14 +246,20 @@ namespace UGame_Remove
         /// </summary>
         public static void DestroyAll()
         {
-            var arr = UIPanelDic.Values.ToArray();
+            var tmp = new Dictionary<string, UIPanelBase>();
 
-            for (int i = 0; i < arr.Length; i++)
+            foreach (var item in UIPanelDic)
             {
-                UIManager.Destroy(arr[i]);
+                tmp.Add(item.Key, item.Value);
+            }
+
+            foreach (var item in tmp.Values)
+            {
+                UIManager.Destroy(item);
             }
 
             UIPanelDic.Clear();
+            tmp.Clear();
         }
 
 
