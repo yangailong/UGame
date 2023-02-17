@@ -5,10 +5,10 @@ namespace UGame_Remove
 {
     public class AudioButtonClickComponent : MonoBehaviour
     {
-        //[FormerlySerializedAs("m_AudioClip")]
+        [FormerlySerializedAs("m_AudioClip")]
         private AudioClip m_AudioClip = null;
 
-        //  [FormerlySerializedAs("m_Volume")]
+        [FormerlySerializedAs("m_Volume")]
         private float m_Volume = 1f;
 
 
@@ -26,7 +26,7 @@ namespace UGame_Remove
 
         private void OnPointerClick()
         {
-            //AudioPlayManager.PlaySFX2D(m_AudioClip, m_Volume);
+            AudioPlayManager.PlaySFX2D(m_AudioClip, m_Volume);
         }
 
 
