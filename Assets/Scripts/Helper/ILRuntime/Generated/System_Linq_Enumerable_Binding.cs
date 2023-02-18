@@ -81,20 +81,6 @@ namespace ILRuntime.Runtime.Generated
                     }
                 }
             }
-            args = new Type[]{typeof(global::MonoBehaviourAdapter.Adaptor)};
-            if (genericMethods.TryGetValue("ToArray", out lst))
-            {
-                foreach(var m in lst)
-                {
-                    if(m.MatchGenericParameters(args, typeof(global::MonoBehaviourAdapter.Adaptor[]), typeof(System.Collections.Generic.IEnumerable<global::MonoBehaviourAdapter.Adaptor>)))
-                    {
-                        method = m.MakeGenericMethod(args);
-                        app.RegisterCLRMethodRedirection(method, ToArray_3);
-
-                        break;
-                    }
-                }
-            }
 
 
         }
@@ -148,22 +134,6 @@ namespace ILRuntime.Runtime.Generated
 
 
             var result_of_this_method = System.Linq.Enumerable.ToArray<System.String>(@source);
-
-            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
-        }
-
-        static StackObject* ToArray_3(ILIntepreter __intp, StackObject* __esp, AutoList __mStack, CLRMethod __method, bool isNewObj)
-        {
-            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
-            StackObject* ptr_of_this_method;
-            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
-
-            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
-            System.Collections.Generic.IEnumerable<global::MonoBehaviourAdapter.Adaptor> @source = (System.Collections.Generic.IEnumerable<global::MonoBehaviourAdapter.Adaptor>)typeof(System.Collections.Generic.IEnumerable<global::MonoBehaviourAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
-            __intp.Free(ptr_of_this_method);
-
-
-            var result_of_this_method = System.Linq.Enumerable.ToArray<global::MonoBehaviourAdapter.Adaptor>(@source);
 
             return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
         }

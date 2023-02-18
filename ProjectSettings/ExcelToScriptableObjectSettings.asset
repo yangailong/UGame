@@ -6,11 +6,11 @@
     },
     "body": [
         {
-            "ExcelName": "CfgLocalLang",
-            "ExcelPath": "Excels/CfgLocalLang.xlsx",
+            "ExcelName": "CfgRemoteLang",
+            "ExcelPath": "Excels/CfgRemoteLang.xlsx",
             "NameSpace": "UGame.Remove",
-            "ScriptFolder": "Assets/Data",
-            "AssetFolder": "Assets/Data",
+            "ScriptFolder": "Assets/Scripts/Game/Data/Normal/ScriptableObject",
+            "AssetFolder": "Assets/AddressableAssets/Remote/Data/ScriptableObject/Normal",
             "UseHashString": false,
             "PublicItemsGetter": false,
             "HideaAssetProperties": false,

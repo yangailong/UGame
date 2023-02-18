@@ -80,11 +80,6 @@
     <Compile Include="Scripts\Game\Utility\UnityAPIEx.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Assembly-CSharp, Version=0.0.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\Library\ScriptAssemblies\Assembly-CSharp.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
     <Reference Include="SuperSocket.ClientEngine">
       <HintPath>..\Assets\ThirdParty\WebSocket4Net\SuperSocket.ClientEngine.dll</HintPath>
       <Private>False</Private>

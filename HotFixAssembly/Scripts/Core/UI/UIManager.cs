@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
 using UnityEngine.EventSystems;
+using UnityEngine.ResourceManagement.AsyncOperations;
+
 namespace UGame_Remove
 {
     public class UIManager : MonoBehaviour
@@ -25,9 +28,9 @@ namespace UGame_Remove
         /// <summary>
         /// 异步初始化是否完成  true：完成  false：未完成
         /// </summary>
-        public static bool AsyncInitComplete { get; set; } = false;
+        public static bool InitAsyncComplete { get; set; } = false;
 
-        public static void AsyncInit()
+        public static async void InitAsync()
         {
             UIPanelDic = new Dictionary<string, UIPanelBase>();
 
@@ -35,11 +38,14 @@ namespace UGame_Remove
 
             var uiRootName = "UIRoot";
 
-            ResourceManager.LoadAssetAsync<GameObject>(uiRootName, o =>
-            {
-                if (o == null) return;
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(AssetsMapper.LoadPath(uiRootName));
+            await handle.Task;
 
-                m_UIRoot = Instantiate(o).AddComponent<UIManager>();
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
+                if (handle.Result == null) return;
+
+                m_UIRoot = Instantiate(handle.Result).AddComponent<UIManager>();
 
                 m_AnimManager = m_UIRoot.gameObject.AddComponent<UIAnimManager>();
 
@@ -58,11 +64,13 @@ namespace UGame_Remove
 
                 DontDestroyOnLoad(m_UIRoot);
 
-                AsyncInitComplete = true;
+                InitAsyncComplete = true;
 
-                Debug.Log($"{nameof(UIManager)} Async Init Complete ");
-            });
+                Debug.Log($"{nameof(UIManager)}  Init Async Complete ");
+            }
         }
+
+
 
         public static UIManager UIRoot => m_UIRoot;
 
@@ -267,15 +275,13 @@ namespace UGame_Remove
         /// <typeparam name="T">要克隆的窗口</typeparam>
         /// <param name="callback">克隆完成后回调</param>
         /// <exception cref="ApplicationException">加载未成功</exception>
-        private static void Clone<T>(Action<UIPanelBase> callback) where T : UIPanelBase
+        private static async void Clone<T>(Action<UIPanelBase> callback) where T : UIPanelBase
         {
-            ResourceManager.LoadAssetAsync<GameObject>(typeof(T).Name, o =>
-            {
-                if (o == null)
-                {
-                    throw new ApplicationException($"load {typeof(T).Name} panel fail");
-                }
+            AsyncOperationHandle<GameObject> handle = Addressables.LoadAssetAsync<GameObject>(AssetsMapper.LoadPath(typeof(T).Name));
+            await handle.Task;
 
+            if (handle.Status == AsyncOperationStatus.Succeeded)
+            {
                 //默认Normal层
                 Transform parent = UIManager.Getlayer(UIPanelLayer.Normal);
 
@@ -288,12 +294,17 @@ namespace UGame_Remove
                     parent = UIManager.Getlayer(layerAttr.layer);
                 }
 
-                var newPanel = GameObject.Instantiate(o, parent).AddComponent<T>();
+                var newPanel = GameObject.Instantiate(handle.Result, parent).AddComponent<T>();
 
-                newPanel.name = o.name;
+                newPanel.name = handle.Result.name;
 
                 callback.Invoke(newPanel);
-            });
+            }
+            else
+            {
+                throw new ApplicationException($"load {typeof(T).Name} panel fail");
+            }
+
         }
 
 

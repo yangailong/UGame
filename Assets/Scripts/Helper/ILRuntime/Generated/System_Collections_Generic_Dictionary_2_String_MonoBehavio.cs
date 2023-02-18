@@ -38,9 +38,15 @@ namespace ILRuntime.Runtime.Generated
             args = new Type[]{typeof(System.String)};
             method = type.GetMethod("Remove", flag, null, args, null);
             app.RegisterCLRMethodRedirection(method, Remove_3);
+            args = new Type[]{};
+            method = type.GetMethod("GetEnumerator", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, GetEnumerator_4);
             args = new Type[]{typeof(System.String), typeof(global::MonoBehaviourAdapter.Adaptor)};
             method = type.GetMethod("Add", flag, null, args, null);
-            app.RegisterCLRMethodRedirection(method, Add_4);
+            app.RegisterCLRMethodRedirection(method, Add_5);
+            args = new Type[]{};
+            method = type.GetMethod("Clear", flag, null, args, null);
+            app.RegisterCLRMethodRedirection(method, Clear_6);
 
             args = new Type[]{};
             method = type.GetConstructor(flag, null, args, null);
@@ -130,7 +136,22 @@ namespace ILRuntime.Runtime.Generated
             return __ret + 1;
         }
 
-        static StackObject* Add_4(ILIntepreter __intp, StackObject* __esp, AutoList __mStack, CLRMethod __method, bool isNewObj)
+        static StackObject* GetEnumerator_4(ILIntepreter __intp, StackObject* __esp, AutoList __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Collections.Generic.Dictionary<System.String, global::MonoBehaviourAdapter.Adaptor> instance_of_this_method = (System.Collections.Generic.Dictionary<System.String, global::MonoBehaviourAdapter.Adaptor>)typeof(System.Collections.Generic.Dictionary<System.String, global::MonoBehaviourAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            __intp.Free(ptr_of_this_method);
+
+            var result_of_this_method = instance_of_this_method.GetEnumerator();
+
+            return ILIntepreter.PushObject(__ret, __mStack, result_of_this_method);
+        }
+
+        static StackObject* Add_5(ILIntepreter __intp, StackObject* __esp, AutoList __mStack, CLRMethod __method, bool isNewObj)
         {
             ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
             StackObject* ptr_of_this_method;
@@ -149,6 +170,21 @@ namespace ILRuntime.Runtime.Generated
             __intp.Free(ptr_of_this_method);
 
             instance_of_this_method.Add(@key, @value);
+
+            return __ret;
+        }
+
+        static StackObject* Clear_6(ILIntepreter __intp, StackObject* __esp, AutoList __mStack, CLRMethod __method, bool isNewObj)
+        {
+            ILRuntime.Runtime.Enviorment.AppDomain __domain = __intp.AppDomain;
+            StackObject* ptr_of_this_method;
+            StackObject* __ret = ILIntepreter.Minus(__esp, 1);
+
+            ptr_of_this_method = ILIntepreter.Minus(__esp, 1);
+            System.Collections.Generic.Dictionary<System.String, global::MonoBehaviourAdapter.Adaptor> instance_of_this_method = (System.Collections.Generic.Dictionary<System.String, global::MonoBehaviourAdapter.Adaptor>)typeof(System.Collections.Generic.Dictionary<System.String, global::MonoBehaviourAdapter.Adaptor>).CheckCLRTypes(StackObject.ToObject(ptr_of_this_method, __domain, __mStack), (CLR.Utils.Extensions.TypeFlags)0);
+            __intp.Free(ptr_of_this_method);
+
+            instance_of_this_method.Clear();
 
             return __ret;
         }

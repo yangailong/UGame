@@ -4,11 +4,11 @@
 
 using UnityEngine;
 
-namespace UGame_Local_Out_CfgData {
+namespace UGame.Remove {
 
 	public partial class CfgRemoteLang : ScriptableObject {
 
-		[SerializeField, HideInInspector]
+		[SerializeField]
 		private CfgRemoteLangItem[] _Items;
 		private CfgRemoteLangItem[] items { get { return _Items; } }
 
@@ -33,33 +33,38 @@ namespace UGame_Local_Out_CfgData {
 	[System.Serializable]
 	public class CfgRemoteLangItem {
 
-		[SerializeField, HideInInspector]
+		[SerializeField]
 		private string _Id;
 		public string id { get { return _Id; } }
 
-		[SerializeField, HideInInspector]
+		[SerializeField]
 		private string _CN;
 		public string CN { get { return _CN; } }
 
-		[SerializeField, HideInInspector]
+		[SerializeField]
 		private string _EN;
 		public string EN { get { return _EN; } }
 
-		[SerializeField, HideInInspector]
+		[SerializeField]
 		private string _TC;
 		public string TC { get { return _TC; } }
 
-		[SerializeField, HideInInspector]
+		[SerializeField]
 		private string _DE;
 		public string DE { get { return _DE; } }
 
-		[SerializeField, HideInInspector]
+		[SerializeField]
 		private string _ES;
 		public string ES { get { return _ES; } }
 
-		[SerializeField, HideInInspector]
+		[SerializeField]
 		private string _FR;
 		public string FR { get { return _FR; } }
+
+		public override string ToString() {
+			return string.Format("[CfgRemoteLangItem]{{id:{0}, CN:{1}, EN:{2}, TC:{3}, DE:{4}, ES:{5}, FR:{6}}}",
+				id, CN, EN, TC, DE, ES, FR);
+		}
 
 	}
 

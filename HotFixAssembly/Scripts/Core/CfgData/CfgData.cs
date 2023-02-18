@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using UGame_Local;
 using UnityEngine;
+using UnityEngine.AddressableAssets;
+using UnityEngine.ResourceManagement.AsyncOperations;
 
 namespace UGame_Remove
 {
@@ -18,16 +20,17 @@ namespace UGame_Remove
         /// true：完成
         /// false：未完成
         /// </summary>
-        public static bool AsyncInitComplete { get; set; } = false;
+        public static bool InitAsyncComplete { get; set; } = false;
 
 
         /// <summary>
         /// 异步初始化·读取配置数据
         /// </summary>
-        public static void AsyncInit()
+        public static async void InitAsync()
         {
             valuePairs = new Dictionary<string, ScriptableObject>();
 
+            
             Assembly assembly = typeof(UGame).Assembly;
 
             Predicate<Type> typeMatch = type => type.BaseType == typeof(ScriptableObject) && !string.IsNullOrEmpty(type.Namespace) && type.Namespace.Equals("UGame_Local_Out_CfgData");
@@ -36,24 +39,36 @@ namespace UGame_Remove
 
             string[] assetsName = arr.Select(type => type.Name).ToArray();
 
-            Debug.Log($"count:{valuePairs.Count}");
-
-            ResourceManager.LoadAssetsAsync<ScriptableObject>(assetsName, o =>
+            foreach (string assetName in assetsName)
             {
-                if (!valuePairs.ContainsKey(o.name))
-                {
-                    valuePairs.Add(o.name, o);
+                Debug.Log($"配置表Name: {assetName}");
+            }
 
-                    Debug.Log($"CfgData {o.name} load success");
+            AsyncOperationHandle<IList<ScriptableObject>> handle = Addressables.LoadAssetsAsync<ScriptableObject>(assetsName, null);
+            await handle.Task;
+
+            if (handle.Status != AsyncOperationStatus.Succeeded)
+            {
+                throw new ArgumentNullException($"配置表加载失败：{handle.OperationException.Message}");
+            }
+
+            IList<ScriptableObject> loadedAssets = handle.Result;
+            foreach (ScriptableObject asset in loadedAssets)
+            {
+                if (!valuePairs.ContainsKey(asset.name))
+                {
+                    valuePairs.Add(asset.name, asset);
+
+                    Debug.Log($"CfgData {asset.name} load success");
 
                     if (valuePairs.Count == assetsName.Length)
                     {
-                        AsyncInitComplete = true;
+                        InitAsyncComplete = true;
 
-                        Debug.Log($"{nameof(CfgData)} Async Init Complete ");
+                        Debug.Log($"{nameof(CfgData)} Async Init Complete...All Count :{valuePairs.Count}");
                     }
                 }
-            });
+            }
         }
 
 
