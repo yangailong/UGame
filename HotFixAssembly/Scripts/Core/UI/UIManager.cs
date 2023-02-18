@@ -99,7 +99,7 @@ namespace UGame_Remove
                 panel.SetData(message);
 
                 panel.OnUIEnable();
-              
+
                 UIManager.m_AnimManager.StartEnterAnim(panel);
             };
 
@@ -261,6 +261,12 @@ namespace UGame_Remove
         }
 
 
+        /// <summary>
+        /// 克隆panel
+        /// </summary>
+        /// <typeparam name="T">要克隆的窗口</typeparam>
+        /// <param name="callback">克隆完成后回调</param>
+        /// <exception cref="ApplicationException">加载未成功</exception>
         private static void Clone<T>(Action<UIPanelBase> callback) where T : UIPanelBase
         {
             ResourceManager.LoadAssetAsync<GameObject>(typeof(T).Name, o =>
